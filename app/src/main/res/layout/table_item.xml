@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/date"
+        android:textAlignment="center"
+        android:textColor="#87F8D0"
+        android:textSize="15sp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+
+        />
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/reason"
+        android:textAlignment="center"
+        android:textColor="#87F8D0"
+        android:textSize="15sp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+
+        />
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/category"
+        android:textAlignment="center"
+        android:textColor="#87F8D0"
+        android:textSize="15sp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        />
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/amount"
+        android:textAlignment="center"
+        android:textColor="#87F8D0"
+        android:textSize="15sp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        />
+
+</TableRow>
