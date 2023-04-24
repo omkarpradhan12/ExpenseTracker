@@ -1,11 +1,15 @@
 package com.example.expensetest;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -26,18 +30,37 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TableLayout tableLayout;
+    private static final int REQUEST_WRITE_PERMISSION = 786;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+        }
+    }
+
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+        } else {
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        requestPermission();
         table_update(getall());
 
         Spinner category = (Spinner) findViewById(R.id.filter);
@@ -140,9 +163,31 @@ public class MainActivity extends AppCompatActivity {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getBaseContext(),String.valueOf(db.row_deleter(exp.getExpkey())),Toast.LENGTH_SHORT).show();
+                    db.row_deleter(exp.getExpkey());
+
+                    tableLayout.removeView(tabrow);
+                    TextView totalamt = (TextView) findViewById(R.id.totalamt);
+                    Double newamt = Double.parseDouble(totalamt.getText().toString()) - Double.parseDouble(exp.getAmount());
+                    totalamt.setText(newamt.toString());
+
                 }
+
             });
+
+            switch(exp.getCategory())
+            {
+                case "Food":tabrow.setBackgroundColor(getColor(R.color.food));
+                break;
+                case "Flat":tabrow.setBackgroundColor(getColor(R.color.flat));
+                break;
+                case "Other":tabrow.setBackgroundColor(getColor(R.color.other));
+                break;
+                case "Drink":tabrow.setBackgroundColor(getColor(R.color.drink));
+                break;
+                case "Travel":tabrow.setBackgroundColor(getColor(R.color.travel));
+                break;
+
+            }
 
             tableLayout.addView(tabrow);
 
@@ -172,13 +217,25 @@ public class MainActivity extends AppCompatActivity {
                 Spinner category = (Spinner) dialogview.findViewById(R.id.category_get);
                 EditText amount = (EditText) dialogview.findViewById(R.id.amount_get);
 
+                int month = date.getMonth()+1;
+                int day = date.getDayOfMonth();
 
-                String dt = String.valueOf(date.getYear()) + "-" + String.valueOf(date.getMonth()+1) + "-" + String.valueOf(date.getDayOfMonth());
+
+                String mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                String dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                String dt = String.valueOf(date.getYear()) + "-" + mth + "-" + dy;
                 String reas = reason.getText().toString();
                 String cate = category.getSelectedItem().toString();
                 String amt = amount.getText().toString();
 
-                db.addExpense(new Expense(dt,reas,cate,amt));
+                if (reas.isEmpty() || cate.equals("Select Categories") || amt.isEmpty()){
+                    Toast.makeText(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    db.addExpense(new Expense(dt,reas,cate,amt));
+                }
+
                 table_update(getall());
             }
         });
@@ -198,5 +255,96 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void csv_maker(View view)
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater linf = this.getLayoutInflater();
+        View dialogview = linf.inflate(R.layout.csv_dialog,null);
+
+        dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+        dialogBuilder.setView(dialogview);
+        dialogBuilder.setCancelable(true);
+
+
+        dialogBuilder.setPositiveButton("Create CSV", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatePicker fromdate = (DatePicker) dialogview.findViewById(R.id.datePickerfrom);
+                DatePicker todate = (DatePicker) dialogview.findViewById(R.id.datePickerto);
+
+                int month =0;
+                int day =0;
+
+                String mth,dy;
+
+                String frdt,todt;
+
+
+                month = fromdate.getMonth()+1;
+                day = fromdate.getDayOfMonth();
+                mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                frdt = String.valueOf(fromdate.getYear()) + "-" + mth + "-" + dy;
+
+                month = todate.getMonth()+1;
+                day = todate.getDayOfMonth();
+                mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                todt = String.valueOf(todate.getYear()) + "-" + mth + "-" + dy;
+
+
+
+                filewriter(db.time_period_csv(frdt,todt));
+
+                //Toast.makeText(getBaseContext(),frdt + " - " + todt,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog csv_maker = dialogBuilder.create();
+        csv_maker.show();
+
+    }
+
+    public void filewriter(List<Expense> expenses)
+    {
+        String data="";
+        data+="Date,Reason,Category,Amount\n";
+
+        for(Expense exp:expenses)
+        {
+            data+= exp.getDate()+","+exp.getReason()+","+exp.getCategory()+","+exp.getAmount()+"\n";
+        }
+
+        File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        root = new File(root , "data.csv");
+
+        try {
+            FileOutputStream fout = new FileOutputStream(root);
+            fout.write(data.getBytes());
+            fout.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            boolean bool = false;
+            try {
+                // try to create the file
+                bool = root.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(getBaseContext(),"Create and saved file in Downloads",Toast.LENGTH_LONG).show();
+    }
 
 }

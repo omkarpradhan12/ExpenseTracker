@@ -99,6 +99,28 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
         return  expenseList;
     }
 
+    public List<Expense> time_period_csv(String fromdate,String todate)
+    {
+        List<Expense> expenseList = new ArrayList<Expense>();
+        String selectQuery = "SELECT * FROM Expenses_Table WHERE Date BETWEEN '"+fromdate+"' and '"+todate+ "' ORDER by Date" ;
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Expense expense = new Expense();
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
+
+                expenseList.add(expense);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  expenseList;
+    }
+
     public boolean row_deleter(int id)
     {
         SQLiteDatabase db = getWritableDatabase();

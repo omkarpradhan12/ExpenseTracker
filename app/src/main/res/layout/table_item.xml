@@ -7,11 +7,11 @@
 
     <TextView
         android:layout_width="10dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/date"
         android:textAlignment="center"
-        android:textColor="#87F8D0"
-        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         android:layout_weight="0.25"
         android:gravity="center"
 
@@ -22,8 +22,8 @@
         android:layout_height="match_parent"
         android:id="@+id/reason"
         android:textAlignment="center"
-        android:textColor="#87F8D0"
-        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         android:layout_weight="0.25"
         android:gravity="center"
 
@@ -34,8 +34,8 @@
         android:layout_height="match_parent"
         android:id="@+id/category"
         android:textAlignment="center"
-        android:textColor="#87F8D0"
-        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         android:layout_weight="0.25"
         android:gravity="center"
 
@@ -45,8 +45,8 @@
         android:layout_height="match_parent"
         android:id="@+id/amount"
         android:textAlignment="center"
-        android:textColor="#87F8D0"
-        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         android:layout_weight="0.25"
         android:gravity="center"
 
@@ -56,7 +56,9 @@
         android:id="@+id/deleter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="   🗑"
+        android:textAlignment="center"
+        android:text="    X"
+        android:textColor="#FFFFFF"
         android:background="@color/transperent"/>
 
 
