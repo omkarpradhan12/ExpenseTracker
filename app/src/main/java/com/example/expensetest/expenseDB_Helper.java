@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
 
-        MyDB.execSQL("CREATE TABLE if not exists Expenses_Table(Date TEXT, Reason TEXT,Category TEXT,Amount TEXT)");
+        MyDB.execSQL("CREATE TABLE if not exists Expenses_Table(ExpenseKey INTEGER PRIMARY KEY AUTOINCREMENT,Date Date, Reason TEXT,Category TEXT,Amount TEXT)");
     }
 
     @Override
@@ -55,17 +56,18 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     {
         List<Expense> expenseList = new ArrayList<Expense>();
 
-        String selectQuery = "SELECT * FROM Expenses_Table" ;
+        String selectQuery = "SELECT * FROM Expenses_Table ORDER by Date" ;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
             do{
                 Expense expense = new Expense();
-                expense.setDate(cursor.getString(0));
-                expense.setReason(cursor.getString(1));
-                expense.setCategory(cursor.getString(2));
-                expense.setAmount(cursor.getString(3));
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
 
                 expenseList.add(expense);
             }while(cursor.moveToNext());
@@ -73,6 +75,36 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
         db.close();
         return  expenseList;
     }
+
+    public List<Expense> filter_expense(String category)
+    {
+        List<Expense> expenseList = new ArrayList<Expense>();
+
+        String selectQuery = "SELECT * FROM Expenses_Table WHERE Category LIKE '"+category+ "' ORDER by Date" ;
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Expense expense = new Expense();
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
+
+                expenseList.add(expense);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  expenseList;
+    }
+
+    public boolean row_deleter(int id)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete("Expenses_Table","ExpenseKey=?", new String[]{Integer.toString(id)}) >0;
+    }
+
 
 
 }

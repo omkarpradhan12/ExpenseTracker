@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">ExpenseTest</string>
+    
+    <string-array name="Categories">
+        <item>Select Categories</item>
+        <item>Food</item>
+        <item>Drink</item>
+        <item>Flat</item>
+        <item>Other</item>
+        <item>Travel</item>
+    </string-array>
+
+    <string-array name="Categories_Filter">
+        <item>All</item>
+        <item>Food</item>
+        <item>Drink</item>
+        <item>Flat</item>
+        <item>Other</item>
+        <item>Travel</item>
+    </string-array>
+
 </resources>

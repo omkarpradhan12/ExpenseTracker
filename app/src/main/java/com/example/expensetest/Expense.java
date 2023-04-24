@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class Expense {
 
+
+
+    int expkey;
     String date;
     String Reason;
     String Category;
@@ -19,6 +22,14 @@ public class Expense {
         this.Reason = Reason;
         this.Category = Category;
         this.Amount = Amount;
+    }
+
+    public int getExpkey() {
+        return expkey;
+    }
+
+    public void setExpkey(int expkey) {
+        this.expkey = expkey;
     }
 
     public String getDate() {
