@@ -8,6 +8,8 @@
     tools:context=".Launcher"
     android:background="#393646">
 
+
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
@@ -16,7 +18,11 @@
         android:textAlignment="center"
         android:textColor="#F4EEE0"
         android:textSize="44sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
+
+
+
 
     <Space
         android:layout_width="match_parent"
@@ -58,4 +64,20 @@
         android:text="Go"
         android:backgroundTint="#6D5D6E"
         android:onClick="sendme"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50px" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="click to change password"
+        android:textAllCaps="false"
+        android:textColor="#9EC2F8"
+        android:textStyle="italic"
+        android:clickable="true"
+        android:onClick="setpass"
+        />
+
 </LinearLayout>

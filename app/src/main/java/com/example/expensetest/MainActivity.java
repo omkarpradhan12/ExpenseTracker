@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"Okay",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Baadme Bhulega to rona mat 🤦‍",Toast.LENGTH_SHORT).show();
             }
         });
 
