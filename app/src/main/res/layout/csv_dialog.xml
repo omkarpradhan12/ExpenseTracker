@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Select From Date :"
         android:textAlignment="textStart"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -31,10 +31,12 @@
         android:id="@+id/datePickerfrom"
         style="@android:style/Widget.Material.DatePicker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="163dp"
         android:layout_above="@+id/textView1"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+        android:datePickerMode="spinner"
+
+        android:theme="@style/MyDatePicker" />
 
 
     <TextView
@@ -43,7 +45,7 @@
         android:layout_height="wrap_content"
         android:text="Select to Date :"
         android:textAlignment="textStart"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -51,10 +53,30 @@
         android:id="@+id/datePickerto"
         style="@android:style/Widget.Material.DatePicker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="163dp"
         android:layout_above="@+id/textView1"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+        android:datePickerMode="spinner"
+        android:theme="@style/MyDatePicker" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="An Appropriate File Name Please"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/fname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter Filename or file will be named data"
+
+        />
 
 
 </LinearLayout>

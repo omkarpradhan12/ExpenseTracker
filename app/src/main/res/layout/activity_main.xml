@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="#2C3333"
     >
 
 
@@ -14,94 +14,88 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expense Tracker"
+        android:text="₹ Expense Tracker"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textColor="#F6F6F6"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        />
 
     <Spinner
         android:id="@+id/filter"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="1dp"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#CBE4DE"
         android:textSize="20sp"
         android:layout_weight="0.25"
         android:gravity="center"
-        android:background="#5EE8EC"
+        android:background="#2E4F4F"
         android:entries="@array/Categories_Filter"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="10dp"
+            android:id="@+id/datesorter"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
             android:gravity="center"
             android:text="Date"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#CBE4DE"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="10dp"
+            android:id="@+id/reasonsorter"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
             android:gravity="center"
             android:text="Reason"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#CBE4DE"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="10dp"
+            android:id="@+id/categorysorter"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
             android:gravity="center"
             android:text="Category"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#CBE4DE"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="10dp"
+            android:id="@+id/amountsorter"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
             android:gravity="center"
             android:text="Amount"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#CBE4DE"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:gravity="center"
-            android:text="X"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
         android:layout_weight="1"
         android:fillViewport="true"
@@ -110,7 +104,7 @@
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/expensetable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -139,10 +133,10 @@
             android:text="Total : "
             android:layout_weight="0.25"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#CBE4DE"
             android:textSize="20sp"
             android:gravity="center"
-            android:background="#AFFDFF"
+            android:background="#0E8388"
             />
 
 
@@ -157,21 +151,42 @@
             android:textSize="20sp"
             android:layout_weight="0.25"
             android:gravity="center"
-            android:background="#AFFDFF"/>
+            android:background="#0E8388"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Expense"
-        android:onClick="new_expense"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_weight="0.16"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#0E9C04"
+            android:onClick="new_expense"
+            android:text="Add Expense ➕"
+            android:textSize="13dp"/>
+
+        <Button
+            android:id="@+id/clearall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#B80606"
+            android:onClick="new_expense"
+            android:text="Clear All Expenses 🗑️"
+            android:textSize="13dp"/>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="csv_maker"
-        android:text="Save as CSV" />
+        android:backgroundTint="#788780"
+        android:text="Save as CSV 💾" />
 
 </LinearLayout>

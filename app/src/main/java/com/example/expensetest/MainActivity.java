@@ -2,11 +2,14 @@ package com.example.expensetest;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,7 +41,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //flags for sorting
+    private Boolean dateflag = true;
+    private Boolean reasonflag = true;
+    private Boolean categoryflag = true;
+    private Boolean amountflag = true;
+
     private TableLayout tableLayout;
+
     private static final int REQUEST_WRITE_PERMISSION = 786;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -62,6 +73,67 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         requestPermission();
         table_update(getall());
+
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#070A52"));
+
+        actionBar.setBackgroundDrawable(colorDrawable);
+
+        TextView datesorter = (TextView) findViewById(R.id.datesorter);
+        datesorter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateSorter();
+            }
+        });
+
+        TextView reasonsorter = (TextView) findViewById(R.id.reasonsorter);
+        reasonsorter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReasonSorter();
+            }
+        });
+
+        TextView categorysorter = (TextView) findViewById(R.id.categorysorter);
+        categorysorter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CategorySorter();
+            }
+        });
+
+        TextView amountsorter = (TextView) findViewById(R.id.amountsorter);
+        amountsorter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AmountSorter();
+            }
+        });
+
+        TextView totalamt = (TextView) findViewById(R.id.totalamt);
+
+        Button deleter = (Button) findViewById(R.id.clearall);
+        deleter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Warning")
+                        .setMessage("This will clear all existing records")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                ClearAll();
+                                Toast.makeText(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT).show();
+                                totalamt.setText("0.0");
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+            }
+        });
 
         Spinner category = (Spinner) findViewById(R.id.filter);
 
@@ -106,6 +178,15 @@ public class MainActivity extends AppCompatActivity {
         return total;
     }
 
+    public void ClearAll()
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+        List<Expense> expenses = db.clearall();
+
+        table_update(expenses);
+
+    }
+
     public List<Expense> getall()
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
@@ -147,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
             int key = exp.getExpkey();
 
+
             TextView date = (TextView)tabrow.findViewById(R.id.date);
             date.setText(exp.getDate());
 
@@ -159,20 +241,7 @@ public class MainActivity extends AppCompatActivity {
             TextView amount = (TextView)tabrow.findViewById(R.id.amount);
             amount.setText(exp.getAmount());
 
-            Button delete = (Button)tabrow.findViewById(R.id.deleter);
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    db.row_deleter(exp.getExpkey());
 
-                    tableLayout.removeView(tabrow);
-                    TextView totalamt = (TextView) findViewById(R.id.totalamt);
-                    Double newamt = Double.parseDouble(totalamt.getText().toString()) - Double.parseDouble(exp.getAmount());
-                    totalamt.setText(newamt.toString());
-
-                }
-
-            });
 
             switch(exp.getCategory())
             {
@@ -187,7 +256,32 @@ public class MainActivity extends AppCompatActivity {
                 case "Travel":tabrow.setBackgroundColor(getColor(R.color.travel));
                 break;
 
-            }
+            };
+
+            tabrow.setLongClickable(true);
+            tabrow.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Warning")
+                            .setMessage("This will remove this Record")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Delete Record", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //ClearAll();
+                                    db.row_deleter(exp.getExpkey());
+
+                                    tableLayout.removeView(tabrow);
+                                    TextView totalamt = (TextView) findViewById(R.id.totalamt);
+                                    Double newamt = Double.parseDouble(totalamt.getText().toString()) - Double.parseDouble(exp.getAmount());
+                                    totalamt.setText(newamt.toString());
+                                    Toast.makeText(MainActivity.this, "Removed Record", Toast.LENGTH_SHORT).show();
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+                    return false;
+                }
+            });
 
             tableLayout.addView(tabrow);
 
@@ -255,6 +349,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void DateSorter()
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        dateflag = !dateflag;
+
+        table_update(db.sortdate(dateflag));
+
+    }
+    public void ReasonSorter()
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        reasonflag = !reasonflag;
+
+        table_update(db.sortreason(reasonflag));
+
+    }
+    public void CategorySorter()
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        categoryflag = !categoryflag;
+
+        table_update(db.sortcategory(categoryflag));
+
+    }
+
+    public void AmountSorter()
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        amountflag = !amountflag;
+
+        table_update(db.amountsort(amountflag));
+
+    }
     public void csv_maker(View view)
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
@@ -274,6 +405,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatePicker fromdate = (DatePicker) dialogview.findViewById(R.id.datePickerfrom);
                 DatePicker todate = (DatePicker) dialogview.findViewById(R.id.datePickerto);
+
+                EditText fname = (EditText) dialogview.findViewById(R.id.fname);
 
                 int month =0;
                 int day =0;
@@ -299,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                filewriter(db.time_period_csv(frdt,todt));
+                filewriter(db.time_period_csv(frdt,todt),fname.getText().toString());
 
                 //Toast.makeText(getBaseContext(),frdt + " - " + todt,Toast.LENGTH_SHORT).show();
             }
@@ -310,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void filewriter(List<Expense> expenses)
+    public void filewriter(List<Expense> expenses,String fname)
     {
         String data="";
         data+="Date,Reason,Category,Amount\n";
@@ -322,7 +455,15 @@ public class MainActivity extends AppCompatActivity {
 
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-        root = new File(root , "data.csv");
+        String file_name = "expenses.csv";
+
+        if (fname.isEmpty()==false)
+        {
+            file_name = fname+".csv";
+        }
+
+
+        root = new File(root , file_name);
 
         try {
             FileOutputStream fout = new FileOutputStream(root);
@@ -344,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Toast.makeText(getBaseContext(),"Create and saved file in Downloads",Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(),"Create and saved file "+file_name+" in Downloads",Toast.LENGTH_LONG).show();
     }
 
 }

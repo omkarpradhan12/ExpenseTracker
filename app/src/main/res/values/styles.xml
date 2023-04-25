@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyDatePicker" >
+        <!-- Text color -->
+        <item name="android:textColorPrimary">#D2FFFB</item>
+        <!-- Divider color -->
+        <item name="colorControlNormal">#5BC7FA</item>
+    </style>
+</resources>

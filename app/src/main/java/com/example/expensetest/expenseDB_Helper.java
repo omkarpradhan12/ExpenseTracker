@@ -127,6 +127,144 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
         return db.delete("Expenses_Table","ExpenseKey=?", new String[]{Integer.toString(id)}) >0;
     }
 
+    public List<Expense> sortdate(Boolean flag)
+    {
+        String selectQuery= "SELECT * FROM Expenses_Table ORDER by Date";
 
+        if(flag)
+        {
+            selectQuery = "SELECT * FROM Expenses_Table ORDER by Date" ;
+        }
+        else
+        {
+            selectQuery = "SELECT * FROM Expenses_Table ORDER by Date DESC" ;
+        }
+
+        List<Expense> expenseList = new ArrayList<Expense>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Expense expense = new Expense();
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
+
+                expenseList.add(expense);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  expenseList;
+    }
+  public List<Expense> sortreason(Boolean flag)
+    {
+        String selectQuery= "SELECT * FROM Expenses_Table ORDER by Reason";
+
+        if(flag)
+        {
+            selectQuery = "SELECT * FROM Expenses_Table ORDER by Reason" ;
+        }
+        else
+        {
+            selectQuery = "SELECT * FROM Expenses_Table ORDER by Reason DESC" ;
+        }
+
+        List<Expense> expenseList = new ArrayList<Expense>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Expense expense = new Expense();
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
+
+                expenseList.add(expense);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  expenseList;
+    }
+  public List<Expense> sortcategory(Boolean flag)
+    {
+        String selectQuery= "SELECT * FROM Expenses_Table ORDER by Category";
+
+        if(flag)
+        {
+            selectQuery = "SELECT * FROM Expenses_Table ORDER by Category" ;
+        }
+        else
+        {
+            selectQuery = "SELECT * FROM Expenses_Table ORDER by Category DESC" ;
+        }
+
+        List<Expense> expenseList = new ArrayList<Expense>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Expense expense = new Expense();
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
+
+                expenseList.add(expense);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  expenseList;
+    }
+
+
+    public List<Expense> amountsort(Boolean flag)
+    {
+        String selectQuery= "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Amount";
+
+        if(flag)
+        {
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Amount" ;
+        }
+        else
+        {
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Amount DESC" ;
+        }
+
+        List<Expense> expenseList = new ArrayList<Expense>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Expense expense = new Expense();
+                expense.setExpkey(cursor.getInt(0));
+                expense.setDate(cursor.getString(1));
+                expense.setReason(cursor.getString(2));
+                expense.setCategory(cursor.getString(3));
+                expense.setAmount(cursor.getString(4));
+
+                expenseList.add(expense);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  expenseList;
+    }
+
+    public List<Expense> clearall()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM Expenses_Table");
+
+        List<Expense> expenseList = new ArrayList<Expense>();
+        return expenseList;
+    }
 
 }
