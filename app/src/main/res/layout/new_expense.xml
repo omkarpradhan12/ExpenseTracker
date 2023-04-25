@@ -80,6 +80,7 @@
         android:entries="@array/Categories"
         android:textAlignment="center"
         android:backgroundTint="#ffffff"
+        android:popupBackground="#5E6AAC"
         />
 
     <TextView

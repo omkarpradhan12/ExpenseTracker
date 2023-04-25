@@ -50,28 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
     private TableLayout tableLayout;
 
-    private static final int REQUEST_WRITE_PERMISSION = 786;
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-        }
-    }
-
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
-        } else {
-
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestPermission();
         table_update(getall());
 
         ActionBar actionBar;
@@ -121,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Warning")
-                        .setMessage("This will clear all existing records")
+                        .setTitle("Delete All Records ?")
+                        .setMessage("This will clear all existing records from the database")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
 
@@ -245,15 +229,15 @@ public class MainActivity extends AppCompatActivity {
 
             switch(exp.getCategory())
             {
-                case "Food":tabrow.setBackgroundColor(getColor(R.color.food));
+                case "Food":tabrow.setBackgroundDrawable(getDrawable(R.drawable.food));
                 break;
-                case "Flat":tabrow.setBackgroundColor(getColor(R.color.flat));
+                case "Flat":tabrow.setBackgroundDrawable(getDrawable(R.drawable.flat));
                 break;
-                case "Other":tabrow.setBackgroundColor(getColor(R.color.other));
+                case "Other":tabrow.setBackgroundDrawable(getDrawable(R.drawable.other));
                 break;
-                case "Drink":tabrow.setBackgroundColor(getColor(R.color.drink));
+                case "Drink":tabrow.setBackgroundDrawable(getDrawable(R.drawable.drink));
                 break;
-                case "Travel":tabrow.setBackgroundColor(getColor(R.color.travel));
+                case "Travel":tabrow.setBackgroundDrawable(getDrawable(R.drawable.travel));
                 break;
 
             };
@@ -263,8 +247,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View view) {
                     new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Warning")
-                            .setMessage("This will remove this Record")
+                            .setTitle("Delete Record ?")
+                            .setMessage("Date : "+exp.getDate()+
+                                    "\nReason : "+exp.getReason()+
+                                    "\nCategory : "+exp.getCategory()+
+                                    "\nAmount : "+exp.getAmount())
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Delete Record", new DialogInterface.OnClickListener() {
 
@@ -284,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             tableLayout.addView(tabrow);
+
 
 
         }

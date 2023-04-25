@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ExpenseTest</string>
-    
+
     <string-array name="Categories">
         <item>Select Categories</item>
         <item>Food</item>
