@@ -4,7 +4,7 @@ Add Data to db and view it in the table
 ## Stage 2
 Added Deletion of rows and Filters
 
-### Stage 3
+## Stage 3
 Filters, Sorting and svae to CSV
 
 ### Stage 3.5
