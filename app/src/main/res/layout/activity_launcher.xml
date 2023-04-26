@@ -9,78 +9,86 @@
     android:background="#2C3333">
 
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/tiny_icon"
         android:text="Expense Tracker"
         android:textAlignment="center"
         android:textColor="#F6F6F6"
         android:textSize="35sp"
-        android:drawableLeft="@drawable/tiny_icon"
         android:textStyle="bold"
 
         />
 
-
-
-
-    <Space
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="500px" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please Enter Password:"
-        android:textColor="#F4EEE0"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="100px" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Your Password"
-        android:inputType="textPassword"
-        android:textColor="#F4EEE0"
-        android:textColorHint="#F4EEE0"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:tooltipText=" (Default : Password)"
-        />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="500px" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="500px" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please Enter Password:"
+                android:textColor="#F4EEE0"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go"
-        android:backgroundTint="#0E8388"
-        android:onClick="sendme"/>
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50px" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="100px" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="click to change password"
-        android:textAllCaps="false"
-        android:textColor="#9EC2F8"
-        android:textStyle="italic"
-        android:clickable="true"
-        android:onClick="setpass"
-        />
+            <EditText
+                android:id="@+id/editTextTextPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Your Password"
+                android:inputType="textPassword"
+                android:textColor="#F4EEE0"
+                android:textColorHint="#F4EEE0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:tooltipText=" (Default : Password)" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="500px" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#0E8388"
+                android:onClick="sendme"
+                android:text="Go" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50px" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="setpass"
+                android:text="click to change password"
+                android:textAllCaps="false"
+                android:textColor="#9EC2F8"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

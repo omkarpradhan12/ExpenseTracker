@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#6DEDAB"
+    >
+
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hey There !"
+        android:background="#345E48"
+        android:textAlignment="center"
+        android:textColor="#FDFDFD"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a app you could use to track your expenses"
+        android:textAlignment="center"
+        android:textColor="#1C1C1C"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Basic Tutorial For features"
+        android:textAlignment="textStart"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#1C1C1C"
+        android:text="\t-Click The Blue header above the table to filter data
+                      \n\t- Click any column of the table header to sort according to the field
+                      \n\t-long press on any row to delete that row
+                      \n\t-Add expense opens a dialog for new expense entry (no field can be blank)
+                      \n\t- Clear table will delete all records
+                      \n\t-Total shows sum of values currently displayed
+                      \n\t-View a simple graph and table for sum according to categories for specifed date range
+                      \n\t-Select Date Range to save data into a csv file"
+        android:textAlignment="viewStart" />
+</LinearLayout>

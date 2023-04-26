@@ -66,34 +66,48 @@ public class MainActivity extends AppCompatActivity {
         });
 
         TextView datesorter = (TextView) findViewById(R.id.datesorter);
+        TextView reasonsorter = (TextView) findViewById(R.id.reasonsorter);
+        TextView categorysorter = (TextView) findViewById(R.id.categorysorter);
+        TextView amountsorter = (TextView) findViewById(R.id.amountsorter);
+
         datesorter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DateSorter();
+                reasonsorter.setText("Reason ↑");
+                categorysorter.setText("Category ↑");
+                amountsorter.setText("Amount ↑");
             }
         });
 
-        TextView reasonsorter = (TextView) findViewById(R.id.reasonsorter);
+
         reasonsorter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ReasonSorter();
+                datesorter.setText("Date ↑");
+                categorysorter.setText("Category ↑");
+                amountsorter.setText("Amount ↑");
             }
         });
 
-        TextView categorysorter = (TextView) findViewById(R.id.categorysorter);
         categorysorter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CategorySorter();
+                reasonsorter.setText("Reason ↑");
+                datesorter.setText("Date ↑");
+                amountsorter.setText("Amount ↑");
             }
         });
 
-        TextView amountsorter = (TextView) findViewById(R.id.amountsorter);
         amountsorter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AmountSorter();
+                reasonsorter.setText("Reason ↑");
+                categorysorter.setText("Category ↑");
+                datesorter.setText("Date ↑");
             }
         });
 
@@ -127,13 +141,21 @@ public class MainActivity extends AppCompatActivity {
                                        int postion, long arg3) {
                 // TODO Auto-generated method stub
                 String  category = parent.getItemAtPosition(postion).toString();
-                if (postion==0)
+                if (postion==0 || postion==1)
                 {
                     table_update(getall());
+                    datesorter.setClickable(true);
+                    reasonsorter.setClickable(true);
+                    categorysorter.setClickable(true);
+                    amountsorter.setClickable(true);
                 }
                 else {
                     Toast.makeText(getBaseContext(),category,Toast.LENGTH_SHORT).show();
                     table_update(getfiltered(category));
+                    datesorter.setClickable(false);
+                    reasonsorter.setClickable(false);
+                    categorysorter.setClickable(false);
+                    amountsorter.setClickable(false);
                 }
 
 
@@ -143,6 +165,14 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
 
+            }
+        });
+
+        TextView helpme = findViewById(R.id.helme);
+        helpme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Help_Show(view);
             }
         });
 
@@ -399,11 +429,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     public void DateSorter()
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
         dateflag = !dateflag;
+        TextView sorter = (TextView) findViewById(R.id.datesorter);
+        if(dateflag)
+            sorter.setText("Date ↑");
+        else
+            sorter.setText("Date ↓");
 
         table_update(db.sortdate(dateflag));
 
@@ -413,6 +450,11 @@ public class MainActivity extends AppCompatActivity {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
         reasonflag = !reasonflag;
+        TextView sorter = (TextView) findViewById(R.id.reasonsorter);
+        if(reasonflag)
+            sorter.setText("Reason ↑");
+        else
+            sorter.setText("Reason ↓");
 
         table_update(db.sortreason(reasonflag));
 
@@ -422,6 +464,11 @@ public class MainActivity extends AppCompatActivity {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
         categoryflag = !categoryflag;
+        TextView sorter = (TextView) findViewById(R.id.categorysorter);
+        if(categoryflag)
+            sorter.setText("Category ↑");
+        else
+            sorter.setText("Category ↓");
 
         table_update(db.sortcategory(categoryflag));
 
@@ -432,6 +479,11 @@ public class MainActivity extends AppCompatActivity {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
         amountflag = !amountflag;
+        TextView sorter = (TextView) findViewById(R.id.amountsorter);
+        if(amountflag)
+            sorter.setText("Amount ↑");
+        else
+            sorter.setText("Amount ↓");
 
         table_update(db.amountsort(amountflag));
 
@@ -544,6 +596,32 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.dev_popup, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+    }
+
+    public void Help_Show(View view)
+    {
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.help_dialog, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;

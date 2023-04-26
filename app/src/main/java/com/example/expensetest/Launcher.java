@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -133,18 +134,31 @@ public class Launcher extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        EditText pass = (EditText) findViewById(R.id.editTextTextPassword2);
+
         if(!sharedPreferences.contains("password"))
         {
             Toast.makeText(Launcher.this,"No Password found\nDefault: Password",Toast.LENGTH_LONG).show();
             editor.putString("password","Password");
             editor.commit();
 
-            EditText pass = (EditText) findViewById(R.id.editTextTextPassword2);
             pass.setHint("Default Password : 'Password'");
         }
 
-    }
+        pass.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    sendme(view);
+                    return true;
+                }
+                return false;
+            }
+        });
 
+    }
 
 
     public void sendme(View view)
