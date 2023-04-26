@@ -6,18 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Launcher"
-    android:background="#393646">
+    android:background="#2C3333">
 
 
 
     <TextView
-        android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Expense Tracker"
         android:textAlignment="center"
-        android:textColor="#F4EEE0"
-        android:textSize="44sp"
+        android:textColor="#F6F6F6"
+        android:textSize="35sp"
+        android:drawableLeft="@drawable/tiny_icon"
         android:textStyle="bold"
         />
 
@@ -51,7 +51,9 @@
         android:textColor="#F4EEE0"
         android:textColorHint="#F4EEE0"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:tooltipText=" (Default : Password)"
+        />
 
     <Space
         android:layout_width="match_parent"
@@ -62,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Go"
-        android:backgroundTint="#6D5D6E"
+        android:backgroundTint="#0E8388"
         android:onClick="sendme"/>
     <Space
         android:layout_width="match_parent"

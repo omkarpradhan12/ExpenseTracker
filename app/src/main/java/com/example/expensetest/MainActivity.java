@@ -1,21 +1,15 @@
 package com.example.expensetest;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -23,15 +17,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,13 +47,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         table_update(getall());
 
-        ActionBar actionBar;
-        actionBar = getSupportActionBar();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
-        ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#070A52"));
 
-        actionBar.setBackgroundDrawable(colorDrawable);
 
         TextView datesorter = (TextView) findViewById(R.id.datesorter);
         datesorter.setOnClickListener(new View.OnClickListener() {
@@ -278,6 +265,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void graphme(View view)
+    {
+        Intent myIntent = new Intent(MainActivity.this, Graph.class);
+
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater linf = this.getLayoutInflater();
+        View dialogview = linf.inflate(R.layout.graphdialog,null);
+
+        dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+        dialogBuilder.setView(dialogview);
+        dialogBuilder.setCancelable(true);
+
+
+        dialogBuilder.setPositiveButton("Visualize For Dates", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatePicker fromdate = (DatePicker) dialogview.findViewById(R.id.datePickerfrom);
+                DatePicker todate = (DatePicker) dialogview.findViewById(R.id.datePickerto);
+
+
+
+                int month =0;
+                int day =0;
+
+                String mth,dy;
+
+                String frdt,todt;
+
+
+                month = fromdate.getMonth()+1;
+                day = fromdate.getDayOfMonth();
+                mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                frdt = String.valueOf(fromdate.getYear()) + "-" + mth + "-" + dy;
+
+                month = todate.getMonth()+1;
+                day = todate.getDayOfMonth();
+                mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                todt = String.valueOf(todate.getYear()) + "-" + mth + "-" + dy;
+
+                myIntent.putExtra("fromdate",frdt);
+                myIntent.putExtra("todate",todt);
+                MainActivity.this.startActivity(myIntent);
+
+
+                //Toast.makeText(getBaseContext(),frdt + " - " + todt,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog csv_maker = dialogBuilder.create();
+        csv_maker.show();
+
+
+
+
+    }
+
     public void new_expense(View view)
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
@@ -420,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                filewriter(db.time_period_csv(frdt,todt),fname.getText().toString());
+                filewriter(db.time_period(frdt,todt),fname.getText().toString());
 
                 //Toast.makeText(getBaseContext(),frdt + " - " + todt,Toast.LENGTH_SHORT).show();
             }

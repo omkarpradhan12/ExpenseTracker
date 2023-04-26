@@ -99,7 +99,7 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
         return  expenseList;
     }
 
-    public List<Expense> time_period_csv(String fromdate,String todate)
+    public List<Expense> time_period(String fromdate, String todate)
     {
         List<Expense> expenseList = new ArrayList<Expense>();
         String selectQuery = "SELECT * FROM Expenses_Table WHERE Date BETWEEN '"+fromdate+"' and '"+todate+ "' ORDER by Date" ;

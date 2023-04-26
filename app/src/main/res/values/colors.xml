@@ -10,6 +10,8 @@
     <color name="bg">#495286</color>
     <color name="transperent">#00FFFFFF</color>
 
+    <color name="nc">#2C3333</color>
+
     <color name="food">#70D53B</color>
     <color name="flat">#989393</color>
     <color name="drink">#7DBBDD</color>

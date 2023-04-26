@@ -127,7 +127,9 @@ public class Launcher extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         requestPermission();
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -136,7 +138,11 @@ public class Launcher extends AppCompatActivity {
             Toast.makeText(Launcher.this,"No Password found\nDefault: Password",Toast.LENGTH_LONG).show();
             editor.putString("password","Password");
             editor.commit();
+
+            EditText pass = (EditText) findViewById(R.id.editTextTextPassword2);
+            pass.setHint("Default Password : 'Password'");
         }
+
     }
 
 

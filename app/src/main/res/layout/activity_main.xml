@@ -11,13 +11,13 @@
 
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="₹ Expense Tracker"
+        android:text="Expense Tracker"
         android:textAlignment="center"
         android:textColor="#F6F6F6"
-        android:textSize="40sp"
+        android:textSize="35sp"
+        android:drawableLeft="@drawable/tiny_icon"
         android:textStyle="bold"
         />
 
@@ -45,6 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
+            android:foreground="@drawable/ripple"
             android:gravity="center"
             android:text="Date"
             android:textAlignment="center"
@@ -58,6 +59,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
+            android:foreground="@drawable/ripple"
             android:gravity="center"
             android:text="Reason"
             android:textAlignment="center"
@@ -71,6 +73,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
+            android:foreground="@drawable/ripple"
             android:gravity="center"
             android:text="Category"
             android:textAlignment="center"
@@ -84,6 +87,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:background="@drawable/cell"
+            android:foreground="@drawable/ripple"
             android:gravity="center"
             android:text="Amount"
             android:textAlignment="center"
@@ -136,7 +140,7 @@
             android:textColor="#CBE4DE"
             android:textSize="20sp"
             android:gravity="center"
-            android:background="#0E8388"
+            android:background="@drawable/cell"
             />
 
 
@@ -151,7 +155,7 @@
             android:textSize="20sp"
             android:layout_weight="0.25"
             android:gravity="center"
-            android:background="#0E8388"/>
+            android:background="@drawable/cell"/>
 
     </LinearLayout>
 
@@ -181,6 +185,14 @@
             android:text="Clear Table 🗑️"
             android:textSize="12sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/grapher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#0E8287"
+        android:onClick="graphme"
+        android:text="Visualize Expense 📊" />
 
     <Button
         android:id="@+id/button2"
