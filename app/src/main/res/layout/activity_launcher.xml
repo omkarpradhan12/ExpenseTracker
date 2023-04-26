@@ -19,6 +19,7 @@
         android:textSize="35sp"
         android:drawableLeft="@drawable/tiny_icon"
         android:textStyle="bold"
+
         />
 
 
