@@ -56,7 +56,7 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     {
         List<Expense> expenseList = new ArrayList<Expense>();
 
-        String selectQuery = "SELECT * FROM Expenses_Table ORDER by Date" ;
+        String selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Date,Amount DESC" ;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
@@ -80,7 +80,7 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     {
         List<Expense> expenseList = new ArrayList<Expense>();
 
-        String selectQuery = "SELECT * FROM Expenses_Table WHERE Category LIKE '"+category+ "' ORDER by Date" ;
+        String selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table WHERE Category LIKE '"+category+ "' ORDER by Date,Amount DESC" ;
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
@@ -102,7 +102,7 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     public List<Expense> time_period(String fromdate, String todate)
     {
         List<Expense> expenseList = new ArrayList<Expense>();
-        String selectQuery = "SELECT * FROM Expenses_Table WHERE Date BETWEEN '"+fromdate+"' and '"+todate+ "' ORDER by Date" ;
+        String selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table WHERE Date BETWEEN '"+fromdate+"' and '"+todate+ "' ORDER by Date,Amount DESC" ;
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){

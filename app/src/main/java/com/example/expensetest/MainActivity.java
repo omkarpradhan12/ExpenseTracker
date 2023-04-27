@@ -1,15 +1,15 @@
 package com.example.expensetest;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,15 +26,21 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 
+    private static final int PICKFILE_RESULT_CODE = 2000;
     //flags for sorting
     private Boolean dateflag = true;
     private Boolean reasonflag = true;
@@ -643,4 +649,146 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    public void file_picker(View view)
+    {
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+        chooseFile.setType("text/*");
+        startActivityForResult(
+                Intent.createChooser(chooseFile, "Select a CSV"),
+                PICKFILE_RESULT_CODE
+        );
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICKFILE_RESULT_CODE && resultCode == Activity.RESULT_OK){
+            Uri uri = data.getData();
+            File file = new File(uri.getPath());//create path from uri
+            final String[] split = file.getPath().split(":");//split the path.
+            reader(split[1]);
+        }
+    }
+
+
+    public void reader(String filename){
+
+
+        File file = new File(filename);
+
+        String string = "";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        List<String> fileContent = new ArrayList<String>();
+
+        InputStream is = null;
+        try {
+            is = new FileInputStream(filename);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        while (true) {
+            try {
+                if ((string = reader.readLine()) == null) break;
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileContent.add(string);
+
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        verify(fileContent);
+
+    }
+
+
+    public void verify(List<String> fileContent)
+    {
+
+        List<String> todb = new ArrayList<String>();
+
+        if(fileContent.get(0).equals("Date,Reason,Category,Amount"))
+        {
+            Toast.makeText(MainActivity.this,"Correct Headers",Toast.LENGTH_LONG).show();
+
+            for(int i=1;i<fileContent.size();i++)
+            {
+                todb.add(fileContent.get(i));
+            }
+            send_to_db(todb);
+        }
+
+
+        else{
+            Toast.makeText(MainActivity.this,"InCorrect Headers",Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+
+    public  void send_to_db(List<String> todb)
+    {
+        expenseDB_Helper db = new expenseDB_Helper(MainActivity.this);
+
+
+        List<String> new_to_db = new ArrayList<String>();
+
+        List<String> db_content = new ArrayList<String>();
+
+        for(Expense exp:db.getExpenses())
+        {
+            db_content.add(exp.getDate()+","+exp.getReason()+","+exp.getCategory()+","+exp.getAmount());
+        }
+
+        int row_add_count = 0;
+
+        for(String exp:todb)
+        {
+            String[] data = exp.split(",");
+
+            String[] dt_chk = data[0].split("-");
+
+            if (dt_chk[0].length()==4 && dt_chk[1].length()==2 && dt_chk[2].length()==2)
+            {
+                if(!data[1].isEmpty() && !data[2].isEmpty() && !data[3].isEmpty())
+                {
+                    Log.d("Format","Correct ");
+
+                    if(!db_content.contains(exp))
+                    {
+                        row_add_count+=1;
+                        db.addExpense(new Expense(data[0],data[1],data[2],data[3]));
+                    }
+
+
+
+                }
+                else
+                {
+                    Log.d("Format","Incorrect");
+                }
+            }
+            else
+            {
+                Log.d("Format","Incorrect : "+data[0]);
+            }
+        }
+
+        Toast.makeText(MainActivity.this,row_add_count+" Rows Added",Toast.LENGTH_LONG).show();
+        table_update(getall());
+
+    }
 }

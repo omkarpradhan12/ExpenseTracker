@@ -8,16 +8,39 @@
     android:orientation="vertical"
     android:background="#2C3333">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expense Tracker"
-        android:textAlignment="center"
-        android:textColor="#F6F6F6"
-        android:textSize="35sp"
-        android:drawableLeft="@drawable/tiny_icon"
-        android:textStyle="bold"
-        />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/titlebar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@drawable/tiny_icon"
+            android:foreground="@drawable/ripple"
+            android:longClickable="true"
+            android:text="Expense Tracker"
+            android:textAlignment="center"
+            android:textColor="#F6F6F6"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:text="💾"
+            android:textColor="#AE944B"
+            android:clickable="true"
+            />
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

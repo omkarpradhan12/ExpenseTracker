@@ -2,8 +2,13 @@ package com.example.expensetest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +23,10 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -154,7 +162,48 @@ public class Graph extends AppCompatActivity {
             }
         });
 
+
+        TextView save = (TextView) findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String fname = fromdate+"_to_"+todate;
+
+                try {
+                    // image naming and path  to include sd card  appending name you choose for file
+
+                    String mPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fname + ".jpg";
+
+
+                    // create bitmap screen capture
+                    View v1 = getWindow().getDecorView().getRootView();
+                    v1.setDrawingCacheEnabled(true);
+                    Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+                    v1.setDrawingCacheEnabled(false);
+
+                    File imageFile = new File(mPath);
+
+                    FileOutputStream outputStream = new FileOutputStream(imageFile);
+                    int quality = 100;
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+
+
+
+                } catch (Throwable e) {
+                    // Several error may come out with file handling or DOM
+                    e.printStackTrace();
+                }
+                Toast.makeText(Graph.this,"Saving Image : "+fname+" in Downloads",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
+
+
 
 
     public Hashtable<String, Double> category_sums(List<Expense> expenses)

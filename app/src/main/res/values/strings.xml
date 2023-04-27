@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ExpenseTest</string>
+    <string name="app_name">Expense Tracker</string>
 
     <string-array name="Categories">
         <item>Select Categories</item>

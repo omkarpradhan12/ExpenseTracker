@@ -187,24 +187,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.4"
             android:backgroundTint="#007806"
             android:onClick="new_expense"
             android:text="Add  Expense ➕"
             android:textSize="12sp"
             app:rippleColor="#6796BC" />
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            ></Space>
 
         <Button
             android:id="@+id/clearall"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1.4"
             android:backgroundTint="#9F0909"
             android:text="Clear Table 🗑️"
             android:textSize="12sp" />
@@ -218,12 +225,39 @@
         android:onClick="graphme"
         android:text="Visualize Expense 📊" />
 
-    <Button
-        android:id="@+id/button2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="csv_maker"
-        android:backgroundTint="#788780"
-        android:text="Save as CSV 💾" />
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/read"
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:layout_height="wrap_content"
+            android:onClick="file_picker"
+            android:backgroundTint="#788780"
+            android:text="Read CSV 🗄️" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            ></Space>
+
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:layout_height="wrap_content"
+            android:onClick="csv_maker"
+            android:backgroundTint="#788780"
+            android:text="Save as CSV 💾" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -3,107 +3,125 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    
+    >
 
-    <TextView
-        android:id="@+id/textView2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Add New Expense"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@drawable/header_bg"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Date"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:theme="@style/MyDatePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+            >
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add New Expense"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@drawable/header_bg"/>
 
-    <TextView
+            <TextView
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Reason"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/reason_get"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:inputType="text"
-        android:hint="Reason" />
 
-    <TextView
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:theme="@style/MyDatePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView1"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Category"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+            <TextView
 
-        android:textStyle="bold"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reason"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
-    <Spinner
-        android:id="@+id/category_get"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:entries="@array/Categories"
-        android:textAlignment="center"
-        android:backgroundTint="#ffffff"
-        android:popupBackground="#5E6AAC"
-        />
+            <EditText
+                android:id="@+id/reason_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:inputType="text"
+                android:hint="Reason" />
 
-    <TextView
+            <TextView
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Amount"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Category"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
 
-    <EditText
-        android:id="@+id/amount_get"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:inputType="numberDecimal"
-        android:hint="Amount" />
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/category_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/Categories"
+                android:textAlignment="center"
+                android:backgroundTint="#ffffff"
+                android:popupBackground="#5E6AAC"
+                />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Amount"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/amount_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:inputType="numberDecimal"
+                android:hint="Amount" />
+        </LinearLayout>
+    </ScrollView>
+
+
 
 
 
