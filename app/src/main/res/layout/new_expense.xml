@@ -57,6 +57,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Amount"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/amount_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:inputType="numberDecimal"
+                android:hint="Amount" />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Reason"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
@@ -97,27 +119,7 @@
                 android:popupBackground="#5E6AAC"
                 />
 
-            <TextView
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Amount"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/amount_get"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:inputType="numberDecimal"
-                android:hint="Amount" />
         </LinearLayout>
     </ScrollView>
 

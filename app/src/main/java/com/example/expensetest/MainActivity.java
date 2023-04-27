@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PICKFILE_RESULT_CODE = 2000;
     //flags for sorting
-    private Boolean dateflag = true;
+    private Boolean dateflag = false;
     private Boolean reasonflag = true;
     private Boolean categoryflag = true;
     private Boolean amountflag = true;

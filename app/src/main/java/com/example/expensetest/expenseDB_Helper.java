@@ -56,7 +56,7 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     {
         List<Expense> expenseList = new ArrayList<Expense>();
 
-        String selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Date,Amount DESC" ;
+        String selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Date DESC,Amount DESC" ;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
@@ -129,15 +129,15 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
 
     public List<Expense> sortdate(Boolean flag)
     {
-        String selectQuery= "SELECT * FROM Expenses_Table ORDER by Date";
+        String selectQuery= "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Date, Amount DESC";
 
         if(flag)
         {
-            selectQuery = "SELECT * FROM Expenses_Table ORDER by Date" ;
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Date, Amount DESC" ;
         }
         else
         {
-            selectQuery = "SELECT * FROM Expenses_Table ORDER by Date DESC" ;
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Date DESC, Amount DESC" ;
         }
 
         List<Expense> expenseList = new ArrayList<Expense>();
@@ -161,15 +161,15 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     }
   public List<Expense> sortreason(Boolean flag)
     {
-        String selectQuery= "SELECT * FROM Expenses_Table ORDER by Reason";
+        String selectQuery= "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Reason, Amount DESC";
 
         if(flag)
         {
-            selectQuery = "SELECT * FROM Expenses_Table ORDER by Reason" ;
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Reason, Amount DESC" ;
         }
         else
         {
-            selectQuery = "SELECT * FROM Expenses_Table ORDER by Reason DESC" ;
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Reason DESC, Amount DESC" ;
         }
 
         List<Expense> expenseList = new ArrayList<Expense>();
@@ -193,15 +193,15 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
     }
   public List<Expense> sortcategory(Boolean flag)
     {
-        String selectQuery= "SELECT * FROM Expenses_Table ORDER by Category";
+        String selectQuery= "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Category, Amount DESC";
 
         if(flag)
         {
-            selectQuery = "SELECT * FROM Expenses_Table ORDER by Category" ;
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Category, Amount DESC" ;
         }
         else
         {
-            selectQuery = "SELECT * FROM Expenses_Table ORDER by Category DESC" ;
+            selectQuery = "SELECT ExpenseKey,Date,Reason,Category,CAST(Amount as Double)[Amount] FROM Expenses_Table ORDER by Category DESC, Amount DESC" ;
         }
 
         List<Expense> expenseList = new ArrayList<Expense>();
