@@ -59,24 +59,15 @@
         android:datePickerMode="spinner"
         android:theme="@style/MyDatePicker" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="An Appropriate File Name Please"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
     <EditText
-        android:id="@+id/fname"
+        android:id="@+id/filename"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="Enter Filename or file will be named data"
-
-        />
+        android:hint="Enter Filename or leave empty"
+        android:textColorHint="#ffffff"
+        android:textColor="#FFFFFF" />
 
 
 </LinearLayout>

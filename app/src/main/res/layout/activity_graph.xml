@@ -42,286 +42,367 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/frdt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dates"
-            android:textColor="#48FFD3"
-            android:textSize="28sp"
-            android:layout_alignParentLeft="true"
-            android:textStyle="bold" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="to"
-            android:textColor="#F4EEE0"
-            android:textSize="23sp"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/todt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dates"
-            android:textColor="#48FFD3"
-            android:textSize="28sp"
-            android:layout_alignParentRight="true"
-            android:textStyle="bold" />
-
-
-    </RelativeLayout>
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            android:weightSum="2"
-            >
-
-            <TextView
-
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Category"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/cell"
-                android:textSize="24sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Amount Spent"
-                android:textAlignment="center"
-                android:background="@drawable/cell"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                />
-        </TableRow>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/frdt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="Dates"
+                        android:textColor="#48FFD3"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                    <TextView
 
-            android:weightSum="2"
-            android:foreground="@drawable/ripple"
-            >
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="to"
+                        android:textColor="#F4EEE0"
+                        android:textSize="23sp"
+                        android:textStyle="bold" />
 
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Food"
-                android:textAlignment="center"
-                android:background="@drawable/food"
-                android:foreground="@drawable/ripple"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:id="@+id/food"
-                android:layout_height="wrap_content"
-                android:text="0.0"
-                android:background="@drawable/food"
-                android:foreground="@drawable/ripple"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:weightSum="2"
-            android:foreground="@drawable/ripple"
-            >
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Drink"
-                android:foreground="@drawable/ripple"
-                android:background="@drawable/drink"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:id="@+id/drink"
-                android:layout_height="wrap_content"
-                android:text="0.0"
-                android:background="@drawable/drink"
-                android:foreground="@drawable/ripple"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:weightSum="2"
-            android:foreground="@drawable/ripple"
-            >
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Flat"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/flat"
-                android:foreground="@drawable/ripple"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:id="@+id/flat"
-                android:layout_height="wrap_content"
-                android:text="0.0"
-                android:background="@drawable/flat"
-                android:foreground="@drawable/ripple"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:weightSum="2"
-            android:foreground="@drawable/ripple"
-            >
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Travel"
-                android:background="@drawable/travel"
-                android:foreground="@drawable/ripple"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:id="@+id/travel"
-                android:layout_height="wrap_content"
-                android:text="0.0"
-                android:background="@drawable/travel"
-                android:foreground="@drawable/ripple"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:weightSum="2"
-
-            >
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Other"
-                android:textAlignment="center"
-                android:background="@drawable/other"
-                android:foreground="@drawable/ripple"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:id="@+id/other"
-                android:layout_height="wrap_content"
-                android:text="0.0"
-                android:textAlignment="center"
-                android:background="@drawable/other"
-                android:foreground="@drawable/ripple"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                />
-        </TableRow>
+                    <TextView
+                        android:id="@+id/todt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="Dates"
+                        android:textColor="#48FFD3"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
 
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                </RelativeLayout>
 
-            android:weightSum="2"
-            >
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Grand Total :"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/cell"
-                android:textSize="24sp" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="0.0"
-                android:id="@+id/grandtotal"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/cell"
-                android:textSize="24sp"
-                />
-        </TableRow>
-    </TableLayout>
+                        android:weightSum="2">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/category_graph"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/cell"
+                            android:text="Category"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/cell"
+                            android:text="Amount Spent"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:foreground="@drawable/ripple"
+                        android:weightSum="2">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/food"
+                            android:foreground="@drawable/ripple"
+                            android:text="Food"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/food"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/food"
+                            android:foreground="@drawable/ripple"
+                            android:text="0.0"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:foreground="@drawable/ripple"
+                        android:weightSum="2">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/drink"
+                            android:foreground="@drawable/ripple"
+                            android:text="Drink"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/drink"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/drink"
+                            android:foreground="@drawable/ripple"
+                            android:text="0.0"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:foreground="@drawable/ripple"
+                        android:weightSum="2">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/flat"
+                            android:foreground="@drawable/ripple"
+                            android:text="Flat"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/flat"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/flat"
+                            android:foreground="@drawable/ripple"
+                            android:text="0.0"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:foreground="@drawable/ripple"
+                        android:weightSum="2">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/travel"
+                            android:foreground="@drawable/ripple"
+                            android:text="Travel"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/travel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/travel"
+                            android:foreground="@drawable/ripple"
+                            android:text="0.0"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/other"
+                            android:foreground="@drawable/ripple"
+                            android:text="Other"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/other"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/other"
+                            android:foreground="@drawable/ripple"
+                            android:text="0.0"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:weightSum="2">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/cell"
+                            android:text="Grand Total :"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/grandtotal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/cell"
+                            android:text="0.0"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+                    </TableRow>
+                </TableLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/bartab"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#918888"
+                        android:clickable="true"
+                        android:onClick="switcher"
+                        android:text="Bar Chart"
+                        android:textAlignment="center"
+                        android:textColor="#DCDCDC"
+                        android:textSize="18sp" />
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/switcher"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_weight="0.2"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:background="#8B51A8"-->
+<!--                        android:clickable="true"-->
+<!--                        android:onClick="switcher"-->
+<!--                        android:text="↔"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textColor="#DCDCDC"-->
+<!--                        android:textSize="25sp" />-->
+
+                    <TextView
+                        android:id="@+id/pietab"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#6E6666"
+                        android:clickable="true"
+                        android:onClick="switcher"
+                        android:text="Pie Chart"
+                        android:textAlignment="center"
+                        android:textColor="#DCDCDC"
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/graph_container"
+                        >
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/category_graph"
+                            android:layout_width="350dp"
+                            android:layout_height="250dp">
+
+                        </com.github.mikephil.charting.charts.BarChart>
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChart_view"
+                            android:layout_width="350dp"
+                            android:layout_height="250dp">
+
+                        </com.github.mikephil.charting.charts.PieChart>
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

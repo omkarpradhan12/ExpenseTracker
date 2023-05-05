@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -35,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,13 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
     private TableLayout tableLayout;
 
-
-
+    private String cat_list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         table_update(getall());
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        cat_list = sharedPreferences.getString("category_list", "");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -138,7 +145,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ArrayList<String> filter_category = new ArrayList<String>();
+        filter_category.add("Click to Apply Filter");
+        filter_category.add("All");
+
+        for(String cat:cat_list.split(","))
+        {
+            filter_category.add(cat);
+        }
+
+        ArrayAdapter ad = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,filter_category);
+
         Spinner category = (Spinner) findViewById(R.id.filter);
+
+        category.setAdapter(ad);
+
+
 
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -173,6 +195,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
         TextView helpme = findViewById(R.id.helme);
         helpme.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
                 case "Travel":tabrow.setBackgroundDrawable(getDrawable(R.drawable.travel));
                 break;
+                default:tabrow.setBackgroundDrawable(getDrawable(R.drawable.default_color));
 
             };
 
@@ -302,6 +328,14 @@ public class MainActivity extends AppCompatActivity {
                                 }})
                             .setNegativeButton(android.R.string.no, null).show();
                     return false;
+                }
+            });
+
+            tabrow.setClickable(true);
+            tabrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    edit_expenese(exp);
                 }
             });
 
@@ -376,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void new_expense(View view)
+    public void edit_expenese(Expense exp)
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
@@ -386,9 +420,39 @@ public class MainActivity extends AppCompatActivity {
 
         dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
 
+
+
         dialogBuilder.setView(dialogview);
+
+        DatePicker datep = (DatePicker) dialogview.findViewById(R.id.datePicker);
+        EditText reasonp = (EditText) dialogview.findViewById(R.id.reason_get);
+
+        Spinner categoryset = (Spinner) dialogview.findViewById(R.id.category_get);
+
+        ArrayList<String> filter_category = new ArrayList<String>();
+        filter_category.add("Select Categories");
+
+        for(String cat:cat_list.split(","))
+        {
+            filter_category.add(cat);
+        }
+
+        ArrayAdapter ad2 = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,filter_category);
+        categoryset.setAdapter(ad2);
+
+        EditText amountp = (EditText) dialogview.findViewById(R.id.amount_get);
+
+        String[] dt_set = exp.getDate().split("-");
+
+        String[] Categories = new String[]{"Select Categories","Food","Drink","Flat","Other","Travel"};
+
+        datep.updateDate(Integer.parseInt(dt_set[0]),Integer.parseInt(dt_set[1])-1,Integer.parseInt(dt_set[2]));
+        reasonp.setText(exp.getReason());
+        amountp.setText(exp.getAmount());
+        categoryset.setSelection(Arrays.asList(Categories).indexOf(exp.getCategory()));
+
         dialogBuilder.setCancelable(true);
-        dialogBuilder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -401,12 +465,92 @@ public class MainActivity extends AppCompatActivity {
                 int day = date.getDayOfMonth();
 
 
+
                 String mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
                 String dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
 
                 String dt = String.valueOf(date.getYear()) + "-" + mth + "-" + dy;
                 String reas = reason.getText().toString();
                 String cate = category.getSelectedItem().toString();
+                String amt = amount.getText().toString();
+
+                if (reas.isEmpty() || cate.equals("Select Categories") || amt.isEmpty()){
+                    Toast.makeText(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getBaseContext(),"Editing",Toast.LENGTH_LONG).show();
+                    db.editExpense(new Expense(exp.getExpkey(),dt,reas,cate,amt));
+                }
+
+                table_update(getall());
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(),"Baadme Bhulega to rona mat 🤦‍",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog add_new_expense = dialogBuilder.create();
+
+
+
+        add_new_expense.show();
+
+    }
+
+    public void new_expense(View view)
+    {
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater linf = this.getLayoutInflater();
+        View dialogview = linf.inflate(R.layout.new_expense,null);
+        Spinner categoryset = (Spinner) dialogview.findViewById(R.id.category_get);
+
+        ArrayList<String> filter_category = new ArrayList<String>();
+        filter_category.add("Select Categories");
+
+        for(String cat:cat_list.split(","))
+        {
+            filter_category.add(cat);
+        }
+
+        ArrayAdapter ad2 = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,filter_category);
+        categoryset.setAdapter(ad2);
+
+        dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+        dialogBuilder.setView(dialogview);
+        dialogBuilder.setCancelable(true);
+        dialogBuilder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                DatePicker date = (DatePicker) dialogview.findViewById(R.id.datePicker);
+                EditText reason = (EditText) dialogview.findViewById(R.id.reason_get);
+                Spinner categoryget = (Spinner) dialogview.findViewById(R.id.category_get);
+                EditText amount = (EditText) dialogview.findViewById(R.id.amount_get);
+
+
+
+
+
+
+
+
+                int month = date.getMonth()+1;
+                int day = date.getDayOfMonth();
+
+
+                String mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                String dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                String dt = String.valueOf(date.getYear()) + "-" + mth + "-" + dy;
+                String reas = reason.getText().toString();
+                String cate = categoryget.getSelectedItem().toString();
                 String amt = amount.getText().toString();
 
                 if (reas.isEmpty() || cate.equals("Select Categories") || amt.isEmpty()){
@@ -513,8 +657,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatePicker fromdate = (DatePicker) dialogview.findViewById(R.id.datePickerfrom);
                 DatePicker todate = (DatePicker) dialogview.findViewById(R.id.datePickerto);
-
-                EditText fname = (EditText) dialogview.findViewById(R.id.fname);
+                EditText fname = (EditText) dialogview.findViewById(R.id.filename);
 
                 int month =0;
                 int day =0;
@@ -540,7 +683,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                filewriter(db.time_period(frdt,todt),fname.getText().toString());
+                filewriter(db.time_period(frdt,todt),frdt,todt,fname.getText().toString());
 
                 //Toast.makeText(getBaseContext(),frdt + " - " + todt,Toast.LENGTH_SHORT).show();
             }
@@ -551,7 +694,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void filewriter(List<Expense> expenses,String fname)
+    public void filewriter(List<Expense> expenses,String frdt,String todt, String fname)
     {
         String data="";
         data+="Date,Reason,Category,Amount\n";
@@ -563,9 +706,13 @@ public class MainActivity extends AppCompatActivity {
 
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-        String file_name = "expenses.csv";
+        String file_name = frdt+"_"+todt+".csv";
 
-        if (fname.isEmpty()==false)
+        if(fname.isEmpty())
+        {
+            file_name = frdt+"_"+todt+".csv";
+        }
+        else
         {
             file_name = fname+".csv";
         }
@@ -586,11 +733,11 @@ public class MainActivity extends AppCompatActivity {
                 // try to create the file
                 bool = root.createNewFile();
             } catch (IOException ex) {
-                ex.printStackTrace();
+                Log.d("Exception : ",ex.toString());
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("Exception : ",e.toString());
         }
 
         Toast.makeText(getBaseContext(),"Create and saved file "+file_name+" in Downloads",Toast.LENGTH_LONG).show();

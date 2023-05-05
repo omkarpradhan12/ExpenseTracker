@@ -23,6 +23,14 @@ public class Expense {
         this.Category = Category;
         this.Amount = Amount;
     }
+    public Expense(int expkey,String date, String Reason, String Category, String Amount)
+    {
+        this.expkey = expkey;
+        this.date = date;
+        this.Reason = Reason;
+        this.Category = Category;
+        this.Amount = Amount;
+    }
 
     public int getExpkey() {
         return expkey;

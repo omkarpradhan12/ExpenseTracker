@@ -18,7 +18,8 @@
         android:textColor="#F6F6F6"
         android:textSize="35sp"
         android:textStyle="bold"
-
+        android:clickable="true"
+        android:onClick="bypass"
         />
 
     <ScrollView
@@ -40,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Please Enter Password:"
                 android:textColor="#F4EEE0"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -53,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Enter Your Password"
+                android:textAlignment="center"
                 android:inputType="textPassword"
                 android:textColor="#F4EEE0"
                 android:textColorHint="#F4EEE0"
@@ -83,6 +86,21 @@
                 android:clickable="true"
                 android:onClick="setpass"
                 android:text="click to change password"
+                android:textAllCaps="false"
+                android:textColor="#9EC2F8"
+                android:textStyle="italic" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50px" />
+
+            <TextView
+                android:id="@+id/cat_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="setpass"
+                android:text="click to add or modify categories"
                 android:textAllCaps="false"
                 android:textColor="#9EC2F8"
                 android:textStyle="italic" />

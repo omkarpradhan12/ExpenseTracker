@@ -71,7 +71,8 @@
                 android:ems="10"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:inputType="numberDecimal"
+                android:textColorHint="#ffffff"
+                android:inputType="numberSigned"
                 android:hint="Amount" />
 
             <TextView
@@ -94,6 +95,7 @@
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:inputType="text"
+                android:textColorHint="#ffffff"
                 android:hint="Reason" />
 
             <TextView
@@ -117,6 +119,7 @@
                 android:textAlignment="center"
                 android:backgroundTint="#ffffff"
                 android:popupBackground="#5E6AAC"
+                android:foregroundTint="#ffffff"
                 />
 
 

@@ -196,6 +196,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
             android:backgroundTint="#007806"
+            android:textColor="#ffffff"
             android:onClick="new_expense"
             android:text="Add  Expense ➕"
             android:textSize="12sp"
@@ -213,6 +214,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
             android:backgroundTint="#9F0909"
+            android:textColor="#ffffff"
             android:text="Clear Table 🗑️"
             android:textSize="12sp" />
     </LinearLayout>
@@ -223,7 +225,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#0E8287"
         android:onClick="graphme"
-        android:text="Visualize Expense 📊" />
+        android:textColor="#ffffff"
+        android:text="Visualize Expenses" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -237,6 +240,7 @@
             android:layout_weight="1.4"
             android:layout_height="wrap_content"
             android:onClick="file_picker"
+            android:textColor="#ffffff"
             android:backgroundTint="#788780"
             android:text="Read CSV 🗄️" />
 
@@ -253,6 +257,7 @@
             android:layout_weight="1.4"
             android:layout_height="wrap_content"
             android:onClick="csv_maker"
+            android:textColor="#ffffff"
             android:backgroundTint="#788780"
             android:text="Save as CSV 💾" />
 

@@ -6,7 +6,9 @@ package com.example.expensetest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Launcher extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class Launcher extends AppCompatActivity {
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
         } else {
 
         }
@@ -106,11 +109,8 @@ public class Launcher extends AppCompatActivity {
                 }
             });
 
-            AlertDialog add_new_expense = dialogBuilder.create();
-
-
-
-            add_new_expense.show();
+            AlertDialog password_changer = dialogBuilder.create();
+            password_changer.show();
 
 
 
@@ -131,6 +131,9 @@ public class Launcher extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+
+
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -158,8 +161,91 @@ public class Launcher extends AppCompatActivity {
             }
         });
 
+        TextView category_text = findViewById(R.id.cat_text);
+        category_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                category_utility();
+            }
+        });
+
+        if(!sharedPreferences.contains("category_list"))
+        {
+
+
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            LayoutInflater linf = this.getLayoutInflater();
+            View dialogview = linf.inflate(R.layout.category_dialog,null);
+
+            dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+            dialogBuilder.setView(dialogview);
+            dialogBuilder.setCancelable(true);
+
+
+            dialogBuilder.setPositiveButton("Create Categories", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    EditText Category_List = dialogview.findViewById(R.id.category_list);
+                    editor.putString("category_list",Category_List.getText().toString());
+                    editor.commit();
+                    Toast.makeText(Launcher.this,"Categories successfully Created",Toast.LENGTH_LONG).show();
+                }
+            });
+
+            AlertDialog category_lister = dialogBuilder.create();
+            category_lister.show();
+        }
+
     }
 
+
+    public void category_utility()
+    {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        if(sharedPreferences.contains("category_list"))
+        {
+            String cat_list = sharedPreferences.getString("category_list","");
+
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            LayoutInflater linf = this.getLayoutInflater();
+            View dialogview = linf.inflate(R.layout.category_dialog,null);
+
+            dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+            dialogBuilder.setView(dialogview);
+            dialogBuilder.setCancelable(true);
+
+            EditText Category_List = dialogview.findViewById(R.id.category_list);
+            Category_List.setText(cat_list);
+
+            dialogBuilder.setPositiveButton("Modify Categories", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    EditText Category_List = dialogview.findViewById(R.id.category_list);
+
+                    String new_catlist = Category_List.getText().toString();
+                    editor.putString("category_list",Category_List.getText().toString());
+                    editor.commit();
+                    Toast.makeText(Launcher.this,"Categories successfully Modified",Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+            AlertDialog category_lister = dialogBuilder.create();
+            category_lister.show();
+        }
+    }
+
+    public void bypass(View view)
+    {
+        Intent myIntent = new Intent(Launcher.this, MainActivity.class);
+        Launcher.this.startActivity(myIntent);
+    }
 
     public void sendme(View view)
     {

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/header_bg"
-        android:text="Modify Password"
+        android:text="Add Categories"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -21,7 +21,7 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter Old Password:"
+        android:text="Add Categories separated by commas"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -29,34 +29,15 @@
 
 
     <EditText
-        android:id="@+id/oldpword"
+        android:id="@+id/category_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Old Password"
+        android:inputType="text"
+        android:hint="Add Categories separated by commas"
 
         />
 
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enter New :"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-
-    <EditText
-        android:id="@+id/newpword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="New Password"
-        />
 
 
 </LinearLayout>

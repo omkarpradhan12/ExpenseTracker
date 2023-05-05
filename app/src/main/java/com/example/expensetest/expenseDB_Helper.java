@@ -51,6 +51,24 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
             Log.d("Insert : ","Yah Bro");
         db.close();
     }
+    void editExpense(Expense exp)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+
+        values.put("Date",exp.getDate().toString());
+        values.put("Reason",exp.getReason());
+        values.put("Category",exp.getCategory());
+        values.put("Amount",exp.getAmount());
+
+        Log.d("key : ",String.valueOf(exp.getExpkey()));
+
+        db.update("Expenses_Table",values,"ExpenseKey=?",new String[]{String.valueOf(exp.getExpkey())});
+
+
+        db.close();
+    }
 
     public List<Expense> getExpenses()
     {

@@ -2,31 +2,35 @@ package com.example.expensetest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -35,6 +39,9 @@ public class Graph extends AppCompatActivity {
 
     List<Expense> expenses;
     BarChart barChart;
+    PieChart pieChart;
+
+    boolean flag=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +157,10 @@ public class Graph extends AppCompatActivity {
         barChart.getLegend().setEnabled(false);
         barChart.invalidate();
 
+
+
+        barChart.animateY(1400, Easing.EaseInOutQuad);
+
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
@@ -201,9 +212,101 @@ public class Graph extends AppCompatActivity {
             }
         });
 
+
+        pieChart = findViewById(R.id.pieChart_view);
+        setupPieChart();
+        loadPieChartData(cat_sums);
+
+        LinearLayout graphcontainer = (LinearLayout) findViewById(R.id.graph_container);
+        graphcontainer.removeAllViews();
+        graphcontainer.addView(barChart);
+
+
     }
 
 
+
+    public void switcher(View view)
+    {
+        flag = !flag;
+
+        LinearLayout graphcontainer = (LinearLayout) findViewById(R.id.graph_container);
+        TextView bartab = (TextView) findViewById(R.id.bartab);
+        TextView pietab = (TextView) findViewById(R.id.pietab);
+
+        graphcontainer.removeAllViews();
+
+        if(flag)
+        {
+            pietab.setBackgroundColor(Color.parseColor("#6E6666"));
+            bartab.setBackgroundColor(Color.parseColor("#918888"));
+            graphcontainer.addView(barChart);
+        }
+
+        else
+        {
+            bartab.setBackgroundColor(Color.parseColor("#6E6666"));
+            pietab.setBackgroundColor(Color.parseColor("#918888"));
+            graphcontainer.addView(pieChart);
+        }
+    }
+
+    private void setupPieChart() {
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setUsePercentValues(true);
+        pieChart.setEntryLabelTextSize(12);
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setCenterText("Spending by Category");
+        pieChart.setCenterTextSize(18);
+        pieChart.getDescription().setEnabled(false);
+
+    }
+
+    private void loadPieChartData(Hashtable<String, Double> cat_sums) {
+
+
+        Double gt = 0.0;
+
+        for(String k:cat_sums.keySet())
+        {
+            gt+=cat_sums.get(k);
+        }
+
+
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry((float) (cat_sums.get("Food")/gt), "Food"));
+        entries.add(new PieEntry((float) (cat_sums.get("Drink")/gt), "Drink"));
+        entries.add(new PieEntry((float) (cat_sums.get("Flat")/gt), "Flat"));
+        entries.add(new PieEntry((float) (cat_sums.get("Travel")/gt), "Travel"));
+        entries.add(new PieEntry((float) (cat_sums.get("Other")/gt), "Other"));
+
+
+
+
+
+        PieDataSet dataSet = new PieDataSet(entries, "Expense Category");
+        dataSet.setColors(new int []{
+                Color.parseColor("#70D53B"),//food
+                Color.parseColor("#7DBBDD"),//drink
+                Color.parseColor("#989393"),//flat
+                Color.parseColor("#F1905C"),//travel
+                Color.parseColor("#EC6161") //other
+        });
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(true);
+        data.setValueFormatter(new PercentFormatter(pieChart));
+        data.setValueTextSize(12f);
+        data.setValueTextColor(Color.BLACK);
+
+        pieChart.setData(data);
+        pieChart.invalidate();
+
+
+        pieChart.getLegend().setEnabled(false);
+        pieChart.animateY(1400, Easing.EaseInOutQuad);
+    }
 
 
     public Hashtable<String, Double> category_sums(List<Expense> expenses)
