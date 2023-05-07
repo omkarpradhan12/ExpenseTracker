@@ -42,7 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#1C1C1C"
-        android:text="\t-Click The Blue header above the table to filter data
+        android:text="\t-Add or Modify categories by adding them as a comma separated line
+                      \n\t-Click The Blue header above the table to filter data
                       \n\t- Click any column of the table header to sort according to the field
                       \n\t-press on any row to edit that row
                       \n\t-long press on any row to delete that row

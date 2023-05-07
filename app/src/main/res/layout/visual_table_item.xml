@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple"
+    >
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/cat_key"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        android:background="@drawable/visual_resource"
+        />
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/cat_value"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        android:background="@drawable/visual_resource"
+        />
+
+
+
+</TableRow>
+

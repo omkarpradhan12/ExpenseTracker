@@ -2,12 +2,17 @@ package com.example.expensetest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +32,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -77,101 +83,10 @@ public class Graph extends AppCompatActivity {
 
 
 
-        TextView food = (TextView) findViewById(R.id.food);
-        food.setText(cat_sums.get("Food").toString());
-
-        TextView flat = (TextView) findViewById(R.id.flat);
-        flat.setText(cat_sums.get("Flat").toString());
-
-        TextView drink = (TextView) findViewById(R.id.drink);
-        drink.setText(cat_sums.get("Drink").toString());
-
-        TextView other = (TextView) findViewById(R.id.other);
-        other.setText(cat_sums.get("Other").toString());
-
-        TextView travel = (TextView) findViewById(R.id.travel);
-        travel.setText(cat_sums.get("Travel").toString());
-
-        TextView gt = (TextView) findViewById(R.id.grandtotal);
-        Double Grand_Total = cat_sums.get("Food") + cat_sums.get("Flat") + cat_sums.get("Drink") + cat_sums.get("Other") +cat_sums.get("Travel");
-        gt.setText(Grand_Total.toString());
+        tab_maker(cat_sums);
+        bar_maker(cat_sums);
 
 
-        barChart = findViewById(R.id.category_graph);
-
-        barChart.getAxisLeft().setTextColor(Color.parseColor("#ffffff")); // left y-axis
-        barChart.getXAxis().setTextColor(Color.parseColor("#ffffff"));
-        barChart.getLegend().setTextColor(Color.parseColor("#ffffff"));
-        barChart.getDescription().setEnabled(false);
-
-
-
-        XAxis xaxis = barChart.getXAxis();
-        YAxis yaxis = barChart.getAxisRight();
-        xaxis.setTextColor(Color.WHITE);
-        yaxis.setTextColor(Color.WHITE);
-
-
-
-        ArrayList<Double> valueList = new ArrayList<Double>();
-        ArrayList<BarEntry> entries = new ArrayList<>();
-
-
-        //input data
-        valueList.add(cat_sums.get("Food"));
-        valueList.add(cat_sums.get("Drink"));
-        valueList.add(cat_sums.get("Flat"));
-        valueList.add(cat_sums.get("Travel"));
-        valueList.add(cat_sums.get("Other"));
-
-        //fit the data into a bar
-        String[] labels = {"Food","Drink","Flat","Travel","Other"};
-
-        for (int i = 0; i < valueList.size(); i++) {
-            BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
-            entries.add(barEntry);
-        }
-
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        xaxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        BarDataSet barDataSet = new BarDataSet(entries, "");
-        barDataSet.setColors(new int []{
-                            Color.parseColor("#70D53B"),//food
-                            Color.parseColor("#7DBBDD"),//drink
-                            Color.parseColor("#989393"),//flat
-                            Color.parseColor("#F1905C"),//travel
-                            Color.parseColor("#EC6161") //other
-        });
-
-
-        BarData data = new BarData(barDataSet);
-
-        barChart.setData(data);
-
-        data.setValueTextColor(Color.parseColor("#ffffff"));
-        data.setValueTextSize(15);
-
-        xaxis.setGranularity(1);
-        barChart.getLegend().setEnabled(false);
-        barChart.invalidate();
-
-
-
-        barChart.animateY(1400, Easing.EaseInOutQuad);
-
-        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(Graph.this,labels[Math.round(e.getX())],Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
 
 
         TextView save = (TextView) findViewById(R.id.save);
@@ -224,7 +139,109 @@ public class Graph extends AppCompatActivity {
 
     }
 
+    public void tab_maker(Hashtable<String, Double> cat_sums)
+    {
+        TableLayout dynamic_table = (TableLayout) findViewById(R.id.dynamictable);
+        dynamic_table.removeAllViews();
 
+        for(String category:cat_sums.keySet())
+        {
+            View tabrow = LayoutInflater.from(this).inflate(R.layout.visual_table_item,null,false);
+
+            TextView cat_key = (TextView) tabrow.findViewById(R.id.cat_key);
+            cat_key.setText(category);
+
+            TextView cat_value = (TextView) tabrow.findViewById(R.id.cat_value);
+            cat_value.setText(cat_sums.get(category).toString());
+            dynamic_table.addView(tabrow);
+        }
+
+        Double gt = 0.0;
+        for(Double tot:cat_sums.values())
+        {
+            gt+=tot;
+        }
+
+        TextView grand_total = (TextView) findViewById(R.id.grand_total);
+        grand_total.setText(gt.toString());
+
+
+    }
+
+
+    public void bar_maker(Hashtable<String, Double> cat_sums)
+    {
+        barChart = findViewById(R.id.category_graph);
+
+        barChart.getAxisLeft().setTextColor(Color.parseColor("#ffffff")); // left y-axis
+        barChart.getXAxis().setTextColor(Color.parseColor("#ffffff"));
+        barChart.getLegend().setTextColor(Color.parseColor("#ffffff"));
+        barChart.getDescription().setEnabled(false);
+
+
+
+        XAxis xaxis = barChart.getXAxis();
+        YAxis yaxis = barChart.getAxisRight();
+        xaxis.setTextColor(Color.WHITE);
+        yaxis.setTextColor(Color.WHITE);
+
+
+
+        ArrayList<Double> valueList = new ArrayList<Double>();
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+
+        //input data
+        ArrayList<String> label_List = new ArrayList<String>();
+
+        for(String cat_val:cat_sums.keySet())
+        {
+            valueList.add(cat_sums.get(cat_val));
+            label_List.add(cat_val);
+        }
+
+
+
+        for (int i = 0; i < valueList.size(); i++) {
+            BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
+            entries.add(barEntry);
+        }
+
+        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        xaxis.setValueFormatter(new IndexAxisValueFormatter(label_List));
+
+        BarDataSet barDataSet = new BarDataSet(entries, "");
+        barDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+
+
+        BarData data = new BarData(barDataSet);
+
+        barChart.setData(data);
+
+        data.setValueTextColor(Color.parseColor("#ffffff"));
+        data.setValueTextSize(15);
+
+        xaxis.setGranularity(1);
+        barChart.getLegend().setEnabled(false);
+        barChart.invalidate();
+
+
+
+        barChart.animateY(1400, Easing.EaseInOutQuad);
+
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Toast.makeText(Graph.this,label_List.get(Math.round(e.getX()))+" : "+e.getY(),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+    }
 
     public void switcher(View view)
     {
@@ -241,6 +258,7 @@ public class Graph extends AppCompatActivity {
             pietab.setBackgroundColor(Color.parseColor("#6E6666"));
             bartab.setBackgroundColor(Color.parseColor("#918888"));
             graphcontainer.addView(barChart);
+            barChart.animateY(1400, Easing.EaseInOutQuad);
         }
 
         else
@@ -248,6 +266,7 @@ public class Graph extends AppCompatActivity {
             bartab.setBackgroundColor(Color.parseColor("#6E6666"));
             pietab.setBackgroundColor(Color.parseColor("#918888"));
             graphcontainer.addView(pieChart);
+            pieChart.animateY(1400, Easing.EaseInOutQuad);
         }
     }
 
@@ -255,10 +274,11 @@ public class Graph extends AppCompatActivity {
         pieChart.setDrawHoleEnabled(true);
         pieChart.setUsePercentValues(true);
         pieChart.setEntryLabelTextSize(12);
-        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelColor(Color.WHITE);
         pieChart.setCenterText("Spending by Category");
         pieChart.setCenterTextSize(18);
         pieChart.getDescription().setEnabled(false);
+
 
     }
 
@@ -275,30 +295,43 @@ public class Graph extends AppCompatActivity {
 
 
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry((float) (cat_sums.get("Food")/gt), "Food"));
-        entries.add(new PieEntry((float) (cat_sums.get("Drink")/gt), "Drink"));
-        entries.add(new PieEntry((float) (cat_sums.get("Flat")/gt), "Flat"));
-        entries.add(new PieEntry((float) (cat_sums.get("Travel")/gt), "Travel"));
-        entries.add(new PieEntry((float) (cat_sums.get("Other")/gt), "Other"));
+        ArrayList<String> label_List = new ArrayList<String>();
+
+        for(String category:cat_sums.keySet())
+        {
+            entries.add(new PieEntry((float) (cat_sums.get(category)/gt), category));
+            label_List.add(category);
+        }
+//
+//        entries.add(new PieEntry((float) (cat_sums.get("Food")/gt), "Food"));
+//        entries.add(new PieEntry((float) (cat_sums.get("Drink")/gt), "Drink"));
+//        entries.add(new PieEntry((float) (cat_sums.get("Flat")/gt), "Flat"));
+//        entries.add(new PieEntry((float) (cat_sums.get("Travel")/gt), "Travel"));
+//        entries.add(new PieEntry((float) (cat_sums.get("Other")/gt), "Other"));
 
 
 
 
 
         PieDataSet dataSet = new PieDataSet(entries, "Expense Category");
-        dataSet.setColors(new int []{
-                Color.parseColor("#70D53B"),//food
-                Color.parseColor("#7DBBDD"),//drink
-                Color.parseColor("#989393"),//flat
-                Color.parseColor("#F1905C"),//travel
-                Color.parseColor("#EC6161") //other
-        });
+//        dataSet.setColors(new int []{
+//                Color.parseColor("#70D53B"),//food
+//                Color.parseColor("#7DBBDD"),//drink
+//                Color.parseColor("#989393"),//flat
+//                Color.parseColor("#F1905C"),//travel
+//                Color.parseColor("#EC6161") //other
+//        });
+        dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+        dataSet.setSliceSpace(2f);
+        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setValueTextColor(Color.WHITE);
 
         PieData data = new PieData(dataSet);
         data.setDrawValues(true);
         data.setValueFormatter(new PercentFormatter(pieChart));
         data.setValueTextSize(12f);
-        data.setValueTextColor(Color.BLACK);
+        data.setValueTextColor(Color.WHITE);
 
         pieChart.setData(data);
         pieChart.invalidate();
@@ -306,49 +339,74 @@ public class Graph extends AppCompatActivity {
 
         pieChart.getLegend().setEnabled(false);
         pieChart.animateY(1400, Easing.EaseInOutQuad);
+
+        Double finalGt = gt;
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Toast.makeText(Graph.this,label_List.get(Math.round(h.getX()))+" : "+Math.round(e.getY()* finalGt),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
 
     public Hashtable<String, Double> category_sums(List<Expense> expenses)
     {
         Hashtable<String, Double> cat_sum= new Hashtable<String, Double>();
-        
-        cat_sum.put("Food", 0.0);
-        cat_sum.put("Flat", 0.0);
-        cat_sum.put("Drink", 0.0);
-        cat_sum.put("Other", 0.0);
-        cat_sum.put("Travel", 0.0);
 
-        Double food=0.0,flat=0.0,drink=0.0,other=0.0,travel=0.0;
+        ArrayList<String> nkeys = new ArrayList<String>();
 
 
         for(Expense exp:expenses)
         {
-            switch(exp.getCategory())
+            if(!nkeys.contains(exp.getCategory()))
             {
-                case "Food": food+=Double.parseDouble(exp.getAmount());
-                break;
-                case "Flat": flat+=Double.parseDouble(exp.getAmount());
-                break;
-                case "Drink": drink+=Double.parseDouble(exp.getAmount());
-                break;
-                case "Other": other+=Double.parseDouble(exp.getAmount());
-                break;
-                case "Travel": travel+=Double.parseDouble(exp.getAmount());
-                break;
+                nkeys.add(exp.getCategory());
+
             }
         }
 
-        cat_sum.replace("Food",food);
-        cat_sum.replace("Flat",flat);
-        cat_sum.replace("Drink",drink);
-        cat_sum.replace("Other",other);
-        cat_sum.replace("Travel",travel);
+
+
+//        cat_sum.put("Food", 0.0);
+//        cat_sum.put("Flat", 0.0);
+//        cat_sum.put("Drink", 0.0);
+//        cat_sum.put("Other", 0.0);
+//        cat_sum.put("Travel", 0.0);
+
+        for (String key:nkeys)
+        {
+            cat_sum.put(key,0.0);
+        }
+
+        Double food=0.0,flat=0.0,drink=0.0,other=0.0,travel=0.0;
+
+
+
+
+
+        for(Expense exp:expenses)
+        {
+            Double temp = cat_sum.get(exp.getCategory())+ Double.parseDouble(exp.getAmount());
+            cat_sum.replace(exp.getCategory(),temp);
+        }
+
 
         return cat_sum;
 
     }
 
+
+    public void go_home(View view)
+    {
+        Intent myIntent = new Intent(Graph.this, MainActivity.class);
+        Graph.this.startActivity(myIntent);
+    }
 
 
 }

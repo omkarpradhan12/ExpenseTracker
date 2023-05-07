@@ -72,7 +72,7 @@
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:inputType="numberSigned"
+                android:inputType="numberSigned|numberDecimal"
                 android:hint="Amount" />
 
             <TextView
