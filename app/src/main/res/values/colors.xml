@@ -17,4 +17,18 @@
     <color name="drink">#7DBBDD</color>
     <color name="other">#EC6161</color>
     <color name="travel">#F1905C</color>
+
+    <color name="colorPrimary">#424242</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#40E9FF</color>
+
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#B3FFFFFF</color>
+
+    <color name="windowBackground">#000000</color>
+    <color name="colorBackground">#121212</color>
+
+    <color name="dark_background_color">#363636</color>
+    <color name="dark_text_color_primary">#FFFFFF</color>
+    <color name="dark_text_color_secondary">#BDBDBD</color>
 </resources>

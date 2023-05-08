@@ -54,7 +54,6 @@
         android:layout_weight="0.25"
         android:gravity="center"
         android:background="#2E4F4F"
-        android:entries="@array/Categories_Filter"
         android:tooltipText="Select a Category to apply filter"
         />
 
@@ -136,14 +135,11 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
 
 
-        </TableRow>
+
+
 
 
 

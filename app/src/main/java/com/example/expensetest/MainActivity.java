@@ -154,11 +154,10 @@ public class MainActivity extends AppCompatActivity {
             filter_category.add(cat);
         }
 
-        ArrayAdapter ad = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,filter_category);
-
+        CustomAdapter cad = new CustomAdapter(MainActivity.this,filter_category);
         Spinner category = (Spinner) findViewById(R.id.filter);
 
-        category.setAdapter(ad);
+        category.setAdapter(cad);
 
 
 
@@ -166,10 +165,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View v,
-                                       int postion, long arg3) {
+                                       int position, long id) {
                 // TODO Auto-generated method stub
-                String  category = parent.getItemAtPosition(postion).toString();
-                if (postion==0 || postion==1)
+
+                String category = filter_category.get(position);
+
+                if (position==0 || position==1)
                 {
                     table_update(getall());
                     datesorter.setClickable(true);
@@ -185,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
                     categorysorter.setClickable(false);
                     amountsorter.setClickable(false);
                 }
-
 
             }
 
@@ -437,8 +437,8 @@ public class MainActivity extends AppCompatActivity {
             filter_category.add(cat);
         }
 
-        ArrayAdapter ad2 = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,filter_category);
-        categoryset.setAdapter(ad2);
+        CustomAdapter2 cad2 = new CustomAdapter2(MainActivity.this,filter_category);
+        categoryset.setAdapter(cad2);
 
         EditText amountp = (EditText) dialogview.findViewById(R.id.amount_get);
 
@@ -518,8 +518,10 @@ public class MainActivity extends AppCompatActivity {
             filter_category.add(cat);
         }
 
-        ArrayAdapter ad2 = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,filter_category);
-        categoryset.setAdapter(ad2);
+
+
+        CustomAdapter2 cad2 = new CustomAdapter2(MainActivity.this,filter_category);
+        categoryset.setAdapter(cad2);
 
         dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
 
