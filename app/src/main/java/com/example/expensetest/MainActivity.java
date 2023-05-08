@@ -444,12 +444,12 @@ public class MainActivity extends AppCompatActivity {
 
         String[] dt_set = exp.getDate().split("-");
 
-        String[] Categories = new String[]{"Select Categories","Food","Drink","Flat","Other","Travel"};
+
 
         datep.updateDate(Integer.parseInt(dt_set[0]),Integer.parseInt(dt_set[1])-1,Integer.parseInt(dt_set[2]));
         reasonp.setText(exp.getReason());
         amountp.setText(exp.getAmount());
-        categoryset.setSelection(Arrays.asList(Categories).indexOf(exp.getCategory()));
+        categoryset.setSelection(filter_category.indexOf(exp.getCategory()));
 
         dialogBuilder.setCancelable(true);
         dialogBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
