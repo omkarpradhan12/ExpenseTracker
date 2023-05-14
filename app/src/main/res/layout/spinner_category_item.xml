@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/icon"
-        android:background="#505788"
+        android:background="@drawable/categroy_bg"
         android:padding="8dp"
         android:text="Strawberry"
         android:textAlignment="center"

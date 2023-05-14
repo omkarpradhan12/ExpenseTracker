@@ -25,8 +25,11 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="change_pass"><u>Click to Change Password</u></string>
+    <string name="cat_change"><u>Click to Add or Modify Categories</u></string>
+
+
+    <string name="author">This app was made by \n <b><u>Omkar Mandar Pradhan</u></b></string>
 
 </resources>

@@ -31,7 +31,7 @@ public class CustomAdapter2 extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return i;
     }
 
     @Override
@@ -46,4 +46,6 @@ public class CustomAdapter2 extends BaseAdapter {
         names.setText(categories.get(i));
         return view;
     }
+
+
 }

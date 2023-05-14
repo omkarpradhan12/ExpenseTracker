@@ -14,16 +14,33 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  "
+            android:textAlignment="center"
+            android:textColor="#F6F6F6"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:layout_width="35sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_height="35dp"
+            android:src="@drawable/combi"></ImageView>
+
+        <TextView
             android:id="@+id/titlebar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:drawableLeft="@drawable/tiny_icon"
             android:foreground="@drawable/ripple"
-            android:text="Expense Tracker"
+            android:text="  Expense Tracker"
             android:textAlignment="center"
             android:textColor="#F6F6F6"
-            android:textSize="35sp"
+            android:textSize="30dp"
             android:textStyle="bold"
             android:onClick="go_home"
             />
@@ -33,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="12sp"
+            android:textSize="20dp"
             android:textAlignment="center"
             android:text="💾"
             android:textColor="#AE944B"
@@ -68,7 +85,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="Dates"
                         android:textColor="#48FFD3"
-                        android:textSize="28sp"
+                        android:textSize="28dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -78,7 +95,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="to"
                         android:textColor="#F4EEE0"
-                        android:textSize="23sp"
+                        android:textSize="23dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -88,7 +105,7 @@
                         android:layout_alignParentRight="true"
                         android:text="Dates"
                         android:textColor="#48FFD3"
-                        android:textSize="28sp"
+                        android:textSize="28dp"
                         android:textStyle="bold" />
 
 
@@ -114,7 +131,7 @@
                             android:text="Category"
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="24dp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -124,7 +141,7 @@
                             android:text="Amount Spent"
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="24dp" />
                     </TableRow>
 
                 </TableLayout>
@@ -170,7 +187,7 @@
                             android:text="Grand Total : "
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="24dp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -181,7 +198,7 @@
                             android:text="Amount Spent"
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
-                            android:textSize="24sp" />
+                            android:textSize="24dp" />
                     </TableRow>
 
                 </TableLayout>
@@ -202,24 +219,13 @@
                         android:background="#918888"
                         android:clickable="true"
                         android:onClick="switcher"
-                        android:text="Bar Chart"
+                        android:drawableRight="@drawable/bar_chart_4_bars_fill0_wght400_grad0_opsz48"
+                        android:text="BarChart"
                         android:textAlignment="center"
                         android:textColor="#DCDCDC"
-                        android:textSize="18sp" />
+                        android:textSize="18dp" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/switcher"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_weight="0.2"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:background="#8B51A8"-->
-<!--                        android:clickable="true"-->
-<!--                        android:onClick="switcher"-->
-<!--                        android:text="↔"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textColor="#DCDCDC"-->
-<!--                        android:textSize="25sp" />-->
+
 
                     <TextView
                         android:id="@+id/pietab"
@@ -230,17 +236,16 @@
                         android:background="#6E6666"
                         android:clickable="true"
                         android:onClick="switcher"
-                        android:text="Pie Chart"
+                        android:text="PieChart"
+                        android:drawableRight="@drawable/pie_chart_fill0_wght400_grad0_opsz48"
                         android:textAlignment="center"
                         android:textColor="#DCDCDC"
-                        android:textSize="20sp" />
+                        android:textSize="20dp" />
 
 
                 </LinearLayout>
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -252,21 +257,23 @@
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/category_graph"
-                            android:layout_width="360dp"
-                            android:layout_height="250dp">
+                            android:layout_width="fill_parent"
+                            android:layout_height="250dp"
+                            >
 
                         </com.github.mikephil.charting.charts.BarChart>
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieChart_view"
-                            android:layout_width="350dp"
-                            android:layout_height="250dp">
+                            android:layout_width="fill_parent"
+                            android:layout_height="250dp"
+                            >
 
                         </com.github.mikephil.charting.charts.PieChart>
 
 
                     </LinearLayout>
-                </HorizontalScrollView>
+
 
 
             </LinearLayout>

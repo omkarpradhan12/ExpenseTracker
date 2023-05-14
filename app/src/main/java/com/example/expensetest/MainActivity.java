@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         cat_list = sharedPreferences.getString("category_list", "");
+        if(cat_list.endsWith(" "))
+        {
+            cat_list = cat_list.substring(0,cat_list.length() - 1);
+        }
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -430,7 +434,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner categoryset = (Spinner) dialogview.findViewById(R.id.category_get);
 
         ArrayList<String> filter_category = new ArrayList<String>();
-        filter_category.add("Select Categories");
+        filter_category.add("Click to Select Category");
 
         for(String cat:cat_list.split(","))
         {
@@ -471,10 +475,10 @@ public class MainActivity extends AppCompatActivity {
 
                 String dt = String.valueOf(date.getYear()) + "-" + mth + "-" + dy;
                 String reas = reason.getText().toString();
-                String cate = category.getSelectedItem().toString();
+                String cate =filter_category.get(category.getSelectedItemPosition());
                 String amt = amount.getText().toString();
 
-                if (reas.isEmpty() || cate.equals("Select Categories") || amt.isEmpty()){
+                if (reas.isEmpty() || cate.equals("Click to Select Category") || amt.isEmpty()){
                     Toast.makeText(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -511,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner categoryset = (Spinner) dialogview.findViewById(R.id.category_get);
 
         ArrayList<String> filter_category = new ArrayList<String>();
-        filter_category.add("Select Categories");
+        filter_category.add("Click to Select Category");
 
         for(String cat:cat_list.split(","))
         {
@@ -538,11 +542,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
                 int month = date.getMonth()+1;
                 int day = date.getDayOfMonth();
 
@@ -552,14 +551,20 @@ public class MainActivity extends AppCompatActivity {
 
                 String dt = String.valueOf(date.getYear()) + "-" + mth + "-" + dy;
                 String reas = reason.getText().toString();
-                String cate = categoryget.getSelectedItem().toString();
+                String cate =filter_category.get(categoryget.getSelectedItemPosition());
+
+
+
+
+
+
                 String amt = amount.getText().toString();
 
-                if (reas.isEmpty() || cate.equals("Select Categories") || amt.isEmpty()){
+                if (reas.isEmpty() || cate.equals("Click to Select Category") || amt.isEmpty()){
                     Toast.makeText(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG).show();
                 }
                 else {
-                    db.addExpense(new Expense(dt,reas,cate,amt));
+                    db.addExpense(new Expense(dt,reas, cate,amt));
                 }
 
                 table_update(getall());

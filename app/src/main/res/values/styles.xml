@@ -67,4 +67,20 @@
     </style>
 
 
+    <style name="Add_Button" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">#008c13</item>
+    </style>
+
+<style name="Clear_Button" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">#9f0909</item>
+    </style>
+
+<style name="Visualize_Expense" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">#085054</item>
+    </style>
+
+<style name="Read_Write_CSV" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">#788780</item>
+    </style>
+
 </resources>

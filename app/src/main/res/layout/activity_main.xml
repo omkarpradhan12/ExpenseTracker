@@ -23,10 +23,10 @@
             android:drawableLeft="@drawable/tiny_icon"
             android:foreground="@drawable/ripple"
             android:longClickable="true"
-            android:text="Expense Tracker"
+            android:text="  Expense Tracker"
             android:textAlignment="center"
             android:textColor="#F6F6F6"
-            android:textSize="35sp"
+            android:textSize="30dp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:textAlignment="center"
             android:text=" Help?"
             android:textColor="#AE944B"
@@ -50,7 +50,7 @@
         android:layout_height="1dp"
         android:textAlignment="center"
         android:textColor="#CBE4DE"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:layout_weight="0.25"
         android:gravity="center"
         android:background="#2E4F4F"
@@ -73,7 +73,7 @@
             android:text="Date ↓"
             android:textAlignment="center"
             android:textColor="#CBE4DE"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
@@ -87,7 +87,7 @@
             android:text="Reason ↑"
             android:textAlignment="center"
             android:textColor="#CBE4DE"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
@@ -101,7 +101,7 @@
             android:text="Category ↑"
             android:textAlignment="center"
             android:textColor="#CBE4DE"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
@@ -115,7 +115,7 @@
             android:text="Amount ↑"
             android:textAlignment="center"
             android:textColor="#CBE4DE"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -158,7 +158,7 @@
             android:layout_weight="0.25"
             android:textAlignment="center"
             android:textColor="#CBE4DE"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center"
             android:background="@drawable/cell"
             />
@@ -172,7 +172,7 @@
             android:text="0"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:layout_weight="0.25"
             android:gravity="center"
             android:background="@drawable/cell"/>
@@ -184,35 +184,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="3"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <Button
             android:id="@+id/button3"
+            style="@style/Add_Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.4"
-            android:backgroundTint="#007806"
-            android:textColor="#ffffff"
+            android:layout_weight="1.5"
             android:onClick="new_expense"
             android:text="Add  Expense ➕"
-            android:textSize="12sp"
-            app:rippleColor="#6796BC" />
+            android:textColor="#ffffff"
+            android:textSize="12dp"
+            app:cornerRadius="30px"
+            app:strokeColor="#F8F8F8"
+            app:strokeWidth="2px" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"
-            ></Space>
+
 
         <Button
             android:id="@+id/clearall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.4"
+            android:layout_weight="1.5"
             android:backgroundTint="#9F0909"
             android:textColor="#ffffff"
             android:text="Clear Table 🗑️"
-            android:textSize="12sp" />
+            style="@style/Clear_Button"
+            android:textSize="12dp"
+            app:cornerRadius="30px"
+            app:strokeColor="#F8F8F8"
+            app:strokeWidth="2px"/>
     </LinearLayout>
 
     <Button
@@ -222,7 +225,13 @@
         android:backgroundTint="#0E8287"
         android:onClick="graphme"
         android:textColor="#ffffff"
-        android:text="Visualize Expenses" />
+        style="@style/Visualize_Expense"
+        app:cornerRadius="30px"
+        android:textSize="12dp"
+        app:strokeColor="#F8F8F8"
+        app:strokeWidth="2px"
+        android:text="Visualize Expenses"
+        android:drawableRight="@drawable/combi"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -233,28 +242,32 @@
         <Button
             android:id="@+id/read"
             android:layout_width="0dp"
-            android:layout_weight="1.4"
+            android:layout_weight="1.5"
             android:layout_height="wrap_content"
             android:onClick="file_picker"
             android:textColor="#ffffff"
+            android:textSize="12dp"
             android:backgroundTint="#788780"
+            app:cornerRadius="30px"
+            app:strokeColor="#F8F8F8"
+            app:strokeWidth="2px"
             android:text="Read CSV 🗄️" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"
-            ></Space>
+
 
 
         <Button
             android:id="@+id/save"
             android:layout_width="0dp"
-            android:layout_weight="1.4"
+            android:layout_weight="1.5"
             android:layout_height="wrap_content"
             android:onClick="csv_maker"
             android:textColor="#ffffff"
+            app:cornerRadius="30px"
+            android:textSize="12dp"
+            app:strokeColor="#F8F8F8"
             android:backgroundTint="#788780"
+            app:strokeWidth="2px"
             android:text="Save as CSV 💾" />
 
     </LinearLayout>

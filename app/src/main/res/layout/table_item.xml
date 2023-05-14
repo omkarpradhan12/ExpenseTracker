@@ -16,7 +16,7 @@
         android:id="@+id/date"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="12sp"
+        android:textSize="14dp"
         android:layout_weight="0.25"
         android:gravity="center"
         />
@@ -27,7 +27,7 @@
         android:id="@+id/reason"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="12sp"
+        android:textSize="14dp"
         android:layout_weight="0.25"
         android:gravity="center"
         />
@@ -38,7 +38,7 @@
         android:id="@+id/category"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="12sp"
+        android:textSize="14dp"
         android:layout_weight="0.25"
         android:gravity="center"
 
@@ -49,7 +49,7 @@
         android:id="@+id/amount"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="12sp"
+        android:textSize="14dp"
         android:layout_weight="0.25"
         android:gravity="center"
 

@@ -153,7 +153,18 @@ public class Graph extends AppCompatActivity {
 
             TextView cat_value = (TextView) tabrow.findViewById(R.id.cat_value);
             cat_value.setText(cat_sums.get(category).toString());
+
+            tabrow.setClickable(true);
+            tabrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(Graph.this,category+" : "+cat_sums.get(category),Toast.LENGTH_LONG).show();
+                }
+            });
+
             dynamic_table.addView(tabrow);
+
+
         }
 
         Double gt = 0.0;
