@@ -15,6 +15,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -22,13 +23,22 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Hashtable;
+
 
 public class Launcher extends AppCompatActivity {
 
@@ -202,8 +212,138 @@ public class Launcher extends AppCompatActivity {
             category_lister.show();
         }
 
+
+
     }
 
+    public void color_tester(View view)
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String cat_list = sharedPreferences.getString("category_list","");
+
+
+        ArrayList<String> cat_list_arr = new ArrayList<>(Arrays.asList(cat_list.split(",")));
+
+
+        if(!sharedPreferences.contains("Cat_Colors"))
+        {
+            String temp_s="";
+            for(String x:cat_list.split(","))
+            {
+                temp_s+=x+":"+"-5462104"+"\n";
+            }
+            editor.putString("Cat_Colors",temp_s);
+            editor.commit();
+        }
+
+        String cat_colors = "";
+
+        if(sharedPreferences.contains("Cat_Colors"))
+        {
+            cat_colors = sharedPreferences.getString("Cat_Colors","").strip();
+            ArrayList<String> existing_colors = new ArrayList<String>();
+
+            for(String X:cat_colors.split("\n"))
+            {
+                existing_colors.add(X.split(":")[0]);
+            }
+
+            for (String ex:cat_list_arr)
+            {
+                if(!existing_colors.contains(ex))
+                {
+                    cat_colors+="\n";
+                    cat_colors+=ex+":"+"-5462104";
+                }
+            }
+            editor.putString("Cat_Colors",cat_colors);
+            editor.commit();
+
+        }
+
+
+        cat_colors = sharedPreferences.getString("Cat_Colors","").strip();
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater linf = this.getLayoutInflater();
+        View dialogview = linf.inflate(R.layout.category_colors,null);
+
+        dialogBuilder.setTitle("Select Color For Categories");
+
+        TableLayout tab_lay = dialogview.findViewById(R.id.cat_color_table);
+        tab_lay.removeAllViews();
+
+        for(String x:cat_colors.split("\n"))
+        {
+
+            String cname=x.split(":")[0];
+            String ccol=x.split(":")[1];
+
+            View temp_view = linf.inflate(R.layout.category_color_item,null);
+            TextView cat_name = temp_view.findViewById(R.id.cat_name);
+            cat_name.setText(cname);
+
+
+            TextView cat_color = temp_view.findViewById(R.id.cat_color);
+            cat_color.setText(ccol);
+
+            if(!ccol.equals("TextView"))
+            {
+                temp_view.setBackgroundColor(Integer.parseInt(ccol));
+            }
+
+            temp_view.setClickable(true);
+            temp_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Color_Picker_Handler cph = new Color_Picker_Handler(Launcher.this, Integer.parseInt(ccol), new Color_Picker_Handler.OnColorSelectedListener() {
+                        @Override
+                        public void onColorSelected(int color) {
+                            view.setBackgroundColor(color);
+                            cat_color.setText(color+"");
+                        }
+                    });
+                    cph.show();
+                }
+            });
+
+
+            tab_lay.addView(temp_view);
+
+        }
+
+        dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+
+
+        dialogBuilder.setView(dialogview);
+        dialogBuilder.setCancelable(true);
+
+        dialogBuilder.setPositiveButton("Modify Colors", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //ClearAll();
+                        String s="";
+                        for(int i=0;i<tab_lay.getChildCount();i++)
+                        {
+                            TableRow temp_row =(TableRow) tab_lay.getChildAt(i);
+                            TextView cat_te = (TextView) temp_row.findViewById(R.id.cat_name);
+                            TextView cat_cl = (TextView) temp_row.findViewById(R.id.cat_color);
+
+                            s+= cat_te.getText()+":"+cat_cl.getText()+"\n";
+
+                        }
+                        editor.putString("Cat_Colors",s);
+                        editor.commit();
+
+                    }})
+                .setNegativeButton("Cancel", null);
+
+
+        AlertDialog category_lister = dialogBuilder.create();
+        category_lister.show();
+    }
 
     public void category_utility()
     {
@@ -220,8 +360,12 @@ public class Launcher extends AppCompatActivity {
             LayoutInflater linf = this.getLayoutInflater();
             View dialogview = linf.inflate(R.layout.category_dialog,null);
 
+
+
             dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
 
+
+            
             dialogBuilder.setView(dialogview);
             dialogBuilder.setCancelable(true);
 
@@ -273,6 +417,8 @@ public class Launcher extends AppCompatActivity {
 
 
     }
+
+
 
     public void Help_Me(View view)
     {

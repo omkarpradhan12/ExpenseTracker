@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg"
+    >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_bg"
+        android:text="Color Picker"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/seekBarRed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumbTint="#FF0000"
+        android:progress="0"
+        android:max="255"
+         />
+
+    <SeekBar
+        android:id="@+id/seekBarGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumbTint="#44FD00"
+        android:progress="0"
+        android:max="255"
+         />
+
+    <SeekBar
+        android:id="@+id/seekBarBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumbTint="#0069E4"
+        android:progress="0"
+        android:max="255"
+         />
+
+    <TextView
+        android:id="@+id/color_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selected Color"
+        android:textAlignment="center"
+        android:background="#ffffff"
+
+        />
+</LinearLayout>

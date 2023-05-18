@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,6 +40,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout tableLayout;
 
     private String cat_list;
+    private String cat_color;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         cat_list = sharedPreferences.getString("category_list", "");
+        cat_color = sharedPreferences.getString("Cat_Colors","");
+
+
+
         if(cat_list.endsWith(" "))
         {
             cat_list = cat_list.substring(0,cat_list.length() - 1);
@@ -263,11 +273,30 @@ public class MainActivity extends AppCompatActivity {
     public void table_update(List<Expense> expenses)
     {
 
+        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+
+
+        String cat_colors=cat_color+"";
+        cat_colors = cat_colors.trim();
+
+
+        for(String x:cat_colors.split("\n"))
+        {
+            if(x.split(":").length==2)
+            {
+                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+            }
+        }
+
+
+
+
+
         tableLayout=(TableLayout)findViewById(R.id.expensetable);
 
         tableLayout.removeAllViews();
 
-
+        String s="";
         expenseDB_Helper db = new expenseDB_Helper(this);
 
         for(Expense exp:expenses){
@@ -290,22 +319,39 @@ public class MainActivity extends AppCompatActivity {
             amount.setText(exp.getAmount());
 
 
-
-            switch(exp.getCategory())
+            if(cat_color_table.keySet().contains(exp.getCategory()))
             {
-                case "Food":tabrow.setBackgroundDrawable(getDrawable(R.drawable.food));
-                break;
-                case "Flat":tabrow.setBackgroundDrawable(getDrawable(R.drawable.flat));
-                break;
-                case "Other":tabrow.setBackgroundDrawable(getDrawable(R.drawable.other));
-                break;
-                case "Drink":tabrow.setBackgroundDrawable(getDrawable(R.drawable.drink));
-                break;
-                case "Travel":tabrow.setBackgroundDrawable(getDrawable(R.drawable.travel));
-                break;
-                default:tabrow.setBackgroundDrawable(getDrawable(R.drawable.default_color));
+                GradientDrawable shape = new GradientDrawable();
+                shape.setShape(GradientDrawable.RECTANGLE);
+                shape.setStroke(1, Color.parseColor("#ffffff"));
+                shape.setColor(cat_color_table.get(exp.getCategory()));
 
-            };
+                tabrow.setBackgroundDrawable(shape);
+            }
+
+            else
+            {
+                tabrow.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+
+
+//            switch(exp.getCategory())
+//            {
+//                case "Food":tabrow.setBackgroundDrawable(getDrawable(R.drawable.food));
+//                break;
+//                case "Flat":tabrow.setBackgroundDrawable(getDrawable(R.drawable.flat));
+//                break;
+//                case "Other":tabrow.setBackgroundDrawable(getDrawable(R.drawable.other));
+//                break;
+//                case "Drink":tabrow.setBackgroundDrawable(getDrawable(R.drawable.drink));
+//                break;
+//                case "Travel":tabrow.setBackgroundDrawable(getDrawable(R.drawable.travel));
+//                break;
+//                default:tabrow.setBackgroundDrawable(getDrawable(R.drawable.default_color));
+//
+//            };
+
+
 
             tabrow.setLongClickable(true);
             tabrow.setOnLongClickListener(new View.OnLongClickListener() {
@@ -346,8 +392,9 @@ public class MainActivity extends AppCompatActivity {
             tableLayout.addView(tabrow);
 
 
-
         }
+
+
 
     }
 

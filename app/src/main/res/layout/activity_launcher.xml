@@ -140,9 +140,28 @@
                 android:textAllCaps="false"
                 android:textColor="#9EC2F8"
                 android:textStyle="italic" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50px" />
+
+            <Button
+                android:id="@+id/b4"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transperent"
+                android:clickable="true"
+                android:onClick="color_tester"
+                android:text="@string/cat_colors"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#9EC2F8"
+                android:textStyle="italic" />
 
         </LinearLayout>
     </ScrollView>
+
+
 
 
 </LinearLayout>

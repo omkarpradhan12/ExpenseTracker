@@ -19,7 +19,6 @@
         android:textSize="16dp"
         android:layout_weight="0.25"
         android:gravity="center"
-        android:background="@drawable/visual_resource"
         />
 
     <TextView
@@ -31,7 +30,6 @@
         android:textSize="16dp"
         android:layout_weight="0.25"
         android:gravity="center"
-        android:background="@drawable/visual_resource"
         />
 
 

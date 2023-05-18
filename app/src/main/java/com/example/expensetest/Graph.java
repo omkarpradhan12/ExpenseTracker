@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -49,10 +51,16 @@ public class Graph extends AppCompatActivity {
 
     boolean flag=true;
 
+    String cat_color;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        cat_color = sharedPreferences.getString("Cat_Colors","");
+
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -81,6 +89,8 @@ public class Graph extends AppCompatActivity {
 
         Hashtable<String, Double> cat_sums = category_sums(db.time_period(fromdate, todate));
 
+
+        String cat_colors = cat_color+"";
 
 
         tab_maker(cat_sums);
@@ -144,6 +154,22 @@ public class Graph extends AppCompatActivity {
         TableLayout dynamic_table = (TableLayout) findViewById(R.id.dynamictable);
         dynamic_table.removeAllViews();
 
+        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+
+
+        String cat_colors=cat_color+"";
+        cat_colors = cat_colors.trim();
+
+
+        for(String x:cat_colors.split("\n"))
+        {
+            if(x.split(":").length==2)
+            {
+                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+            }
+        }
+
+
         for(String category:cat_sums.keySet())
         {
             View tabrow = LayoutInflater.from(this).inflate(R.layout.visual_table_item,null,false);
@@ -153,6 +179,22 @@ public class Graph extends AppCompatActivity {
 
             TextView cat_value = (TextView) tabrow.findViewById(R.id.cat_value);
             cat_value.setText(cat_sums.get(category).toString());
+
+            if(cat_color_table.keySet().contains(category))
+            {
+                GradientDrawable shape = new GradientDrawable();
+                shape.setShape(GradientDrawable.RECTANGLE);
+                shape.setStroke(1, Color.parseColor("#ffffff"));
+                shape.setColor(cat_color_table.get(category));
+
+                cat_key.setBackgroundDrawable(shape);
+                cat_value.setBackgroundDrawable(shape);
+            }
+
+            else
+            {
+                tabrow.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
 
             tabrow.setClickable(true);
             tabrow.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +232,21 @@ public class Graph extends AppCompatActivity {
         barChart.getDescription().setEnabled(false);
 
 
+        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+
+        ArrayList<Integer> ncolors = new ArrayList<>();
+
+        String cat_colors=cat_color+"";
+        cat_colors = cat_colors.trim();
+
+
+        for(String x:cat_colors.split("\n"))
+        {
+            if(x.split(":").length==2)
+            {
+                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+            }
+        }
 
         XAxis xaxis = barChart.getXAxis();
         YAxis yaxis = barChart.getAxisRight();
@@ -216,6 +273,7 @@ public class Graph extends AppCompatActivity {
         for (int i = 0; i < valueList.size(); i++) {
             BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
             entries.add(barEntry);
+            ncolors.add(cat_color_table.get(label_List.get(i)));
         }
 
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -223,7 +281,27 @@ public class Graph extends AppCompatActivity {
         xaxis.setValueFormatter(new IndexAxisValueFormatter(label_List));
 
         BarDataSet barDataSet = new BarDataSet(entries, "");
-        barDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+
+        int[] colors = new int[]{
+                Color.parseColor("#2979FF"),  // Blue
+                Color.parseColor("#9FA8DA"),
+                Color.parseColor("#C5CAE9"),
+                Color.parseColor("#E8EAF6"),
+                Color.parseColor("#F8BBD0"),
+                Color.parseColor("#F48FB1"),
+                Color.parseColor("#F06292"),
+                Color.parseColor("#EC407A"),
+                Color.parseColor("#E91E63"),
+                Color.parseColor("#D81B60"),
+                Color.parseColor("#C2185B"),
+                Color.parseColor("#AD1457"),
+                Color.parseColor("#880E4F"),
+                Color.parseColor("#FF1744")   // Red
+        };
+
+
+
+        barDataSet.setColors(ncolors);
 
 
         BarData data = new BarData(barDataSet);
@@ -240,6 +318,7 @@ public class Graph extends AppCompatActivity {
 
 
         barChart.animateY(1400, Easing.EaseInOutQuad);
+
 
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -304,6 +383,22 @@ public class Graph extends AppCompatActivity {
         }
 
 
+        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+
+        ArrayList<Integer> ncolors = new ArrayList<>();
+
+        String cat_colors=cat_color+"";
+        cat_colors = cat_colors.trim();
+
+
+        for(String x:cat_colors.split("\n"))
+        {
+            if(x.split(":").length==2)
+            {
+                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+            }
+        }
+
 
         ArrayList<PieEntry> entries = new ArrayList<>();
         ArrayList<String> label_List = new ArrayList<String>();
@@ -312,6 +407,7 @@ public class Graph extends AppCompatActivity {
         {
             entries.add(new PieEntry((float) (cat_sums.get(category)/gt), category));
             label_List.add(category);
+            ncolors.add(cat_color_table.get(category));
         }
 //
 //        entries.add(new PieEntry((float) (cat_sums.get("Food")/gt), "Food"));
@@ -332,7 +428,26 @@ public class Graph extends AppCompatActivity {
 //                Color.parseColor("#F1905C"),//travel
 //                Color.parseColor("#EC6161") //other
 //        });
-        dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+
+        int[] colors = new int[]{
+                Color.parseColor("#2979FF"),  // Blue
+                Color.parseColor("#9FA8DA"),
+                Color.parseColor("#C5CAE9"),
+                Color.parseColor("#E8EAF6"),
+                Color.parseColor("#F8BBD0"),
+                Color.parseColor("#F48FB1"),
+                Color.parseColor("#F06292"),
+                Color.parseColor("#EC407A"),
+                Color.parseColor("#E91E63"),
+                Color.parseColor("#D81B60"),
+                Color.parseColor("#C2185B"),
+                Color.parseColor("#AD1457"),
+                Color.parseColor("#880E4F"),
+                Color.parseColor("#FF1744")   // Red
+        };
+
+
+        dataSet.setColors(ncolors);
         dataSet.setSliceSpace(2f);
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);

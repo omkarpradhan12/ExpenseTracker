@@ -29,6 +29,8 @@
     <string name="change_pass"><u>Click to Change Password</u></string>
     <string name="cat_change"><u>Click to Add or Modify Categories</u></string>
 
+    <string name="cat_colors"><u>Click Modify Category Colors</u></string>
+
 
     <string name="author">This app was made by \n <b><u>Omkar Mandar Pradhan</u></b></string>
 
