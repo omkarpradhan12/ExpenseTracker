@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        cat_list = sharedPreferences.getString("category_list", "");
+        cat_list = sharedPreferences.getString("category_list", "").replace(" ","");
         cat_color = sharedPreferences.getString("Cat_Colors","");
 
 
@@ -270,6 +270,71 @@ public class MainActivity extends AppCompatActivity {
         return expenses;
     }
 
+    public void date_options(View view)
+    {
+
+
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater linf = this.getLayoutInflater();
+        View dialogview = linf.inflate(R.layout.graphdialog,null);
+
+        dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
+
+        dialogBuilder.setView(dialogview);
+        dialogBuilder.setCancelable(true);
+
+
+        dialogBuilder.setPositiveButton("Visualize For Dates", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatePicker fromdate = (DatePicker) dialogview.findViewById(R.id.datePickerfrom);
+                DatePicker todate = (DatePicker) dialogview.findViewById(R.id.datePickerto);
+
+
+
+                int month =0;
+                int day =0;
+
+                String mth,dy;
+
+
+                String frdt,todt;
+
+                month = fromdate.getMonth()+1;
+                day = fromdate.getDayOfMonth();
+                mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                frdt = String.valueOf(fromdate.getYear()) + "-" + mth + "-" + dy;
+
+                month = todate.getMonth()+1;
+                day = todate.getDayOfMonth();
+                mth = (month<=9) ? "0"+String.valueOf(month):String.valueOf(month);
+                dy = (day<=9) ? "0"+String.valueOf(day):String.valueOf(day);
+
+                todt = String.valueOf(todate.getYear()) + "-" + mth + "-" + dy;
+
+
+                List<Expense> db_tp = db.time_period(frdt, todt);
+
+                Double total = total_calculator(db_tp);
+                TextView totalamt = (TextView) findViewById(R.id.totalamt);
+
+                totalamt.setText(total.toString());
+
+                table_update(db_tp);
+
+            }
+        });
+
+        AlertDialog date_filter = dialogBuilder.create();
+        date_filter.show();
+
+
+    }
+
     public void table_update(List<Expense> expenses)
     {
 
@@ -331,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
 
             else
             {
-                tabrow.setBackgroundColor(Color.parseColor("#ffffff"));
+                tabrow.setBackgroundColor(Color.parseColor("#788780"));
             }
 
 
@@ -453,8 +518,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog csv_maker = dialogBuilder.create();
-        csv_maker.show();
+        AlertDialog grapher_dialog = dialogBuilder.create();
+        grapher_dialog.show();
 
 
 

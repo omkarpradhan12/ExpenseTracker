@@ -223,7 +223,7 @@ public class Launcher extends AppCompatActivity {
         String cat_list = sharedPreferences.getString("category_list","");
 
 
-        ArrayList<String> cat_list_arr = new ArrayList<>(Arrays.asList(cat_list.split(",")));
+        ArrayList<String> cat_list_arr = new ArrayList<>(Arrays.asList(cat_list.replace(" ","").split(",")));
 
 
         if(!sharedPreferences.contains("Cat_Colors"))
@@ -331,9 +331,13 @@ public class Launcher extends AppCompatActivity {
                             TextView cat_te = (TextView) temp_row.findViewById(R.id.cat_name);
                             TextView cat_cl = (TextView) temp_row.findViewById(R.id.cat_color);
 
-                            s+= cat_te.getText()+":"+cat_cl.getText()+"\n";
+                            if(cat_list_arr.contains(cat_te.getText()))
+                                s+= cat_te.getText()+":"+cat_cl.getText()+"\n";
 
                         }
+
+
+
                         editor.putString("Cat_Colors",s);
                         editor.commit();
 
@@ -354,7 +358,7 @@ public class Launcher extends AppCompatActivity {
 
         if(sharedPreferences.contains("category_list"))
         {
-            String cat_list = sharedPreferences.getString("category_list","");
+            String cat_list = sharedPreferences.getString("category_list","").replace(" ","");
 
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             LayoutInflater linf = this.getLayoutInflater();

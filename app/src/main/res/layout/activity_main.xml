@@ -44,6 +44,21 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/date_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2E4F4F"
+        android:onClick="date_options"
+        android:textColor="#ffffff"
+        style="@style/Visualize_Expense"
+        app:cornerRadius="30px"
+        android:textSize="12dp"
+        app:strokeColor="#F8F8F8"
+        app:strokeWidth="2px"
+        android:text="Select Dates"
+        />
+
     <Spinner
         android:id="@+id/filter"
         android:layout_width="match_parent"

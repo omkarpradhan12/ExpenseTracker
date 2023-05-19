@@ -45,13 +45,16 @@ public class Color_Picker_Handler {
          greenSeekBar.setProgress(Color.green(selectedColor));
          blueSeekBar.setProgress(Color.blue(selectedColor));
 
+         red = Color.red(selectedColor);
+         green = Color.green(selectedColor);
+         blue =  Color.blue(selectedColor);
+
          colorPreview.setBackgroundColor(selectedColor);
 
          redSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
              @Override
              public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                  change_red(i);
-                 Toast.makeText(context,red+" : "+green+" : "+blue,Toast.LENGTH_LONG).show();
                  mod_color(colorPreview,red,green,blue);
              }
 
@@ -70,7 +73,6 @@ public class Color_Picker_Handler {
              @Override
              public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                  change_green(i);
-                 Toast.makeText(context,red+" : "+green+" : "+blue,Toast.LENGTH_LONG).show();
                  mod_color(colorPreview,red,green,blue);
              }
 
@@ -89,7 +91,6 @@ public class Color_Picker_Handler {
              @Override
              public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                  change_blue(i);
-                 Toast.makeText(context,red+" : "+green+" : "+blue,Toast.LENGTH_LONG).show();
                  mod_color(colorPreview,red,green,blue);
              }
 
