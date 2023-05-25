@@ -20,7 +20,7 @@
 
             >
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -48,7 +48,7 @@
                 android:theme="@style/MyDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/textView1"
+                android:layout_above="@+id/amount"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
 

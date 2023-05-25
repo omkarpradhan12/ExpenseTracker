@@ -12,11 +12,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1"
+        >
+
+
 
         <TextView
             android:id="@+id/titlebar"
             android:layout_width="match_parent"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:drawableLeft="@drawable/tiny_icon"
@@ -28,6 +33,17 @@
             android:textSize="35dp"
             android:onClick="bypass"
             android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:foreground="@drawable/ripple"
+            android:layout_weight="0.3"
+            android:src="@drawable/settings_gear"
+            android:id="@+id/settings_gear"
+            android:clickable="true"
+            android:onClick="optionsme"
+            />
 
     </LinearLayout>
 
@@ -57,111 +73,198 @@
                 android:textColor="#AE944B"
                 android:textSize="12dp" />
 
-            <Space
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="500px" />
+                android:layout_height="30dp"/>
 
             <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Please Enter Password:"
-                android:textColor="#F4EEE0"
+                android:layout_weight="1"
+                android:backgroundTint="@color/transperent"
+                android:clickable="true"
+                android:onClick="Help_Me"
+                android:text="Login "
                 android:textAlignment="center"
+                android:textColor="#FAFAFA"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="173dp"
+                android:layout_height="186dp"
+                android:src="@drawable/ic_launcher_foreground"
+                android:layout_gravity="center"
+                 />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+            <Button
+                android:id="@+id/use_pass"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text="Use Password   "
+                android:onClick="use_pass"
+                android:drawableRight="@drawable/password_svgrepo_com"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textColor="#ffffff"
+                app:cornerRadius="50px"
+                app:strokeColor="#F8F8F8"
+                app:strokeWidth="2px"
+                android:backgroundTint="#4c5959"
+                />
+
+            <Button
+                android:id="@+id/use_fp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:text="Use Fingerprint"
+                android:onClick="use_pass"
+                android:drawableRight="@drawable/fp_master"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                app:cornerRadius="50px"
+                app:strokeColor="#F8F8F8"
+                app:strokeWidth="2px"
+                android:backgroundTint="#4c5959"
+                />
+
+<!--            <ImageView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:src="@drawable/fingerprint"-->
+<!--                android:id="@+id/fpcombi"-->
+<!--                android:layout_gravity="center"-->
+<!--                app:cornerRadius="30px"-->
+<!--                app:strokeColor="#F8F8F8"-->
+<!--                app:strokeWidth="5px"-->
+<!--                android:foreground="@drawable/ripple"-->
+<!--                />-->
+
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="100px" />
 
-            <EditText
+<!--            <EditText-->
+<!--                android:id="@+id/editTextTextPassword2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:ems="10"-->
+<!--                android:hint="Enter Your Password"-->
+<!--                android:textAlignment="center"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:textColor="#F4EEE0"-->
+<!--                android:textColorHint="#F4EEE0"-->
+<!--                android:textSize="16dp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_gravity="center"-->
+<!--                -->
+<!--                android:tooltipText=" (Default : Password)" />-->
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextTextPassword2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="Enter Your Password"
-                android:textAlignment="center"
-                android:inputType="textPassword"
-                android:textColor="#F4EEE0"
-                android:textColorHint="#F4EEE0"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:tooltipText=" (Default : Password)" />
+                app:boxBackgroundColor="#2c3333"
+                android:textColorHint="#ffffff"
+                app:errorTextColor="#FF0900"
+                app:hintTextColor="#ffffff"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#ffffff"
+                app:helperText="Default Password: Password"
+                app:helperTextTextColor="#ffffff"
+                android:visibility="gone"
+                >
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="300px" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:inputType="textPassword"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#0E8388"
                 android:onClick="sendme"
-                android:text="Go"
+                android:text="   Login   "
                 android:textColor="#FFFFFF"
                 app:cornerRadius="30px"
                 app:strokeColor="#F8F8F8"
                 app:strokeWidth="5px"
+                android:layout_gravity="center"
+                android:visibility="gone"
                 />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50px" />
 
-            <Button
-                android:id="@+id/textView6"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transperent"
-                android:clickable="true"
-                android:onClick="setpass"
-                android:text="@string/change_pass"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#9EC2F8"
-                android:textStyle="italic" />
+<!--            <Button-->
+<!--                android:id="@+id/textView6"-->
+<!--                style="?android:attr/borderlessButtonStyle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:backgroundTint="@color/transperent"-->
+<!--                android:clickable="true"-->
+<!--                android:onClick="setpass"-->
+<!--                android:text="@string/change_pass"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="#9EC2F8"-->
+<!--                android:textStyle="italic" />-->
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50px" />
 
-            <Button
-                android:id="@+id/cat_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transperent"
-                android:clickable="true"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="@string/cat_change"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#9EC2F8"
-                android:textStyle="italic" />
+<!--            <Button-->
+<!--                android:id="@+id/cat_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:backgroundTint="@color/transperent"-->
+<!--                android:clickable="true"-->
+<!--                style="?android:attr/borderlessButtonStyle"-->
+<!--                android:text="@string/cat_change"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="#9EC2F8"-->
+<!--                android:textStyle="italic" />-->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50px" />
 
-            <Button
-                android:id="@+id/b4"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transperent"
-                android:clickable="true"
-                android:onClick="color_tester"
-                android:text="@string/cat_colors"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#9EC2F8"
-                android:textStyle="italic" />
+<!--            <Button-->
+<!--                android:id="@+id/b4"-->
+<!--                style="?android:attr/borderlessButtonStyle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:backgroundTint="@color/transperent"-->
+<!--                android:clickable="true"-->
+<!--                android:onClick="color_tester"-->
+<!--                android:text="@string/cat_colors"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="#9EC2F8"-->
+<!--                android:textStyle="italic" />-->
 
         </LinearLayout>
     </ScrollView>
-
-
 
 
 </LinearLayout>

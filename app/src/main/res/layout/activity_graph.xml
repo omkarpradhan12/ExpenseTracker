@@ -120,74 +120,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:weightSum="2">
-
-                        <TextView
-
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/cell"
-                            android:text="Category"
-                            android:textAlignment="center"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/cell"
-                            android:text="Amount Spent"
-                            android:textAlignment="center"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
-                    </TableRow>
-
-                </TableLayout>
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:scrollbars="none"
-                    android:layout_weight="1"
-                    android:fillViewport="true"
-                    >
+                        >
 
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/dynamictable"
-                    >
-
-
-
-                </TableLayout>
-
-                </ScrollView>
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:weightSum="2">
-
-                        <TextView
-
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/cell"
-                            android:text="Grand Total : "
-                            android:textAlignment="center"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -240,7 +175,7 @@
                         android:drawableRight="@drawable/pie_chart_fill0_wght400_grad0_opsz48"
                         android:textAlignment="center"
                         android:textColor="#DCDCDC"
-                        android:textSize="20dp" />
+                        android:textSize="18dp" />
 
 
                 </LinearLayout>
@@ -274,6 +209,51 @@
 
                     </LinearLayout>
 
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+
+                        <TextView
+                            android:background="@drawable/cell"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Summary "
+                            android:textAlignment="viewStart"
+                            android:textColor="#FFFFFF"
+                            android:textSize="28dp" />
+
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fillViewport="true"
+                    android:scrollbars="none">
+
+
+                    <TableLayout
+                        android:id="@+id/dynamictable"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:shrinkColumns="*"
+                        android:stretchColumns="*"
+                        >
+
+                    </TableLayout>
+
+                </ScrollView>
 
 
             </LinearLayout>

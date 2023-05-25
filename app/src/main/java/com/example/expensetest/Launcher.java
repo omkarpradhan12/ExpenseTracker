@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,17 +18,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -35,9 +43,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.concurrent.Executor;
 
 
 public class Launcher extends AppCompatActivity {
@@ -60,7 +72,7 @@ public class Launcher extends AppCompatActivity {
     }
 
 
-    public void setpass(View view)
+    public void setpass()
     {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -135,6 +147,10 @@ public class Launcher extends AppCompatActivity {
 
 
 
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
+
 
 
     @Override
@@ -142,6 +158,10 @@ public class Launcher extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+
+
+
+        fp_driver();
         requestPermission();
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -152,7 +172,7 @@ public class Launcher extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        EditText pass = (EditText) findViewById(R.id.editTextTextPassword2);
+        TextInputLayout pass = (TextInputLayout) findViewById(R.id.editTextTextPassword2);
 
         if(!sharedPreferences.contains("password"))
         {
@@ -176,13 +196,13 @@ public class Launcher extends AppCompatActivity {
             }
         });
 
-        TextView category_text = findViewById(R.id.cat_text);
-        category_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                category_utility();
-            }
-        });
+//        TextView category_text = findViewById(R.id.cat_text);
+//        category_text.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                category_utility();
+//            }
+//        });
 
         if(!sharedPreferences.contains("category_list"))
         {
@@ -212,11 +232,164 @@ public class Launcher extends AppCompatActivity {
             category_lister.show();
         }
 
-
+        color_check();
 
     }
 
-    public void color_tester(View view)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        color_check();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        color_check();
+    }
+
+    private void color_check()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String cat_list = sharedPreferences.getString("category_list","").strip();
+        String cat_colors = sharedPreferences.getString("Cat_Colors","").strip();
+
+        ArrayList<String> cat_list_arr = new ArrayList<>(Arrays.asList(cat_list.replace(" ","").split(",")));
+
+        expenseDB_Helper edbh = new expenseDB_Helper(Launcher.this);
+
+        List<String> cat_listdb = edbh.getCategories();
+
+        String cols="";
+        for(String x:cat_colors.split("\n"))
+        {
+            if(cat_list_arr.contains(x.split(":")[0]))
+            {
+                cols+=x+"\n";
+            }
+        }
+
+        for(String x:cat_listdb)
+        {
+            if(!cat_list_arr.contains(x))
+            {
+                cols+=x+":"+"-5462104";
+            }
+        }
+
+        editor.putString("Cat_Colors",cols);
+        editor.commit();
+    }
+
+    /*Use Pass*/
+
+    private Boolean use_pass_flag = false;
+    public void use_pass(View view)
+    {
+        use_pass_flag = !use_pass_flag;
+        TextInputLayout edpass = findViewById(R.id.editTextTextPassword2);
+        Button go = findViewById(R.id.button5);
+
+
+        if(use_pass_flag)
+        {
+            edpass.setVisibility(View.VISIBLE);
+            go.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            edpass.setVisibility(View.INVISIBLE);
+            go.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /*Menu*/
+    public void optionsme(View view)
+    {
+        PopupMenu settingspopup = new PopupMenu(Launcher.this,view);
+        settingspopup.getMenuInflater().inflate(R.menu.settings_options_menu,settingspopup.getMenu());
+
+        settingspopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if(menuItem.getItemId() == R.id.menu_change_password)
+                {
+                    setpass();
+
+                }else if(menuItem.getItemId() == R.id.menu_cat_util)
+                {
+                    category_utility();
+                }else if(menuItem.getItemId() == R.id.menu_col_util)
+                {
+                    color_changer();
+                }
+
+
+
+                return false;
+            }
+        });
+
+        settingspopup.show();
+    }
+
+
+    public void fp_driver()
+    {
+        /*
+        Test 1
+         */
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(Launcher.this,
+                executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode,
+                                              @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(),
+                                "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(
+                    @NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getApplicationContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(Launcher.this, MainActivity.class);
+                Launcher.this.startActivity(myIntent);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed",
+                                Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Fingerprint Login")
+                .setSubtitle("Log in using your fingerprint")
+                .setNegativeButtonText("Use password")
+                .build();
+
+
+        Button use_fp = findViewById(R.id.use_fp);
+        use_fp.setOnClickListener(view -> {
+            biometricPrompt.authenticate(promptInfo);
+        });
+        /*
+        Test 1
+         */
+    }
+
+    public void color_changer()
     {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -384,7 +557,8 @@ public class Launcher extends AppCompatActivity {
                     String new_catlist = Category_List.getText().toString();
                     editor.putString("category_list",Category_List.getText().toString());
                     editor.commit();
-                    Toast.makeText(Launcher.this,"Categories successfully Modified",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Launcher.this,"Categories successfully Modified",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Launcher.this,"Restart App To See Changes",Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -405,17 +579,18 @@ public class Launcher extends AppCompatActivity {
         Intent myIntent = new Intent(Launcher.this, MainActivity.class);
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
 
-        EditText pass = (EditText)findViewById(R.id.editTextTextPassword2);
+        TextInputLayout pass = (TextInputLayout) findViewById(R.id.editTextTextPassword2);
 
         String Password = sharedPreferences.getString("password","");
 
-        if(pass.getText().toString().equals(Password))
+        if(pass.getEditText().getText().toString().equals(Password))
         {
             Launcher.this.startActivity(myIntent);
         }
         else
         {
             Toast.makeText(Launcher.this,"Not Authorized ",Toast.LENGTH_LONG).show();
+            pass.setError("Wrong Password");
         }
 
 

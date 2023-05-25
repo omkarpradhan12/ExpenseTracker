@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/reason"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/header_bg"
@@ -35,7 +35,7 @@
         android:ems="10"
         android:inputType="text"
         android:hint="Add Categories separated by commas"
-
+        android:text="Food,Drink,Other,Misc"
         />
 
 

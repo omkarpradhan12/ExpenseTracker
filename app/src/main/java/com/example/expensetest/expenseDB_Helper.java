@@ -70,6 +70,24 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<String> getCategories()
+    {
+        String selectQuery = "SELECT DISTINCT(Category) FROM Expenses_Table";
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+        List<String> cat_list = new ArrayList<>();
+
+        if(cursor.moveToFirst()){
+            do{
+                cat_list.add(cursor.getString(0));
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return  cat_list;
+
+    }
+
     public List<Expense> getExpenses()
     {
         List<Expense> expenseList = new ArrayList<Expense>();
