@@ -1,0 +1,111 @@
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple"
+    app:strokeWidth="1px"
+    app:strokeColor="#ffffff"
+    >
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:checkable="true"
+    android:clickable="true"
+    app:cardBackgroundColor="#00000000"
+    android:id="@+id/tab_card"
+    app:strokeWidth="1px"
+    app:strokeColor="#ffffff"
+    >
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       >
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:weightSum="3"
+        >
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="start"
+               android:layout_weight="1"
+               android:text="Category"
+               android:id="@+id/cat_card"
+               android:textColor="#ffffff"
+               android:textStyle="bold"
+               app:cornerRadius="30px"
+               app:strokeColor="#F8F8F8"
+               app:strokeWidth="2px"
+               />
+
+           <View
+               android:layout_width="0dp"
+               android:layout_height="1dp"
+               android:layout_weight="1"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAlignment="textEnd"
+               android:text="Date"
+               android:layout_weight="1"
+               android:id="@+id/date_card"
+               android:textColor="#ffffff"
+               />
+
+       </LinearLayout>
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Amount"
+           android:textSize="20dp"
+           android:textStyle="italic|bold"
+           android:id="@+id/amount_card"
+           android:textColor="#ffffff"
+           android:textAlignment="center"
+           />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:weightSum="1">
+
+           <View
+               android:layout_width="0dp"
+               android:layout_height="1dp"
+               android:layout_weight="0.6"
+               ></View>
+
+
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:text="Reason"
+               android:textAlignment="center"
+               android:id="@+id/reason_card"
+               android:textColor="#ffffff"
+               android:layout_weight="0.4"
+               android:textStyle="italic"
+               android:textSize="15dp"
+               />
+
+       </LinearLayout>
+
+
+
+   </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+</TableRow>

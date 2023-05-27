@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/dialog_bg"
-    
+
     >
 
     <ScrollView
@@ -52,39 +53,54 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
 
-            <TextView
 
+<!--            <EditText-->
+<!--                android:id="@+id/amount_get"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:ems="10"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="#ffffff"-->
+<!--                android:textColorHint="#ffffff"-->
+<!--                android:inputType="numberSigned|numberDecimal"-->
+<!--                android:hint="Amount" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Amount"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24dp"
-                android:textStyle="bold"/>
+                android:background="@color/bg"
+                app:boxBackgroundColor="@color/bg"
+                app:hintTextColor="@color/white"
+                app:helperTextTextColor="@color/white"
+                android:textColorHint="@color/white"
+                >
 
-            <EditText
-                android:id="@+id/amount_get"
+                            <EditText
+                                android:id="@+id/amount_get"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textColorHint="#ffffff"
+                                android:inputType="numberSigned|numberDecimal"
+                                android:hint="Amount" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:inputType="numberSigned|numberDecimal"
-                android:hint="Amount" />
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Reason"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24dp"
-                android:textStyle="bold"/>
+                android:background="@color/bg"
+                app:boxBackgroundColor="@color/bg"
+                app:hintTextColor="@color/white"
+                app:helperTextTextColor="@color/white"
+                android:textColorHint="@color/white"
+                >
 
             <EditText
                 android:id="@+id/reason_get"
@@ -97,6 +113,8 @@
                 android:inputType="text"
                 android:textColorHint="#ffffff"
                 android:hint="Reason" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
 

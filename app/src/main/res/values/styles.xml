@@ -33,6 +33,10 @@
 
         <item name="alertDialogTheme">@style/DarkAlertDialogTheme</item>
 
+        <!--Overflow -->
+        <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
+        <item name="android:itemBackground">@color/black</item>
+
     </style>
 
     <style name="DarkAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
@@ -83,6 +87,21 @@
         <item name="backgroundTint">#788780</item>
     </style>
 
+
+    <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/file_svg</item>
+        <item name="android:popupBackground">#040000</item>
+        <item name="android:itemBackground">#000000</item>
+        <item name="android:panelFullBackground">@color/black</item><!-- Replace with your own overflow icon -->
+    </style>
+
+    <style name="PopupMenuStyle" parent="@style/Widget.MaterialComponents.PopupMenu">
+        <!-- Customize the menu popup color -->
+        <item name="android:popupBackground">#040000</item>
+        <item name="android:itemBackground">#000000</item>
+        <item name="android:panelFullBackground">@color/black</item>
+        <!-- Replace with your desired color -->
+    </style>
 
 
 </resources>

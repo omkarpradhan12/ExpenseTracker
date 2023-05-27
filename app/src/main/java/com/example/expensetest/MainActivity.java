@@ -1,12 +1,16 @@
 package com.example.expensetest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -15,6 +19,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -29,6 +34,12 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -61,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        table_update(getall());
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -69,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         cat_list = sharedPreferences.getString("category_list", "").replace(" ","");
         cat_color = sharedPreferences.getString("Cat_Colors","");
 
+
+        chip_driver();
 
 
         if(cat_list.endsWith(" "))
@@ -137,25 +150,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         TextView totalamt = (TextView) findViewById(R.id.totalamt);
-
-        Button deleter = (Button) findViewById(R.id.clearall);
-        deleter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Delete All Records ?")
-                        .setMessage("This will clear all existing records from the database")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                ClearAll();
-                                Toast.makeText(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT).show();
-                                totalamt.setText("0.0");
-                            }})
-                        .setNegativeButton(android.R.string.no, null).show();
-            }
-        });
+//
+//        Button deleter = (Button) findViewById(R.id.clearall);
+//        deleter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new AlertDialog.Builder(MainActivity.this)
+//                        .setTitle("Delete All Records ?")
+//                        .setMessage("This will clear all existing records from the database")
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+//                        .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
+//
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                ClearAll();
+//                                Toast.makeText(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT).show();
+//                                totalamt.setText("₹ 0.0");
+//                            }})
+//                        .setNegativeButton(android.R.string.no, null).show();
+//            }
+//        });
 
         ArrayList<String> filter_category = new ArrayList<String>();
         filter_category.add("Click to Apply Filter");
@@ -167,46 +180,46 @@ public class MainActivity extends AppCompatActivity {
         }
 
         CustomAdapter cad = new CustomAdapter(MainActivity.this,filter_category);
-        Spinner category = (Spinner) findViewById(R.id.filter);
-
-        category.setAdapter(cad);
-
-
-
-        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v,
-                                       int position, long id) {
-                // TODO Auto-generated method stub
-
-                String category = filter_category.get(position);
-
-                if (position==0 || position==1)
-                {
-                    table_update(getall());
-                    datesorter.setClickable(true);
-                    reasonsorter.setClickable(true);
-                    categorysorter.setClickable(true);
-                    amountsorter.setClickable(true);
-                }
-                else {
-                    Toast.makeText(getBaseContext(),category,Toast.LENGTH_SHORT).show();
-                    table_update(getfiltered(category));
-                    datesorter.setClickable(false);
-                    reasonsorter.setClickable(false);
-                    categorysorter.setClickable(false);
-                    amountsorter.setClickable(false);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
+//        Spinner category = (Spinner) findViewById(R.id.filter);
+//
+//        category.setAdapter(cad);
+//
+//
+//
+//        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View v,
+//                                       int position, long id) {
+//                // TODO Auto-generated method stub
+//
+//                String category = filter_category.get(position);
+//
+//                if (position==0 || position==1)
+//                {
+//                    table_update(getall());
+//                    datesorter.setClickable(true);
+//                    reasonsorter.setClickable(true);
+//                    categorysorter.setClickable(true);
+//                    amountsorter.setClickable(true);
+//                }
+//                else {
+//                    Toast.makeText(getBaseContext(),category,Toast.LENGTH_SHORT).show();
+//                    table_update(getfiltered(category));
+//                    datesorter.setClickable(false);
+//                    reasonsorter.setClickable(false);
+//                    categorysorter.setClickable(false);
+//                    amountsorter.setClickable(false);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
 
 
 
@@ -218,6 +231,126 @@ public class MainActivity extends AppCompatActivity {
                 Help_Show(view);
             }
         });
+
+
+        BottomAppBar bottomAppBar = (BottomAppBar) findViewById(R.id.bottomAppBar);
+        bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                graphme(view);
+            }
+        });
+
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if(item.getItemId() == R.id.menu_clear_text)
+                {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Delete All Records ?")
+                            .setMessage("This will clear all existing records from the database")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    ClearAll();
+                                    Toast.makeText(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT).show();
+                                    totalamt.setText("₹ 0.0");
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+                    return true;
+                }
+                if(item.getItemId() == R.id.menu_read_csv)
+                {
+                    file_picker();
+                    return true;
+                }
+                if(item.getItemId() == R.id.menu_save_csv)
+                {
+                    csv_maker();
+                }
+
+                return false;
+            }
+        });
+
+        table_update(getall());
+
+    }
+
+    private int chipid;
+    public void chip_driver()
+    {
+        ChipGroup filter_group = (ChipGroup) findViewById(R.id.filter_chips);
+
+        chipid=1;
+        filter_group.removeAllViews();
+
+        HashMap<Integer,String> filter_map = new HashMap<>();
+
+
+        TextView totalamt = (TextView) findViewById(R.id.totalamt);
+
+        for(String category:cat_list.split(","))
+        {
+            Chip chip = new Chip(this);
+            chip.setId(chipid);
+            chip.setText(category);
+            chip.setChipBackgroundColor(ColorStateList.valueOf(Color.parseColor("#01a5a3")));
+            chip.setTextColor(getResources().getColor(R.color.white));
+            chip.setCheckable(true);
+            //chip.setChecked(true);
+            filter_map.put(chipid,category);
+            filter_group.addView(chip);
+
+            chipid+=1;
+
+        }
+
+        filter_group.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
+
+
+
+
+                if(cat_list.split(",").length==checkedIds.size() || checkedIds.size()==0)
+                {
+                    table_update(getall());
+                }
+                else
+                {
+                    List<Expense> filtered_expense = new ArrayList<>();
+                    String temps = "";
+                    for(int id:checkedIds)
+                    {
+                        for(Expense exp:getfiltered(filter_map.get(id)))
+                        {
+                            filtered_expense.add((exp));
+                        }
+                        temps+=id+" : "+filter_map.get(id)+"\n";
+                    }
+
+                    Toast.makeText(MainActivity.this,temps,Toast.LENGTH_LONG).show();
+
+                    totalamt.setText("₹ "+total_calculator(filtered_expense));
+
+                    table_update(filtered_expense);
+
+                }
+
+            }
+        });
+
+        filter_group.setClickable(true);
+        filter_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filter_group.clearCheck();
+            }
+        });
+
 
     }
 
@@ -251,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
         Double total = total_calculator(expenses);
         TextView totalamt = (TextView) findViewById(R.id.totalamt);
 
-        totalamt.setText(total.toString());
+        totalamt.setText("₹ "+total.toString());
 
         return expenses;
     }
@@ -263,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
         Double total = total_calculator(expenses);
         TextView totalamt = (TextView) findViewById(R.id.totalamt);
 
-        totalamt.setText(total.toString());
+        totalamt.setText("₹ "+total.toString());
 
         return expenses;
     }
@@ -278,13 +411,17 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater linf = this.getLayoutInflater();
         View dialogview = linf.inflate(R.layout.graphdialog,null);
 
+        TextView reason_dialog = dialogview.findViewById(R.id.reason_dialog);
+        reason_dialog.setText("Select Dates for Filter");
+
+
         dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
 
         dialogBuilder.setView(dialogview);
         dialogBuilder.setCancelable(true);
 
 
-        dialogBuilder.setPositiveButton("Visualize For Dates", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton("Show For Dates", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatePicker fromdate = (DatePicker) dialogview.findViewById(R.id.datePickerfrom);
@@ -320,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
                 Double total = total_calculator(db_tp);
                 TextView totalamt = (TextView) findViewById(R.id.totalamt);
 
-                totalamt.setText(total.toString());
+                totalamt.setText("₹ "+total.toString());
 
                 table_update(db_tp);
 
@@ -364,22 +501,41 @@ public class MainActivity extends AppCompatActivity {
 
         for(Expense exp:expenses){
 
-            View tabrow = LayoutInflater.from(this).inflate(R.layout.table_item,null,false);
+//            View tabrow = LayoutInflater.from(this).inflate(R.layout.table_item,null,false);
+//
+//            int key = exp.getExpkey();
+//
+//
+//            TextView date = (TextView)tabrow.findViewById(R.id.date);
+//            date.setText(exp.getDate());
+//
+//            TextView reason = (TextView)tabrow.findViewById(R.id.reason);
+//            reason.setText(exp.getReason());
+//
+//            TextView category = (TextView)tabrow.findViewById(R.id.category);
+//            category.setText(exp.getCategory());
+//
+//            TextView amount = (TextView)tabrow.findViewById(R.id.amount);
+//            amount.setText(exp.getAmount());
 
-            int key = exp.getExpkey();
 
+            View tabrow = LayoutInflater.from(this).inflate(R.layout.table_card,tableLayout,false);
 
-            TextView date = (TextView)tabrow.findViewById(R.id.date);
+            MaterialCardView mcard = (MaterialCardView)tabrow.findViewById(R.id.tab_card);
+
+            TextView date = (TextView) tabrow.findViewById(R.id.date_card);
             date.setText(exp.getDate());
 
-            TextView reason = (TextView)tabrow.findViewById(R.id.reason);
+            TextView reason = (TextView)tabrow.findViewById(R.id.reason_card);
             reason.setText(exp.getReason());
 
-            TextView category = (TextView)tabrow.findViewById(R.id.category);
+            TextView category = (TextView)tabrow.findViewById(R.id.cat_card);
             category.setText(exp.getCategory());
 
-            TextView amount = (TextView)tabrow.findViewById(R.id.amount);
-            amount.setText(exp.getAmount());
+            TextView amount = (TextView)tabrow.findViewById(R.id.amount_card);
+            amount.setText("₹ "+exp.getAmount());
+
+
 
 
             if(cat_color_table.keySet().contains(exp.getCategory()))
@@ -416,8 +572,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            tabrow.setLongClickable(true);
-            tabrow.setOnLongClickListener(new View.OnLongClickListener() {
+            mcard.setLongClickable(true);
+            mcard.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     new AlertDialog.Builder(MainActivity.this)
@@ -436,7 +592,7 @@ public class MainActivity extends AppCompatActivity {
                                     tableLayout.removeView(tabrow);
                                     TextView totalamt = (TextView) findViewById(R.id.totalamt);
                                     Double newamt = Double.parseDouble(totalamt.getText().toString()) - Double.parseDouble(exp.getAmount());
-                                    totalamt.setText(newamt.toString());
+                                    totalamt.setText("₹ "+newamt.toString());
                                     Toast.makeText(MainActivity.this, "Removed Record", Toast.LENGTH_SHORT).show();
                                 }})
                             .setNegativeButton(android.R.string.no, null).show();
@@ -444,8 +600,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            tabrow.setClickable(true);
-            tabrow.setOnClickListener(new View.OnClickListener() {
+            mcard.setClickable(true);
+            mcard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     edit_expenese(exp);
@@ -476,7 +632,8 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogview);
         dialogBuilder.setCancelable(true);
 
-
+        TextView reason_dialog = dialogview.findViewById(R.id.reason_dialog);
+        reason_dialog.setText("Select Dates for Visualization");
         dialogBuilder.setPositiveButton("Visualize For Dates", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -596,6 +753,9 @@ public class MainActivity extends AppCompatActivity {
                     db.editExpense(new Expense(exp.getExpkey(),dt,reas,cate,amt));
                 }
 
+                ChipGroup cg = findViewById(R.id.filter_chips);
+                cg.clearCheck();
+
                 table_update(getall());
             }
         });
@@ -677,6 +837,8 @@ public class MainActivity extends AppCompatActivity {
                     db.addExpense(new Expense(dt,reas, cate,amt));
                 }
 
+                ChipGroup cg = findViewById(R.id.filter_chips);
+                cg.clearCheck();
                 table_update(getall());
             }
         });
@@ -755,13 +917,14 @@ public class MainActivity extends AppCompatActivity {
         table_update(db.amountsort(amountflag));
 
     }
-    public void csv_maker(View view)
+    public void csv_maker()
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater linf = this.getLayoutInflater();
         View dialogview = linf.inflate(R.layout.csv_dialog,null);
+
 
         dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
 
@@ -914,7 +1077,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void file_picker(View view)
+    public void file_picker()
     {
         Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFile.addCategory(Intent.CATEGORY_OPENABLE);

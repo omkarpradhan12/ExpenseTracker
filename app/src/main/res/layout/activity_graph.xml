@@ -29,7 +29,7 @@
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
             android:layout_height="35dp"
-            android:src="@drawable/combi"></ImageView>
+            android:src="@drawable/combi_master"></ImageView>
 
         <TextView
             android:id="@+id/titlebar"

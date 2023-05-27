@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.google.android.material.slider.Slider;
+
 public class Color_Picker_Handler {
     private Context context;
     private int selectedColor;
@@ -17,10 +19,13 @@ public class Color_Picker_Handler {
 
     private int red=0,green=0,blue=0;
 
+
+
     public Color_Picker_Handler(Context context, int selectedColor, OnColorSelectedListener listener) {
         this.context = context;
         this.selectedColor = selectedColor;
         this.colorSelectedListener = listener;
+
     }
 
 
@@ -41,6 +46,7 @@ public class Color_Picker_Handler {
          SeekBar blueSeekBar = colorPickerView.findViewById(R.id.seekBarBlue);
          View colorPreview = colorPickerView.findViewById(R.id.color_preview);
 
+
          redSeekBar.setProgress(Color.red(selectedColor));
          greenSeekBar.setProgress(Color.green(selectedColor));
          blueSeekBar.setProgress(Color.blue(selectedColor));
@@ -50,6 +56,8 @@ public class Color_Picker_Handler {
          blue =  Color.blue(selectedColor);
 
          colorPreview.setBackgroundColor(selectedColor);
+
+
 
          redSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
              @Override
@@ -143,4 +151,6 @@ public class Color_Picker_Handler {
     public interface OnColorSelectedListener {
         void onColorSelected(int color);
     }
+
+
 }

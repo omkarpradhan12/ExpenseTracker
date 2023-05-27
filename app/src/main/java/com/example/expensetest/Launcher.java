@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -55,6 +56,8 @@ import java.util.concurrent.Executor;
 public class Launcher extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_PERMISSION = 786;
+
+    private ProgressBar progressscam;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -159,7 +162,8 @@ public class Launcher extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
 
-
+        progressscam = findViewById(R.id.progress_scam);
+        progressscam.setVisibility(View.GONE);
 
         fp_driver();
         requestPermission();
@@ -225,6 +229,7 @@ public class Launcher extends AppCompatActivity {
                     editor.putString("category_list",Category_List.getText().toString());
                     editor.commit();
                     Toast.makeText(Launcher.this,"Categories successfully Created",Toast.LENGTH_LONG).show();
+                    color_changer();
                 }
             });
 
@@ -240,12 +245,14 @@ public class Launcher extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         color_check();
+        progressscam.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         color_check();
+        progressscam.setVisibility(View.INVISIBLE);
     }
 
     private void color_check()
@@ -349,18 +356,22 @@ public class Launcher extends AppCompatActivity {
             public void onAuthenticationError(int errorCode,
                                               @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
+                progressscam.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(),
                                 "Authentication error: " + errString, Toast.LENGTH_SHORT)
                         .show();
+                progressscam.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
+                progressscam.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(Launcher.this, MainActivity.class);
+
                 Launcher.this.startActivity(myIntent);
             }
 
@@ -571,6 +582,7 @@ public class Launcher extends AppCompatActivity {
     public void bypass(View view)
     {
         Intent myIntent = new Intent(Launcher.this, MainActivity.class);
+        progressscam.setVisibility(View.VISIBLE);
         Launcher.this.startActivity(myIntent);
     }
 
@@ -585,6 +597,7 @@ public class Launcher extends AppCompatActivity {
 
         if(pass.getEditText().getText().toString().equals(Password))
         {
+            progressscam.setVisibility(View.VISIBLE);
             Launcher.this.startActivity(myIntent);
         }
         else

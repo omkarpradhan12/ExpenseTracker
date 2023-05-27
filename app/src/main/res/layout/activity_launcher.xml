@@ -57,7 +57,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+
+            >
 
             <TextView
                 android:layout_gravity="right"
@@ -98,11 +100,19 @@
                 android:layout_height="186dp"
                 android:src="@drawable/ic_launcher_foreground"
                 android:layout_gravity="center"
+
                  />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+
+
+            <ProgressBar
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:id="@+id/progress_scam"
+                android:visibility="visible"
+                android:indeterminateTint="#11E8E5"
+                ></ProgressBar>
 
             <Button
                 android:id="@+id/use_pass"
@@ -126,7 +136,6 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:text="Use Fingerprint"
-                android:onClick="use_pass"
                 android:drawableRight="@drawable/fp_master"
                 android:textSize="20dp"
                 android:textColor="#ffffff"
@@ -262,6 +271,8 @@
 <!--                android:textAllCaps="false"-->
 <!--                android:textColor="#9EC2F8"-->
 <!--                android:textStyle="italic" />-->
+
+
 
         </LinearLayout>
     </ScrollView>

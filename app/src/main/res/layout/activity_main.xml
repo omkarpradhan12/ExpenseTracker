@@ -7,13 +7,15 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:background="#2C3333"
+
     >
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:id="@+id/titlebar"
@@ -59,51 +61,42 @@
         android:text="Select Dates"
         />
 
-    <Spinner
-        android:id="@+id/filter"
+<!--    <Spinner-->
+<!--        android:id="@+id/filter"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="#CBE4DE"-->
+<!--        android:textSize="20dp"-->
+<!--        android:layout_weight="0.25"-->
+<!--        android:gravity="center"-->
+<!--        android:background="#2E4F4F"-->
+<!--        android:tooltipText="Select a Category to apply filter"-->
+<!--        />-->
+
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:textAlignment="center"
-        android:textColor="#CBE4DE"
-        android:textSize="20dp"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:background="#2E4F4F"
-        android:tooltipText="Select a Category to apply filter"
-        />
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_chips"
+
+            >
+
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="10dp"
-            android:id="@+id/datesorter"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:foreground="@drawable/ripple"
-            android:gravity="center"
-            android:text="Date ↓"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="10dp"
-            android:id="@+id/reasonsorter"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:foreground="@drawable/ripple"
-            android:gravity="center"
-            android:text="Reason ↑"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="16dp"
-            android:textStyle="bold" />
 
         <TextView
             android:layout_width="10dp"
@@ -119,6 +112,24 @@
             android:textSize="16dp"
             android:textStyle="bold" />
 
+
+
+        <TextView
+            android:id="@+id/reasonsorter"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@drawable/cell"
+            android:foreground="@drawable/ripple"
+            android:gravity="center"
+            android:text="Reason ↑"
+            android:textAlignment="center"
+            android:textColor="#CBE4DE"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+
         <TextView
             android:layout_width="10dp"
             android:id="@+id/amountsorter"
@@ -128,6 +139,20 @@
             android:foreground="@drawable/ripple"
             android:gravity="center"
             android:text="Amount ↑"
+            android:textAlignment="center"
+            android:textColor="#CBE4DE"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="10dp"
+            android:id="@+id/datesorter"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@drawable/cell"
+            android:foreground="@drawable/ripple"
+            android:gravity="center"
+            android:text="Date ↓"
             android:textAlignment="center"
             android:textColor="#CBE4DE"
             android:textSize="16dp"
@@ -148,15 +173,9 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:padding="5dp">
-
-
-
-
-
-
-
-
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        >
 
 
     </TableLayout>
@@ -166,31 +185,83 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:text="Total : "
-            android:layout_weight="0.25"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:background="@drawable/cell"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="10dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Total : "-->
+<!--            android:layout_weight="0.25"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#CBE4DE"-->
+<!--            android:textSize="20dp"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/cell"-->
+<!--            />-->
 
 
 
-        <TextView
-            android:id="@+id/totalamt"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:text="0"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:layout_weight="0.25"
-            android:gravity="center"
-            android:background="@drawable/cell"/>
+<!--        <TextView-->
+<!--            android:id="@+id/totalamt"-->
+<!--            android:layout_width="10dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="0"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:textSize="20dp"-->
+<!--            android:layout_weight="0.25"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/cell"/>-->
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:background="@drawable/cell"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:text="Final Total : "
+                        android:id="@+id/cat_card"
+                        android:textColor="#ffffff"
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amount"
+                        android:layout_gravity="center"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:id="@+id/totalamt"
+                        android:textColor="#ffffff"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
 
     </LinearLayout>
 
@@ -202,91 +273,123 @@
         android:orientation="horizontal"
         >
 
-        <Button
-            android:id="@+id/button3"
-            style="@style/Add_Button"
-            android:layout_width="0dp"
+<!--        <Button-->
+<!--            android:id="@+id/button3"-->
+<!--            style="@style/Add_Button"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:onClick="new_expense"-->
+<!--            android:text="Add  Expense ➕"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:textSize="12dp"-->
+<!--            app:cornerRadius="30px"-->
+<!--            app:strokeColor="#F8F8F8"-->
+<!--            app:strokeWidth="2px" />-->
+
+
+
+<!--        <Button-->
+<!--            android:id="@+id/clearall"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:backgroundTint="#9F0909"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:text="Clear Table 🗑️"-->
+<!--            style="@style/Clear_Button"-->
+<!--            android:textSize="12dp"-->
+<!--            app:cornerRadius="30px"-->
+<!--            app:strokeColor="#F8F8F8"-->
+<!--            app:strokeWidth="2px"/>-->
+    </LinearLayout>
+
+<!--    <Button-->
+<!--        android:id="@+id/grapher"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="#0E8287"-->
+<!--        android:onClick="graphme"-->
+<!--        android:textColor="#ffffff"-->
+<!--        style="@style/Visualize_Expense"-->
+<!--        app:cornerRadius="30px"-->
+<!--        android:textSize="12dp"-->
+<!--        app:strokeColor="#F8F8F8"-->
+<!--        app:strokeWidth="2px"-->
+<!--        android:text="Visualize Expenses"-->
+<!--        android:drawableRight="@drawable/combi"/>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="3">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/read"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:onClick="file_picker"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:textSize="12dp"-->
+<!--            android:backgroundTint="#788780"-->
+<!--            app:cornerRadius="30px"-->
+<!--            app:strokeColor="#F8F8F8"-->
+<!--            app:strokeWidth="2px"-->
+<!--            android:text="Read CSV 🗄️" />-->
+
+
+
+
+<!--        <Button-->
+<!--            android:id="@+id/save"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:onClick="csv_maker"-->
+<!--            android:textColor="#ffffff"-->
+<!--            app:cornerRadius="30px"-->
+<!--            android:textSize="12dp"-->
+<!--            app:strokeColor="#F8F8F8"-->
+<!--            android:backgroundTint="#788780"-->
+<!--            app:strokeWidth="2px"-->
+<!--            android:text="Save as CSV 💾" />-->
+
+<!--    </LinearLayout>-->
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:background="#2c3333"
+        >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:backgroundTint="#97E654"
             android:onClick="new_expense"
-            android:text="Add  Expense ➕"
-            android:textColor="#ffffff"
-            android:textSize="12dp"
-            app:cornerRadius="30px"
-            app:strokeColor="#F8F8F8"
-            app:strokeWidth="2px" />
+            app:srcCompat="@drawable/add"
+            android:layout_gravity="center"
+            />
 
-
-
-        <Button
-            android:id="@+id/clearall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:backgroundTint="#9F0909"
-            android:textColor="#ffffff"
-            android:text="Clear Table 🗑️"
-            style="@style/Clear_Button"
-            android:textSize="12dp"
-            app:cornerRadius="30px"
-            app:strokeColor="#F8F8F8"
-            app:strokeWidth="2px"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/grapher"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#0E8287"
-        android:onClick="graphme"
-        android:textColor="#ffffff"
-        style="@style/Visualize_Expense"
-        app:cornerRadius="30px"
-        android:textSize="12dp"
-        app:strokeColor="#F8F8F8"
-        app:strokeWidth="2px"
-        android:text="Visualize Expenses"
-        android:drawableRight="@drawable/combi"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <Button
-            android:id="@+id/read"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"
-            android:layout_height="wrap_content"
-            android:onClick="file_picker"
-            android:textColor="#ffffff"
-            android:textSize="12dp"
-            android:backgroundTint="#788780"
-            app:cornerRadius="30px"
-            app:strokeColor="#F8F8F8"
-            app:strokeWidth="2px"
-            android:text="Read CSV 🗄️" />
+        android:layout_gravity="bottom"
+        style="@style/MyOverflowButtonStyle"
+        app:navigationIcon="@drawable/combi_master"
+        app:menu="@menu/bottom_app_bar_menu"
+        android:backgroundTint="#2e4f4f"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        />
 
 
-
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"
-            android:layout_height="wrap_content"
-            android:onClick="csv_maker"
-            android:textColor="#ffffff"
-            app:cornerRadius="30px"
-            android:textSize="12dp"
-            app:strokeColor="#F8F8F8"
-            android:backgroundTint="#788780"
-            app:strokeWidth="2px"
-            android:text="Save as CSV 💾" />
-
-    </LinearLayout>
-
-
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>

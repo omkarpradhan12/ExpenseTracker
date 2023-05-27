@@ -19,12 +19,15 @@
 
     <SeekBar
         android:id="@+id/seekBarRed"
+        style="@style/Widget.AppCompat.SeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:thumbTint="#FF0000"
-        android:progress="0"
+        android:backgroundTint="#ffffff"
         android:max="255"
-         />
+        android:progress="0"
+        android:progressTint="#FF0000"
+        android:thumbTint="#FF0000"
+        />
 
     <SeekBar
         android:id="@+id/seekBarGreen"
@@ -33,6 +36,8 @@
         android:thumbTint="#44FD00"
         android:progress="0"
         android:max="255"
+        android:progressTint="#44FD00"
+
          />
 
     <SeekBar
@@ -42,15 +47,52 @@
         android:thumbTint="#0069E4"
         android:progress="0"
         android:max="255"
-         />
+        android:progressTint="#0069E4"
 
-    <TextView
-        android:id="@+id/color_preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Selected Color"
-        android:textAlignment="center"
-        android:background="#ffffff"
 
         />
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/color_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selected Color"
+            android:textAlignment="center"
+            android:background="#ffffff"
+
+            />
+
+<!--        <com.google.android.material.slider.Slider-->
+<!--            android:id="@+id/greenSlider"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:valueFrom="0"-->
+<!--            android:valueTo="255"-->
+<!--            android:thumbColor="@color/green"-->
+<!--            android:trackColorActive="@color/green"-->
+<!--            android:trackColorInactive="@color/gray"-->
+<!--            app:labelText="Green" />-->
+
+<!--        <com.google.android.material.slider.Slider-->
+<!--            android:id="@+id/blueSlider"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:valueFrom="0"-->
+<!--            android:valueTo="255"-->
+<!--            android:thumbColor="@color/blue"-->
+<!--            android:trackColorActive="@color/blue"-->
+<!--            android:trackColorInactive="@color/gray"-->
+<!--            app:labelText="Blue" />-->
+
+    </LinearLayout>
+
 </LinearLayout>
