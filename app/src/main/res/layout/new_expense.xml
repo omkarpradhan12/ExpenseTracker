@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/dialog_bg"
+    android:background="@drawable/popup_background"
 
     >
 
@@ -69,8 +69,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bg"
-                app:boxBackgroundColor="@color/bg"
+                app:boxBackgroundColor="#464D87"
                 app:hintTextColor="@color/white"
                 app:helperTextTextColor="@color/white"
                 android:textColorHint="@color/white"
@@ -95,8 +94,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bg"
-                app:boxBackgroundColor="@color/bg"
+                app:boxBackgroundColor="#464D87"
                 app:hintTextColor="@color/white"
                 app:helperTextTextColor="@color/white"
                 android:textColorHint="@color/white"

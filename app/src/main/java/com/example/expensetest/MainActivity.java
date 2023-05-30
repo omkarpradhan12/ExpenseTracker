@@ -3,20 +3,26 @@ package com.example.expensetest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -52,6 +59,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,72 +112,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView datesorter = (TextView) findViewById(R.id.datesorter);
-        TextView reasonsorter = (TextView) findViewById(R.id.reasonsorter);
-        TextView categorysorter = (TextView) findViewById(R.id.categorysorter);
-        TextView amountsorter = (TextView) findViewById(R.id.amountsorter);
-
-        datesorter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateSorter();
-                reasonsorter.setText("Reason ↑");
-                categorysorter.setText("Category ↑");
-                amountsorter.setText("Amount ↑");
-            }
-        });
-
-
-        reasonsorter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ReasonSorter();
-                datesorter.setText("Date ↑");
-                categorysorter.setText("Category ↑");
-                amountsorter.setText("Amount ↑");
-            }
-        });
-
-        categorysorter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CategorySorter();
-                reasonsorter.setText("Reason ↑");
-                datesorter.setText("Date ↑");
-                amountsorter.setText("Amount ↑");
-            }
-        });
-
-        amountsorter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AmountSorter();
-                reasonsorter.setText("Reason ↑");
-                categorysorter.setText("Category ↑");
-                datesorter.setText("Date ↑");
-            }
-        });
 
         TextView totalamt = (TextView) findViewById(R.id.totalamt);
-//
-//        Button deleter = (Button) findViewById(R.id.clearall);
-//        deleter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new AlertDialog.Builder(MainActivity.this)
-//                        .setTitle("Delete All Records ?")
-//                        .setMessage("This will clear all existing records from the database")
-//                        .setIcon(android.R.drawable.ic_dialog_alert)
-//                        .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
-//
-//                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                ClearAll();
-//                                Toast.makeText(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT).show();
-//                                totalamt.setText("₹ 0.0");
-//                            }})
-//                        .setNegativeButton(android.R.string.no, null).show();
-//            }
-//        });
+
 
         ArrayList<String> filter_category = new ArrayList<String>();
         filter_category.add("Click to Apply Filter");
@@ -179,47 +125,7 @@ public class MainActivity extends AppCompatActivity {
             filter_category.add(cat);
         }
 
-        CustomAdapter cad = new CustomAdapter(MainActivity.this,filter_category);
-//        Spinner category = (Spinner) findViewById(R.id.filter);
-//
-//        category.setAdapter(cad);
-//
-//
-//
-//        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View v,
-//                                       int position, long id) {
-//                // TODO Auto-generated method stub
-//
-//                String category = filter_category.get(position);
-//
-//                if (position==0 || position==1)
-//                {
-//                    table_update(getall());
-//                    datesorter.setClickable(true);
-//                    reasonsorter.setClickable(true);
-//                    categorysorter.setClickable(true);
-//                    amountsorter.setClickable(true);
-//                }
-//                else {
-//                    Toast.makeText(getBaseContext(),category,Toast.LENGTH_SHORT).show();
-//                    table_update(getfiltered(category));
-//                    datesorter.setClickable(false);
-//                    reasonsorter.setClickable(false);
-//                    categorysorter.setClickable(false);
-//                    amountsorter.setClickable(false);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//        });
+
 
 
 
@@ -233,7 +139,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        Context wrapper = new ContextThemeWrapper(MainActivity.this,R.style.PopupMenuStyle2);
+
+
+
         BottomAppBar bottomAppBar = (BottomAppBar) findViewById(R.id.bottomAppBar);
+
         bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,44 +152,146 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+
+
+
+        TextView sort_title = (TextView) findViewById(R.id.sort_title);
+        sort_title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                if(item.getItemId() == R.id.menu_clear_text)
-                {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Delete All Records ?")
-                            .setMessage("This will clear all existing records from the database")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    ClearAll();
-                                    Toast.makeText(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT).show();
-                                    totalamt.setText("₹ 0.0");
-                                }})
-                            .setNegativeButton(android.R.string.no, null).show();
-                    return true;
-                }
-                if(item.getItemId() == R.id.menu_read_csv)
-                {
-                    file_picker();
-                    return true;
-                }
-                if(item.getItemId() == R.id.menu_save_csv)
-                {
-                    csv_maker();
-                }
-
-                return false;
+            public void onClick(View view) {
+                sort_title.setText("Expenses");
+                table_update(getall());
             }
         });
 
+        menu_driver();
+        task_menu();
         table_update(getall());
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ChipGroup cg = (ChipGroup) findViewById(R.id.filter_chips);
+        cg.clearCheck();
+    }
+
+    public void task_menu()
+    {
+        TextView totalamt = (TextView) findViewById(R.id.totalamt);
+        ImageButton task_menu_button = findViewById(R.id.task_menu_button);
+
+        task_menu_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Context wrapper = new ContextThemeWrapper(MainActivity.this,R.style.PopupMenuStyle1);
+
+                PopupMenu task_popup = new PopupMenu(wrapper,view);
+
+                task_popup.getMenuInflater().inflate(R.menu.bottom_app_bar_menu,task_popup.getMenu());
+
+                task_popup.setForceShowIcon(true);
+
+                task_popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        if(item.getItemId() == R.id.menu_clear_text)
+                        {
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("Delete All Records ?")
+                                    .setMessage("This will clear all existing records from the database")
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            ClearAll();
+                                            Toasty.error(MainActivity.this, "Clearing all", Toast.LENGTH_SHORT,true).show();
+                                            totalamt.setText("₹ 0.0");
+                                        }})
+                                    .setNegativeButton(android.R.string.no, null).show();
+                            return true;
+                        }
+
+                        if(item.getItemId() == R.id.menu_read_csv)
+                        {
+                            file_picker();
+                            return true;
+                        }
+                        if(item.getItemId() == R.id.menu_save_csv)
+                        {
+                            csv_maker();
+                            return true;
+
+                        }
+                        if(item.getItemId() == R.id.date_filter)
+                        {
+                            date_options();
+                            return true;
+                        }
+
+                        return true;
+                    }
+                });
+
+                task_popup.show();
+            }
+        });
+    }
+
+    public void menu_driver()
+    {
+        ImageButton sort_button = (ImageButton) findViewById(R.id.sort_button);
+
+        sort_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Context wrapper = new ContextThemeWrapper(MainActivity.this,R.style.PopupMenuStyle2);
+
+                PopupMenu sort_popup = new PopupMenu(wrapper,view);
+
+                sort_popup.getMenuInflater().inflate(R.menu.sort_menu,sort_popup.getMenu());
+
+                sort_popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        if(item.getItemId()==R.id.menu_Amount_sort)
+                        {
+                            AmountSorter();
+                            return true;
+                        }
+
+                        if(item.getItemId()==R.id.menu_date_sort)
+                        {
+                            DateSorter();
+                            return true;
+                        }
+
+                        if(item.getItemId()==R.id.menu_Category_sort)
+                        {
+                            CategorySorter();
+                            return true;
+                        }
+
+                        if(item.getItemId()==R.id.menu_reason_sort)
+                        {
+                            ReasonSorter();
+                            return true;
+                        }
+                        return true;
+                    }
+                });
+
+                sort_popup.show();
+            }
+        });
+
+    }
     private int chipid;
     public void chip_driver()
     {
@@ -289,6 +302,8 @@ public class MainActivity extends AppCompatActivity {
 
         HashMap<Integer,String> filter_map = new HashMap<>();
 
+        TextView sort_title = (TextView) findViewById(R.id.sort_title);
+
 
         TextView totalamt = (TextView) findViewById(R.id.totalamt);
 
@@ -297,9 +312,12 @@ public class MainActivity extends AppCompatActivity {
             Chip chip = new Chip(this);
             chip.setId(chipid);
             chip.setText(category);
-            chip.setChipBackgroundColor(ColorStateList.valueOf(Color.parseColor("#01a5a3")));
-            chip.setTextColor(getResources().getColor(R.color.white));
+            chip.setChipBackgroundColor(getColorStateList(R.color.chip_color));
+            chip.setTextColor(getColorStateList(R.color.text_color));
+            chip.setChipStrokeWidth(2);
+            chip.setChipStrokeColor(getColorStateList(R.color.borde_colors));
             chip.setCheckable(true);
+            chip.setFocusable(true);
             //chip.setChecked(true);
             filter_map.put(chipid,category);
             filter_group.addView(chip);
@@ -317,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(cat_list.split(",").length==checkedIds.size() || checkedIds.size()==0)
                 {
+                    sort_title.setText("Expenses");
                     table_update(getall());
                 }
                 else
@@ -329,13 +348,13 @@ public class MainActivity extends AppCompatActivity {
                         {
                             filtered_expense.add((exp));
                         }
-                        temps+=id+" : "+filter_map.get(id)+"\n";
+
                     }
 
-                    Toast.makeText(MainActivity.this,temps,Toast.LENGTH_LONG).show();
+
 
                     totalamt.setText("₹ "+total_calculator(filtered_expense));
-
+                    sort_title.setText("Expenses");
                     table_update(filtered_expense);
 
                 }
@@ -401,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
         return expenses;
     }
 
-    public void date_options(View view)
+    public void date_options()
     {
 
 
@@ -593,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
                                     TextView totalamt = (TextView) findViewById(R.id.totalamt);
                                     Double newamt = Double.parseDouble(totalamt.getText().toString()) - Double.parseDouble(exp.getAmount());
                                     totalamt.setText("₹ "+newamt.toString());
-                                    Toast.makeText(MainActivity.this, "Removed Record", Toast.LENGTH_SHORT).show();
+                                    Toasty.warning(MainActivity.this, "Removed Record", Toast.LENGTH_SHORT,true).show();
                                 }})
                             .setNegativeButton(android.R.string.no, null).show();
                     return false;
@@ -746,11 +765,11 @@ public class MainActivity extends AppCompatActivity {
                 String amt = amount.getText().toString();
 
                 if (reas.isEmpty() || cate.equals("Click to Select Category") || amt.isEmpty()){
-                    Toast.makeText(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG,true).show();
                 }
                 else {
-                    Toast.makeText(getBaseContext(),"Editing",Toast.LENGTH_LONG).show();
                     db.editExpense(new Expense(exp.getExpkey(),dt,reas,cate,amt));
+                    Toasty.success(getApplicationContext(),"Edited Entry successfully",Toasty.LENGTH_LONG,true).show();
                 }
 
                 ChipGroup cg = findViewById(R.id.filter_chips);
@@ -763,16 +782,15 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"Baadme Bhulega to rona mat 🤦‍",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Baadme Bhulega to rona mat 🤦‍",Toast.LENGTH_SHORT).show();
+                Toasty.warning(getApplicationContext(),"No Changes made to entry",Toasty.LENGTH_LONG,true).show();
             }
         });
 
-        AlertDialog add_new_expense = dialogBuilder.create();
+        AlertDialog edit_expense = dialogBuilder.create();
 
-
-
-        add_new_expense.show();
-
+        edit_expense.show();
+//        edit_expense.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     public void new_expense(View view)
@@ -831,7 +849,7 @@ public class MainActivity extends AppCompatActivity {
                 String amt = amount.getText().toString();
 
                 if (reas.isEmpty() || cate.equals("Click to Select Category") || amt.isEmpty()){
-                    Toast.makeText(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(),"Something went wrong",Toast.LENGTH_LONG,true).show();
                 }
                 else {
                     db.addExpense(new Expense(dt,reas, cate,amt));
@@ -846,7 +864,7 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"Baadme Bhulega to rona mat 🤦‍",Toast.LENGTH_SHORT).show();
+                Toasty.warning(getApplicationContext(),"No new entry added",Toast.LENGTH_SHORT,true).show();
             }
         });
 
@@ -855,7 +873,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         add_new_expense.show();
-
+//        add_new_expense.getWindow().setBackgroundDrawable(new ColorDrawable(R.drawable.bg));
     }
 
 
@@ -864,12 +882,15 @@ public class MainActivity extends AppCompatActivity {
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
+        ChipGroup cg = (ChipGroup) findViewById(R.id.filter_chips);
+        cg.clearCheck();
+
         dateflag = !dateflag;
-        TextView sorter = (TextView) findViewById(R.id.datesorter);
+        TextView sorter = findViewById(R.id.sort_title);
         if(dateflag)
-            sorter.setText("Date ↑");
+            sorter.setText("Expenses (Date ↑)");
         else
-            sorter.setText("Date ↓");
+            sorter.setText("Expenses (Date ↓)");
 
         table_update(db.sortdate(dateflag));
 
@@ -878,12 +899,15 @@ public class MainActivity extends AppCompatActivity {
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
+        ChipGroup cg = (ChipGroup) findViewById(R.id.filter_chips);
+        cg.clearCheck();
+
         reasonflag = !reasonflag;
-        TextView sorter = (TextView) findViewById(R.id.reasonsorter);
+        TextView sorter = findViewById(R.id.sort_title);
         if(reasonflag)
-            sorter.setText("Reason ↑");
+            sorter.setText("Expenses (Reason ↑)");
         else
-            sorter.setText("Reason ↓");
+            sorter.setText("Expenses (Reason ↓)");
 
         table_update(db.sortreason(reasonflag));
 
@@ -892,12 +916,15 @@ public class MainActivity extends AppCompatActivity {
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
+        ChipGroup cg = (ChipGroup) findViewById(R.id.filter_chips);
+        cg.clearCheck();
+
         categoryflag = !categoryflag;
-        TextView sorter = (TextView) findViewById(R.id.categorysorter);
+        TextView sorter = findViewById(R.id.sort_title);
         if(categoryflag)
-            sorter.setText("Category ↑");
+            sorter.setText("Expenses (Category ↑)");
         else
-            sorter.setText("Category ↓");
+            sorter.setText("Expenses (Category ↓)");
 
         table_update(db.sortcategory(categoryflag));
 
@@ -907,12 +934,15 @@ public class MainActivity extends AppCompatActivity {
     {
         expenseDB_Helper db = new expenseDB_Helper(this);
 
+        ChipGroup cg = (ChipGroup) findViewById(R.id.filter_chips);
+        cg.clearCheck();
+
         amountflag = !amountflag;
-        TextView sorter = (TextView) findViewById(R.id.amountsorter);
+        TextView sorter = findViewById(R.id.sort_title);
         if(amountflag)
-            sorter.setText("Amount ↑");
+            sorter.setText("Expenses (Amount ↑)");
         else
-            sorter.setText("Amount ↓");
+            sorter.setText("Expenses (Amount ↓)");
 
         table_update(db.amountsort(amountflag));
 
@@ -1020,7 +1050,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Exception : ",e.toString());
         }
 
-        Toast.makeText(getBaseContext(),"Create and saved file "+file_name+" in Downloads",Toast.LENGTH_LONG).show();
+        Toasty.success(getBaseContext(),"Created and saved file "+file_name+" in Downloads",Toast.LENGTH_LONG,true).show();
     }
 
 
@@ -1148,7 +1178,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(fileContent.get(0).equals("Date,Reason,Category,Amount"))
         {
-            Toast.makeText(MainActivity.this,"Correct Headers",Toast.LENGTH_LONG).show();
+
 
             for(int i=1;i<fileContent.size();i++)
             {
@@ -1159,7 +1189,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         else{
-            Toast.makeText(MainActivity.this,"InCorrect Headers",Toast.LENGTH_LONG).show();
+            Toasty.error(MainActivity.this,"Unsupported CSV found",Toast.LENGTH_LONG,true).show();
         }
 
 
@@ -1214,7 +1244,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(MainActivity.this,row_add_count+" Rows Added",Toast.LENGTH_LONG).show();
+        Toasty.success(MainActivity.this,row_add_count+" Rows Added",Toast.LENGTH_LONG,true).show();
         table_update(getall());
 
     }

@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -44,6 +45,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -51,6 +54,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.Executor;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class Launcher extends AppCompatActivity {
@@ -82,7 +87,7 @@ public class Launcher extends AppCompatActivity {
 
         if(!sharedPreferences.contains("password"))
         {
-            Toast.makeText(Launcher.this,"No Password found\nDefault: Password",Toast.LENGTH_LONG).show();
+            Toasty.info(Launcher.this,"No Password found\nDefault: Password",Toast.LENGTH_LONG).show();
             editor.putString("password","Password");
             editor.commit();
         }
@@ -112,18 +117,18 @@ public class Launcher extends AppCompatActivity {
                         {
                             if(newpword.getText().toString().isEmpty())
                             {
-                                Toast.makeText(Launcher.this,"Password cannot be empty",Toast.LENGTH_LONG).show();
+                                Toasty.error(Launcher.this,"Password cannot be empty",Toast.LENGTH_LONG,true).show();
                             }
                             else
                             {
                                 editor.putString("password",newpword.getText().toString()).apply();
-                                Toast.makeText(Launcher.this,"Password changed",Toast.LENGTH_LONG).show();
+                                Toasty.success(Launcher.this,"Password changed",Toast.LENGTH_LONG,true).show();
                             }
                         }
 
                         else
                         {
-                            Toast.makeText(Launcher.this,"Incorrect Old Password",Toast.LENGTH_LONG).show();
+                            Toasty.error(Launcher.this,"Incorrect Old Password",Toast.LENGTH_LONG,true).show();
                         }
 
 
@@ -134,7 +139,7 @@ public class Launcher extends AppCompatActivity {
             dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(getApplicationContext(),"Later Then",Toast.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(),"Later Then",Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -180,7 +185,7 @@ public class Launcher extends AppCompatActivity {
 
         if(!sharedPreferences.contains("password"))
         {
-            Toast.makeText(Launcher.this,"No Password found\nDefault: Password",Toast.LENGTH_LONG).show();
+            Toasty.info(Launcher.this,"No Password found\nDefault: Password",Toast.LENGTH_LONG).show();
             editor.putString("password","Password");
             editor.commit();
 
@@ -210,31 +215,10 @@ public class Launcher extends AppCompatActivity {
 
         if(!sharedPreferences.contains("category_list"))
         {
-
-
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-            LayoutInflater linf = this.getLayoutInflater();
-            View dialogview = linf.inflate(R.layout.category_dialog,null);
-
-            dialogview.setBackgroundColor(getResources().getColor(R.color.bg));
-
-            dialogBuilder.setView(dialogview);
-            dialogBuilder.setCancelable(true);
-
-
-            dialogBuilder.setPositiveButton("Create Categories", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    EditText Category_List = dialogview.findViewById(R.id.category_list);
-                    editor.putString("category_list",Category_List.getText().toString());
-                    editor.commit();
-                    Toast.makeText(Launcher.this,"Categories successfully Created",Toast.LENGTH_LONG).show();
-                    color_changer();
-                }
-            });
-
-            AlertDialog category_lister = dialogBuilder.create();
-            category_lister.show();
+            editor.putString("category_list","Food,Drink,Other,Misc");
+            editor.commit();
+            Toasty.success(Launcher.this,"Default Categories successfully Created",Toast.LENGTH_LONG,true).show();
+            color_changer();
         }
 
         color_check();
@@ -282,7 +266,7 @@ public class Launcher extends AppCompatActivity {
         {
             if(!cat_list_arr.contains(x))
             {
-                cols+=x+":"+"-5462104";
+                cols+=x+":"+"-5462104"+"\n";
             }
         }
 
@@ -316,7 +300,11 @@ public class Launcher extends AppCompatActivity {
     public void optionsme(View view)
     {
         PopupMenu settingspopup = new PopupMenu(Launcher.this,view);
+
+
         settingspopup.getMenuInflater().inflate(R.menu.settings_options_menu,settingspopup.getMenu());
+
+
 
         settingspopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -357,8 +345,8 @@ public class Launcher extends AppCompatActivity {
                                               @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 progressscam.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(),
-                                "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                Toasty.error(getApplicationContext(),
+                                "Authentication error: " + errString, Toast.LENGTH_SHORT,true)
                         .show();
                 progressscam.setVisibility(View.INVISIBLE);
             }
@@ -368,8 +356,8 @@ public class Launcher extends AppCompatActivity {
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 progressscam.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(),
-                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                Toasty.success(getApplicationContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT,true).show();
                 Intent myIntent = new Intent(Launcher.this, MainActivity.class);
 
                 Launcher.this.startActivity(myIntent);
@@ -378,8 +366,8 @@ public class Launcher extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed",
-                                Toast.LENGTH_SHORT)
+                Toasty.error(getApplicationContext(), "Authentication failed",
+                                Toast.LENGTH_SHORT,true)
                         .show();
             }
         });
@@ -425,6 +413,9 @@ public class Launcher extends AppCompatActivity {
 
         if(sharedPreferences.contains("Cat_Colors"))
         {
+
+
+
             cat_colors = sharedPreferences.getString("Cat_Colors","").strip();
             ArrayList<String> existing_colors = new ArrayList<String>();
 
@@ -438,7 +429,7 @@ public class Launcher extends AppCompatActivity {
                 if(!existing_colors.contains(ex))
                 {
                     cat_colors+="\n";
-                    cat_colors+=ex+":"+"-5462104";
+                    cat_colors+=ex+":"+"-5462104"+"\n";
                 }
             }
             editor.putString("Cat_Colors",cat_colors);
@@ -524,6 +515,7 @@ public class Launcher extends AppCompatActivity {
 
                         editor.putString("Cat_Colors",s);
                         editor.commit();
+                        Toasty.info(Launcher.this,"Please Restart Application for effects to apply",Toast.LENGTH_SHORT).show();
 
                     }})
                 .setNegativeButton("Cancel", null);
@@ -531,6 +523,8 @@ public class Launcher extends AppCompatActivity {
 
         AlertDialog category_lister = dialogBuilder.create();
         category_lister.show();
+
+        color_check();
     }
 
     public void category_utility()
@@ -540,13 +534,23 @@ public class Launcher extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
+
+
+
+
         if(sharedPreferences.contains("category_list"))
         {
             String cat_list = sharedPreferences.getString("category_list","").replace(" ","");
 
+            Toasty.normal(Launcher.this,sharedPreferences.getString("Cat_Colors",""),Toasty.LENGTH_SHORT).show();
+
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             LayoutInflater linf = this.getLayoutInflater();
             View dialogview = linf.inflate(R.layout.category_dialog,null);
+
+            EditText new_cat = dialogview.findViewById(R.id.new_cat);
+            ImageButton cat_add = (ImageButton) dialogview.findViewById(R.id.cat_add);
+
 
 
 
@@ -557,25 +561,93 @@ public class Launcher extends AppCompatActivity {
             dialogBuilder.setView(dialogview);
             dialogBuilder.setCancelable(true);
 
-            EditText Category_List = dialogview.findViewById(R.id.category_list);
-            Category_List.setText(cat_list);
+
+            LinearLayout category_list = dialogview.findViewById(R.id.categories_ll);
+            category_list.removeAllViews();
+
+            cat_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!new_cat.getText().toString().isEmpty())
+                    {
+                        View cat_new = getLayoutInflater().inflate(R.layout.category_item,null);
+                        EditText category_name = (EditText) cat_new.findViewById(R.id.dial_cat_name);
+                        category_name.setText(new_cat.getText().toString());
+                        category_name.setHint("Category");
+
+
+
+                        ImageButton deleter = (ImageButton) cat_new.findViewById(R.id.cat_delete);
+                        deleter.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                category_list.removeView(cat_new);
+                            }
+                        });
+
+                        Toasty.success(getApplicationContext(),"Added New Category",Toasty.LENGTH_SHORT).show();
+                        category_list.addView(cat_new);
+                        new_cat.setText("");
+                    }
+                }
+            });
+
+
+            for(String category:cat_list.split(","))
+            {
+                View cat_view = getLayoutInflater().inflate(R.layout.category_item,null);
+
+                EditText category_name = (EditText) cat_view.findViewById(R.id.dial_cat_name);
+
+                ImageButton deleter = (ImageButton) cat_view.findViewById(R.id.cat_delete);
+                deleter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        category_list.removeView(cat_view);
+                    }
+                });
+
+                category_name.setText(category);
+                category_list.addView(cat_view);
+            }
 
             dialogBuilder.setPositiveButton("Modify Categories", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    EditText Category_List = dialogview.findViewById(R.id.category_list);
 
-                    String new_catlist = Category_List.getText().toString();
-                    editor.putString("category_list",Category_List.getText().toString());
+
+                    expenseDB_Helper edbh = new expenseDB_Helper(Launcher.this);
+                    List<String> cat_listdb = edbh.getCategories();
+
+                    final int childcount = category_list.getChildCount();
+
+                    String n_cat_list ="";
+
+                    for(int x=0;x<childcount;x++)
+                    {
+                        EditText et = category_list.getChildAt(x).findViewById(R.id.dial_cat_name);
+                        n_cat_list+=et.getText().toString()+",";
+                    }
+
+
+
+                    n_cat_list = n_cat_list.substring(0,n_cat_list.length()-1);
+                    editor.putString("category_list",n_cat_list);
                     editor.commit();
-                    Toast.makeText(Launcher.this,"Categories successfully Modified",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Launcher.this,"Restart App To See Changes",Toast.LENGTH_SHORT).show();
 
+                    color_check();
+
+                    Toasty.success(Launcher.this,"Categories successfully Modified",Toast.LENGTH_SHORT,true).show();
+                    Toasty.info(Launcher.this,"Please Restart Application for effects to apply",Toast.LENGTH_SHORT).show();
+                    color_changer();
                 }
             });
 
             AlertDialog category_lister = dialogBuilder.create();
             category_lister.show();
+
+
+
         }
     }
 
@@ -602,7 +674,7 @@ public class Launcher extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(Launcher.this,"Not Authorized ",Toast.LENGTH_LONG).show();
+            Toasty.error(Launcher.this,"Not Authorized ",Toast.LENGTH_LONG,true).show();
             pass.setError("Wrong Password");
         }
 

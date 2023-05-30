@@ -57,6 +57,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class Graph extends AppCompatActivity {
 
 
@@ -147,7 +149,7 @@ public class Graph extends AppCompatActivity {
                     // Several error may come out with file handling or DOM
                     e.printStackTrace();
                 }
-                Toast.makeText(Graph.this,"Saving Image : "+fname+" in Downloads",Toast.LENGTH_SHORT).show();
+                Toasty.success(Graph.this,"Saving Image : "+fname+" in Downloads",Toast.LENGTH_SHORT,true).show();
 
             }
         });
@@ -237,7 +239,8 @@ public class Graph extends AppCompatActivity {
                 fab_test.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Snackbar.make(view,category+" : "+perc.toString().substring(0,4)+"%",Snackbar.LENGTH_SHORT).show();
+//                        Snackbar.make(view,category+" : "+perc.toString().substring(0,4)+"%",Snackbar.LENGTH_SHORT).show();
+                        Toasty.info(Graph.this,category+" : "+perc.toString().substring(0,4)+"%",Toasty.LENGTH_SHORT,false).show();
                     }
                 });
 
@@ -253,7 +256,7 @@ public class Graph extends AppCompatActivity {
             tabrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(Graph.this,category+" : "+cat_sums.get(category),Toast.LENGTH_LONG).show();
+                    Toasty.info(Graph.this,category+" : "+cat_sums.get(category),Toast.LENGTH_LONG,false).show();
                 }
             });
 
@@ -364,7 +367,7 @@ public class Graph extends AppCompatActivity {
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(Graph.this,label_List.get(Math.round(e.getX()))+" : "+e.getY(),Toast.LENGTH_LONG).show();
+                Toasty.info(Graph.this,label_List.get(Math.round(e.getX()))+" : "+e.getY(),Toast.LENGTH_LONG,false).show();
             }
 
             @Override
@@ -511,7 +514,7 @@ public class Graph extends AppCompatActivity {
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(Graph.this,label_List.get(Math.round(h.getX()))+" : "+Math.round(e.getY()* finalGt),Toast.LENGTH_LONG).show();
+                Toasty.info(Graph.this,label_List.get(Math.round(h.getX()))+" : "+Math.round(e.getY()* finalGt),Toast.LENGTH_LONG,false).show();
             }
 
             @Override

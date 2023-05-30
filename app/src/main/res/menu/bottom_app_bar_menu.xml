@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <item
         android:id="@+id/menu_clear_text"
         android:title="Clear Table"
         android:icon="@drawable/trash"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/menu_read_csv"
-        android:title="Read CSV 🗄"
-        app:showAsAction="never"
+        app:showAsAction="ifRoom"
         />
 
     <item
-        android:id="@+id/menu_save_csv"
-        android:title="Save to CSV 💾"
-        app:showAsAction="never" />
+        android:id="@+id/date_filter"
+        android:title="Select Date to Filter"
+        android:icon="@drawable/date_icon"
+        app:showAsAction="ifRoom"/>
+
+       <item
+           android:id="@+id/file_operations_menu"
+           android:title=" File Operations"
+           android:icon="@drawable/file_svg"
+           >
+
+           <menu>
+               <item
+                   android:id="@+id/menu_read_csv"
+                   android:title="Read CSV 🗄"
+                   app:showAsAction="never"
+                   />
+
+               <item
+                   android:id="@+id/menu_save_csv"
+                   android:title="Save to CSV 💾"
+                   app:showAsAction="never" />
+
+           </menu>
+
+       </item>
+
+
+
+
+
+
+
 
 </menu>

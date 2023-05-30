@@ -46,20 +46,53 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/date_options"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2E4F4F"
-        android:onClick="date_options"
-        android:textColor="#ffffff"
-        style="@style/Visualize_Expense"
-        app:cornerRadius="30px"
-        android:textSize="12dp"
-        app:strokeColor="#F8F8F8"
-        app:strokeWidth="2px"
-        android:text="Select Dates"
-        />
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="#0e8388"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
+            android:layout_height="wrap_content"
+            android:text="Expenses"
+            android:textSize="28dp"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:background="#0e8388"
+            android:clickable="true"
+            android:id="@+id/sort_title"
+            android:foreground="@drawable/ripple"
+            />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sort_svgrepo_com"
+            android:backgroundTint="#0e8388"
+            android:id="@+id/sort_button"
+            />
+
+    </LinearLayout>
+<!--    <Button-->
+<!--        android:id="@+id/date_options"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="#2E4F4F"-->
+<!--        android:onClick="date_options"-->
+<!--        android:textColor="#ffffff"-->
+<!--        style="@style/Visualize_Expense"-->
+<!--        app:cornerRadius="30px"-->
+<!--        android:textSize="12dp"-->
+<!--        app:strokeColor="#F8F8F8"-->
+<!--        app:strokeWidth="2px"-->
+<!--        android:text="Select Dates"-->
+<!--        />-->
 
 <!--    <Spinner-->
 <!--        android:id="@+id/filter"-->
@@ -74,91 +107,105 @@
 <!--        android:tooltipText="Select a Category to apply filter"-->
 <!--        />-->
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
 
-        <com.google.android.material.chip.ChipGroup
+
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filter_chips"
-
+            android:scrollbars="none"
+            android:background="#0e8388"
             >
 
 
-        </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_chips"
+                android:backgroundTint="#0e8388"
+                android:background="#0e8388"
+                >
 
-    </HorizontalScrollView>
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
+                </com.google.android.material.chip.Chip>
 
+            </com.google.android.material.chip.ChipGroup>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="10dp"
-            android:id="@+id/categorysorter"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:foreground="@drawable/ripple"
-            android:gravity="center"
-            android:text="Category ↑"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+        </HorizontalScrollView>
 
 
 
-        <TextView
-            android:id="@+id/reasonsorter"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:foreground="@drawable/ripple"
-            android:gravity="center"
-            android:text="Reason ↑"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="10dp"-->
+<!--            android:id="@+id/categorysorter"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.25"-->
+<!--            android:background="@drawable/cell"-->
+<!--            android:foreground="@drawable/ripple"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Category ↑"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#CBE4DE"-->
+<!--            android:textSize="16dp"-->
+<!--            android:textStyle="bold" />-->
 
 
 
-        <TextView
-            android:layout_width="10dp"
-            android:id="@+id/amountsorter"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:foreground="@drawable/ripple"
-            android:gravity="center"
-            android:text="Amount ↑"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/reasonsorter"-->
+<!--            android:layout_width="10dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.25"-->
+<!--            android:background="@drawable/cell"-->
+<!--            android:foreground="@drawable/ripple"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Reason ↑"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#CBE4DE"-->
+<!--            android:textSize="16dp"-->
+<!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="10dp"
-            android:id="@+id/datesorter"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@drawable/cell"
-            android:foreground="@drawable/ripple"
-            android:gravity="center"
-            android:text="Date ↓"
-            android:textAlignment="center"
-            android:textColor="#CBE4DE"
-            android:textSize="16dp"
-            android:textStyle="bold" />
 
-    </LinearLayout>
+
+<!--        <TextView-->
+<!--            android:layout_width="10dp"-->
+<!--            android:id="@+id/amountsorter"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.25"-->
+<!--            android:background="@drawable/cell"-->
+<!--            android:foreground="@drawable/ripple"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Amount ↑"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#CBE4DE"-->
+<!--            android:textSize="16dp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="10dp"-->
+<!--            android:id="@+id/datesorter"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.25"-->
+<!--            android:background="@drawable/cell"-->
+<!--            android:foreground="@drawable/ripple"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Date ↓"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#CBE4DE"-->
+<!--            android:textSize="16dp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--    </LinearLayout>-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -215,8 +262,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:clipChildren="false"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -235,7 +283,7 @@
                         android:textColor="#ffffff"
                         android:textAlignment="center"
                         android:textStyle="bold"
-                        android:textSize="20dp"
+                        android:textSize="25dp"
                         />
 
                     <View
@@ -248,13 +296,62 @@
                         android:layout_height="wrap_content"
                         android:text="Amount"
                         android:layout_gravity="center"
-                        android:textSize="20dp"
+                        android:textSize="25dp"
                         android:textStyle="bold"
                         android:id="@+id/totalamt"
                         android:textColor="#ffffff"
                         />
 
                 </LinearLayout>
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2c3333"
+                    >
+
+
+
+                    <com.google.android.material.bottomappbar.BottomAppBar
+                        android:id="@+id/bottomAppBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        app:navigationIcon="@drawable/combi_master"
+                        android:backgroundTint="#2e4f4f"
+                        style="@style/Widget.MaterialComponents.BottomAppBar"
+                        app:fabCradleVerticalOffset="9dp"
+                    />
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/add"
+                        app:iconTint="#ffffff"
+                        app:strokeColor="#2c3333"
+                        android:elevation="10dp"
+                        android:backgroundTint="#0A787C"
+                        android:onClick="new_expense"
+                        app:layout_anchor="@id/bottomAppBar"
+                        app:strokeWidth="3dp"
+
+                        />
+
+
+
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/menu_icon"
+                        android:layout_gravity="end"
+                        android:backgroundTint="#00000000"
+                        android:id="@+id/task_menu_button"
+                        />
+
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 
 
@@ -266,130 +363,8 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:orientation="horizontal"
-        >
-
-<!--        <Button-->
-<!--            android:id="@+id/button3"-->
-<!--            style="@style/Add_Button"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1.5"-->
-<!--            android:onClick="new_expense"-->
-<!--            android:text="Add  Expense ➕"-->
-<!--            android:textColor="#ffffff"-->
-<!--            android:textSize="12dp"-->
-<!--            app:cornerRadius="30px"-->
-<!--            app:strokeColor="#F8F8F8"-->
-<!--            app:strokeWidth="2px" />-->
 
 
 
-<!--        <Button-->
-<!--            android:id="@+id/clearall"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1.5"-->
-<!--            android:backgroundTint="#9F0909"-->
-<!--            android:textColor="#ffffff"-->
-<!--            android:text="Clear Table 🗑️"-->
-<!--            style="@style/Clear_Button"-->
-<!--            android:textSize="12dp"-->
-<!--            app:cornerRadius="30px"-->
-<!--            app:strokeColor="#F8F8F8"-->
-<!--            app:strokeWidth="2px"/>-->
-    </LinearLayout>
-
-<!--    <Button-->
-<!--        android:id="@+id/grapher"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:backgroundTint="#0E8287"-->
-<!--        android:onClick="graphme"-->
-<!--        android:textColor="#ffffff"-->
-<!--        style="@style/Visualize_Expense"-->
-<!--        app:cornerRadius="30px"-->
-<!--        android:textSize="12dp"-->
-<!--        app:strokeColor="#F8F8F8"-->
-<!--        app:strokeWidth="2px"-->
-<!--        android:text="Visualize Expenses"-->
-<!--        android:drawableRight="@drawable/combi"/>-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:weightSum="3">-->
-
-<!--        <Button-->
-<!--            android:id="@+id/read"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_weight="1.5"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:onClick="file_picker"-->
-<!--            android:textColor="#ffffff"-->
-<!--            android:textSize="12dp"-->
-<!--            android:backgroundTint="#788780"-->
-<!--            app:cornerRadius="30px"-->
-<!--            app:strokeColor="#F8F8F8"-->
-<!--            app:strokeWidth="2px"-->
-<!--            android:text="Read CSV 🗄️" />-->
-
-
-
-
-<!--        <Button-->
-<!--            android:id="@+id/save"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_weight="1.5"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:onClick="csv_maker"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:cornerRadius="30px"-->
-<!--            android:textSize="12dp"-->
-<!--            app:strokeColor="#F8F8F8"-->
-<!--            android:backgroundTint="#788780"-->
-<!--            app:strokeWidth="2px"-->
-<!--            android:text="Save as CSV 💾" />-->
-
-<!--    </LinearLayout>-->
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:background="#2c3333"
-        >
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#97E654"
-            android:onClick="new_expense"
-            app:srcCompat="@drawable/add"
-            android:layout_gravity="center"
-            />
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        style="@style/MyOverflowButtonStyle"
-        app:navigationIcon="@drawable/combi_master"
-        app:menu="@menu/bottom_app_bar_menu"
-        android:backgroundTint="#2e4f4f"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        />
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>
