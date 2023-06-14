@@ -16,6 +16,12 @@
         android:icon="@drawable/date_icon"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/prediction_menu"
+        android:title="Predict month Total(Beta)"
+        android:icon="@drawable/graph_svgrepo_com"
+        app:showAsAction="ifRoom"/>
+
        <item
            android:id="@+id/file_operations_menu"
            android:title=" File Operations"

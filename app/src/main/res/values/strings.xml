@@ -1,37 +1,19 @@
 <resources>
     <string name="app_name">Expense Tracker</string>
 
-    <string-array name="Categories">
-        <item>Select Categories</item>
-        <item>Food</item>
-        <item>Drink</item>
-        <item>Flat</item>
-        <item>Other</item>
-        <item>Travel</item>
-    </string-array>
-
-    <string-array name="Categories_Filter">
-        <item>Click to Apply Filter</item>
-        <item>All</item>
-        <item>Food</item>
-        <item>Drink</item>
-        <item>Flat</item>
-        <item>Other</item>
-        <item>Travel</item>
-    </string-array>
-    <string name="title_activity_graph_me">Graph_me</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="change_pass"><u>Click to Change Password</u></string>
-    <string name="cat_change"><u>Click to Add or Modify Categories</u></string>
-
-    <string name="cat_colors"><u>Click Modify Category Colors</u></string>
 
 
     <string name="author">This app was made by \n <b><u>Omkar Mandar Pradhan</u></b></string>
 
+
+    <string name="add_exp_short">Add Expense</string>
+    <string name="add_exp_long">Add New Expense</string>
+    <string name="compose_disabled_message1">Z</string>
+
+
+    <string name="add_split_short">Open Note</string>
+    <string name="add_split_long">Basic Notepad</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

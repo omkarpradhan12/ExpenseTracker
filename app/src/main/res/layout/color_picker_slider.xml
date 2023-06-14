@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg"
+    >
+
+    <TextView
+        android:id="@+id/reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_bg"
+        android:text="Color Picker"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/color_preview_text"
+            android:text="Your Color"
+            android:textColor="#ffffff"
+            android:textAllCaps="true"
+            android:padding="30dp"
+            android:textAlignment="center"
+            >
+
+        </TextView>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/red_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0"
+            android:valueTo="255"
+            android:stepSize="1"
+            app:tickColorActive="#ff0000"
+            app:tickColorInactive="#806161"
+            app:thumbColor="#ff0000"
+            app:haloColor="#ff0000"
+            app:thumbStrokeColor="#ff0000"
+            app:thumbRadius="10dp"
+            app:trackHeight="7dp"
+            app:trackColorActive="#97FF0000"
+            />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/green_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0"
+            android:valueTo="255"
+            android:stepSize="1"
+            app:tickColorActive="#00ff00"
+            app:tickColorInactive="#806161"
+            app:thumbColor="#00ff00"
+            app:haloColor="#00ff00"
+            app:thumbStrokeColor="#00ff00"
+            app:thumbRadius="10dp"
+            app:trackHeight="7dp"
+            app:trackColorActive="#9700ff00"
+            />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/blue_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0"
+            android:valueTo="255"
+            android:stepSize="1"
+            app:tickColorActive="#0000ff"
+            app:tickColorInactive="#806161"
+            app:thumbColor="#0000ff"
+            app:haloColor="#0000ff"
+            app:thumbStrokeColor="#0000ff"
+            app:thumbRadius="10dp"
+            app:trackHeight="7dp"
+            app:trackColorActive="#970000ff"
+            />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,9 +1,6 @@
 package com.example.expensetest;
 
-import java.util.Date;
-
 public class Expense {
-
 
 
     int expkey;
@@ -12,19 +9,18 @@ public class Expense {
     String Category;
     String Amount;
 
-    public Expense()
-    {
+    public Expense() {
 
     }
-    public Expense(String date, String Reason, String Category, String Amount)
-    {
+
+    public Expense(String date, String Reason, String Category, String Amount) {
         this.date = date;
         this.Reason = Reason;
         this.Category = Category;
         this.Amount = Amount;
     }
-    public Expense(int expkey,String date, String Reason, String Category, String Amount)
-    {
+
+    public Expense(int expkey, String date, String Reason, String Category, String Amount) {
         this.expkey = expkey;
         this.date = date;
         this.Reason = Reason;

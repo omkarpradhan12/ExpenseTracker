@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/dialog_bg"
-    >
+    android:background="@drawable/dialog_bg">
 
     <TextView
         android:id="@+id/reason"
@@ -17,57 +17,96 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView5"
+
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select From Date :"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:weightSum="1">
 
-    <DatePicker
-        android:id="@+id/datePickerfrom"
-        style="@android:style/Widget.Material.DatePicker"
-        android:layout_width="match_parent"
-        android:layout_height="163dp"
-        android:layout_above="@+id/amount"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"/>
 
-        android:theme="@style/MyDatePicker" />
+        <Button
+            android:id="@+id/date_dial_button"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:drawableRight="@drawable/date_icon"
+            android:backgroundTint="#31C35B"
+            />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select to Date :"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
-    <DatePicker
-        android:id="@+id/datePickerto"
-        style="@android:style/Widget.Material.DatePicker"
-        android:layout_width="match_parent"
-        android:layout_height="163dp"
-        android:layout_above="@+id/amount"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:theme="@style/MyDatePicker" />
-
-    <EditText
-        android:id="@+id/filename"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Enter Filename or leave empty"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/frdt"
+            android:textAlignment="textStart"
+            android:text="From Date"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="  to  "
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/todt"
+            android:text="To Date"
+            android:textAlignment="textEnd"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="#464D87"
         android:textColorHint="#ffffff"
-        android:textColor="#FFFFFF" />
+        >
+
+        <EditText
+            android:id="@+id/filename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Modify Filename"
+            android:textColorHint="#ffffff"
+            android:textColor="#FFFFFF" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
 </LinearLayout>

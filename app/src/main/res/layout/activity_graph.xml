@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".Graph"
     android:orientation="vertical"
-    android:background="#2C3333">
+    android:background="#2C3333"
+    android:id="@+id/graph_act"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -121,8 +123,6 @@
                         android:layout_height="wrap_content"
 
                         >
-
-
 
                         <TextView
                             android:layout_width="0dp"

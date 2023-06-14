@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#363c63"
+
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+
+            >
+            <TextView
+                android:id="@+id/popup_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add New Expense"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="@drawable/header_bg"/>
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+
+            <DatePicker
+                android:id="@+id/datePicker_ss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/amount"
+                android:layout_gravity="center"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:theme="@style/MyDatePicker" />
+
+
+            <!--            <EditText-->
+            <!--                android:id="@+id/amount_get"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:ems="10"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="#ffffff"-->
+            <!--                android:textColorHint="#ffffff"-->
+            <!--                android:inputType="numberSigned|numberDecimal"-->
+            <!--                android:hint="Amount" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#464D87"
+                app:hintTextColor="@color/white"
+                app:helperTextTextColor="@color/white"
+                android:textColorHint="@color/white"
+                >
+
+                <EditText
+                    android:id="@+id/amount_get_ss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:inputType="numberSigned|numberDecimal"
+                    android:hint="Amount"
+                    android:textSelectHandle="@drawable/edit"
+                    android:textCursorDrawable="@color/white"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#464D87"
+                app:hintTextColor="@color/white"
+                app:helperTextTextColor="@color/white"
+                android:textColorHint="@color/white"
+                >
+
+                <EditText
+                    android:id="@+id/reason_get_ss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:inputType="text"
+                    android:textColorHint="#ffffff"
+                    android:hint="Reason"
+                    android:textSelectHandle="@drawable/edit"
+                    android:textCursorDrawable="@color/white"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--            <TextView-->
+
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:text="Category"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="#FFFFFF"-->
+            <!--                android:textSize="24dp"-->
+
+            <!--                android:textStyle="bold"/>-->
+
+            <!--            <Spinner-->
+            <!--                android:id="@+id/category_get"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:entries="@array/Categories"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:backgroundTint="#ffffff"-->
+            <!--                android:popupBackground="#5E6AAC"-->
+            <!--                android:foregroundTint="#ffffff"-->
+            <!--                />-->
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textColor="#ffffff"
+                android:hint="Category"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:boxBackgroundColor="@color/bg"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView_ss"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Expense"
+                android:onClick="add_expense"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:onClick="cancel"
+                />
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+
+
+
+
+
+</LinearLayout>

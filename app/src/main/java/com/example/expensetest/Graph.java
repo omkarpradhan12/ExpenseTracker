@@ -1,33 +1,24 @@
 package com.example.expensetest;
 
-import static com.google.android.material.internal.ViewUtils.dpToPx;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -45,15 +36,11 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -66,16 +53,17 @@ public class Graph extends AppCompatActivity {
     BarChart barChart;
     PieChart pieChart;
 
-    boolean flag=true;
+    boolean flag = true;
 
     String cat_color;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-        cat_color = sharedPreferences.getString("Cat_Colors","");
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        cat_color = sharedPreferences.getString("Cat_Colors", "");
 
 
         if (getSupportActionBar() != null) {
@@ -85,18 +73,15 @@ public class Graph extends AppCompatActivity {
         TextView todt = findViewById(R.id.todt);
 
         Bundle extras = getIntent().getExtras();
-        String fromdate,todate;
+        String fromdate, todate;
 
         if (extras != null) {
             fromdate = extras.getString("fromdate");
             todate = extras.getString("todate");
             // and get whatever type user account id is
-        }
-
-        else
-        {
-            fromdate="";
-            todate="";
+        } else {
+            fromdate = "";
+            todate = "";
         }
 
         expenseDB_Helper db = new expenseDB_Helper(this);
@@ -107,13 +92,11 @@ public class Graph extends AppCompatActivity {
         Hashtable<String, Double> cat_sums = category_sums(db.time_period(fromdate, todate));
 
 
-        String cat_colors = cat_color+"";
+        String cat_colors = cat_color + "";
 
 
         tab_maker(cat_sums);
         bar_maker(cat_sums);
-
-
 
 
         TextView save = (TextView) findViewById(R.id.save);
@@ -121,7 +104,13 @@ public class Graph extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String fname = fromdate+"_to_"+todate;
+                String fname = fromdate + "_to_" + todate;
+
+                if (flag) {
+                    fname += "_bar";
+                } else {
+                    fname += "_pie";
+                }
 
                 try {
                     // image naming and path  to include sd card  appending name you choose for file
@@ -132,24 +121,32 @@ public class Graph extends AppCompatActivity {
                     // create bitmap screen capture
                     View v1 = getWindow().getDecorView().getRootView();
                     v1.setDrawingCacheEnabled(true);
-                    Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+
+                    LinearLayout graph_container = findViewById(R.id.graph_container);
+
+                    TextView grand_total = findViewById(R.id.grand_total);
+
+                    Bitmap bitmap = getBitmapFromView(graph_container, graph_container.getHeight(), graph_container.getWidth());
+                    Bitmap bitmap2 = getBitmapFromView(grand_total, grand_total.getHeight(), grand_total.getWidth());
+
+                    Bitmap fbit = combineBitmaps(bitmap2, bitmap);
+
                     v1.setDrawingCacheEnabled(false);
 
                     File imageFile = new File(mPath);
 
                     FileOutputStream outputStream = new FileOutputStream(imageFile);
                     int quality = 100;
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+                    fbit.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
                     outputStream.flush();
                     outputStream.close();
-
 
 
                 } catch (Throwable e) {
                     // Several error may come out with file handling or DOM
                     e.printStackTrace();
                 }
-                Toasty.success(Graph.this,"Saving Image : "+fname+" in Downloads",Toast.LENGTH_SHORT,true).show();
+                Toasty.success(Graph.this, "Saving Image : " + fname + " in Downloads", Toast.LENGTH_SHORT, true).show();
 
             }
         });
@@ -164,57 +161,77 @@ public class Graph extends AppCompatActivity {
         graphcontainer.addView(barChart);
 
 
+
     }
 
-    public void tab_maker(Hashtable<String, Double> cat_sums)
-    {
+    private Bitmap combineBitmaps(final Bitmap left, final Bitmap right) {
+        // Get the size of the images combined side by side.
+        int height = left.getHeight() + right.getHeight();
+        int width = left.getWidth() > right.getWidth() ? left.getWidth() : right.getWidth();
+
+        // Create a Bitmap large enough to hold both input images and a canvas to draw to this
+        // combined bitmap.
+        Bitmap combined = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(combined);
+
+        // Render both input images into the combined bitmap and return it.
+        canvas.drawBitmap(left, 0f, 0f, null);
+        canvas.drawBitmap(right, 0f, left.getHeight(), null);
+
+        return combined;
+    }
+
+    private Bitmap getBitmapFromView(View view, int height, int width) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return bitmap;
+    }
+
+    public void tab_maker(Hashtable<String, Double> cat_sums) {
         TableLayout dynamic_table = (TableLayout) findViewById(R.id.dynamictable);
         dynamic_table.removeAllViews();
 
-        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+        Hashtable<String, Integer> cat_color_table = new Hashtable<>();
 
 
-        String cat_colors=cat_color+"";
+        String cat_colors = cat_color + "";
         cat_colors = cat_colors.trim();
 
         Double gt = 0.0;
-        for(Double tot:cat_sums.values())
-        {
-            gt+=tot;
+        for (Double tot : cat_sums.values()) {
+            gt += tot;
         }
 
 
-        for(String x:cat_colors.split("\n"))
-        {
-            if(x.split(":").length==2)
-            {
-                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+        for (String x : cat_colors.split("\n")) {
+            if (x.split(":").length == 2) {
+                cat_color_table.put(x.split(":")[0], Integer.parseInt(x.split(":")[1]));
             }
         }
 
 
-        for(String category:cat_sums.keySet())
-        {
-            View tabrow = LayoutInflater.from(dynamic_table.getContext()).inflate(R.layout.visual_table_item,dynamic_table,false);
-
-
-
+        for (String category : cat_sums.keySet()) {
+            View tabrow = LayoutInflater.from(dynamic_table.getContext()).inflate(R.layout.visual_table_item, dynamic_table, false);
 
 
             TextView cat_key = (TextView) tabrow.findViewById(R.id.cat_key);
             cat_key.setText(category);
 
             TextView cat_value = (TextView) tabrow.findViewById(R.id.cat_value);
-            cat_value.setText("₹ "+cat_sums.get(category).toString());
+            cat_value.setText("₹ " + cat_sums.get(category).toString());
 
             ExtendedFloatingActionButton fab_test = tabrow.findViewById(R.id.fab_test);
 
             ProgressBar cat_prg = (ProgressBar) tabrow.findViewById(R.id.cat_progress);
 
 
-
-            if(cat_color_table.keySet().contains(category))
-            {
+            if (cat_color_table.containsKey(category)) {
 //                GradientDrawable shape = new GradientDrawable();
 //
 //                shape.setShape(GradientDrawable.OVAL);
@@ -223,32 +240,27 @@ public class Graph extends AppCompatActivity {
 //                shape.setColor(cat_color_table.get(category));
 
 
-
                 cat_prg.setProgressTintList(ColorStateList.valueOf(cat_color_table.get(category)));
-                Double perc =  (cat_sums.get(category)/gt)*100;
-                Log.d("Perc : ",""+perc);
+                Double perc = (cat_sums.get(category) / gt) * 100;
+                Log.d("Perc : ", "" + perc);
                 cat_prg.setProgress(perc.intValue());
 //                cat_key.setBackgroundDrawable(shape);
 //                cat_value.setBackgroundDrawable(shape);
 
 
-
                 fab_test.setBackgroundTintList(ColorStateList.valueOf(cat_color_table.get(category)));
-                fab_test.setText(perc.toString().substring(0,4)+"%");
+                fab_test.setText(perc.toString().substring(0, 4) + "%");
 
                 fab_test.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 //                        Snackbar.make(view,category+" : "+perc.toString().substring(0,4)+"%",Snackbar.LENGTH_SHORT).show();
-                        Toasty.info(Graph.this,category+" : "+perc.toString().substring(0,4)+"%",Toasty.LENGTH_SHORT,false).show();
+                        Toasty.info(Graph.this, category + " : " + perc.toString().substring(0, 4) + "%", Toasty.LENGTH_SHORT, false).show();
                     }
                 });
 
 
-            }
-
-            else
-            {
+            } else {
                 tabrow.setBackgroundColor(Color.parseColor("#ffffff"));
             }
 
@@ -256,7 +268,7 @@ public class Graph extends AppCompatActivity {
             tabrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toasty.info(Graph.this,category+" : "+cat_sums.get(category),Toast.LENGTH_LONG,false).show();
+                    Toasty.info(Graph.this, category + " : " + cat_sums.get(category), Toast.LENGTH_LONG, false).show();
                 }
             });
 
@@ -266,16 +278,14 @@ public class Graph extends AppCompatActivity {
         }
 
 
-
         TextView grand_total = (TextView) findViewById(R.id.grand_total);
-        grand_total.setText("Total Amount Spent ₹"+gt.toString());
+        grand_total.setText("Total Amount Spent ₹" + gt);
 
 
     }
 
 
-    public void bar_maker(Hashtable<String, Double> cat_sums)
-    {
+    public void bar_maker(Hashtable<String, Double> cat_sums) {
         barChart = findViewById(R.id.category_graph);
 
         barChart.getAxisLeft().setTextColor(Color.parseColor("#ffffff")); // left y-axis
@@ -284,19 +294,17 @@ public class Graph extends AppCompatActivity {
         barChart.getDescription().setEnabled(false);
 
 
-        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+        Hashtable<String, Integer> cat_color_table = new Hashtable<>();
 
         ArrayList<Integer> ncolors = new ArrayList<>();
 
-        String cat_colors=cat_color+"";
+        String cat_colors = cat_color + "";
         cat_colors = cat_colors.trim();
 
 
-        for(String x:cat_colors.split("\n"))
-        {
-            if(x.split(":").length==2)
-            {
-                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+        for (String x : cat_colors.split("\n")) {
+            if (x.split(":").length == 2) {
+                cat_color_table.put(x.split(":")[0], Integer.parseInt(x.split(":")[1]));
             }
         }
 
@@ -306,7 +314,6 @@ public class Graph extends AppCompatActivity {
         yaxis.setTextColor(Color.WHITE);
 
 
-
         ArrayList<Double> valueList = new ArrayList<Double>();
         ArrayList<BarEntry> entries = new ArrayList<>();
 
@@ -314,25 +321,19 @@ public class Graph extends AppCompatActivity {
         //input data
         ArrayList<String> label_List = new ArrayList<String>();
 
-        for(String cat_val:cat_sums.keySet())
-        {
+        for (String cat_val : cat_sums.keySet()) {
             valueList.add(cat_sums.get(cat_val));
             label_List.add(cat_val);
         }
-
 
 
         for (int i = 0; i < valueList.size(); i++) {
             BarEntry barEntry = new BarEntry(i, valueList.get(i).floatValue());
             entries.add(barEntry);
 
-            if(cat_color_table.keySet().contains(label_List.get(i)))
-            {
+            if (cat_color_table.containsKey(label_List.get(i))) {
                 ncolors.add(cat_color_table.get(label_List.get(i)));
-            }
-
-            else
-            {
+            } else {
                 ncolors.add(0);
             }
 
@@ -360,14 +361,13 @@ public class Graph extends AppCompatActivity {
         barChart.invalidate();
 
 
-
         barChart.animateY(1400, Easing.EaseInOutQuad);
 
 
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                Toasty.info(Graph.this,label_List.get(Math.round(e.getX()))+" : "+e.getY(),Toast.LENGTH_LONG,false).show();
+                Toasty.info(Graph.this, label_List.get(Math.round(e.getX())) + " : " + e.getY(), Toast.LENGTH_LONG, false).show();
             }
 
             @Override
@@ -377,8 +377,7 @@ public class Graph extends AppCompatActivity {
         });
     }
 
-    public void switcher(View view)
-    {
+    public void switcher(View view) {
         flag = !flag;
 
         LinearLayout graphcontainer = (LinearLayout) findViewById(R.id.graph_container);
@@ -387,16 +386,12 @@ public class Graph extends AppCompatActivity {
 
         graphcontainer.removeAllViews();
 
-        if(flag)
-        {
+        if (flag) {
             pietab.setBackgroundColor(Color.parseColor("#6E6666"));
             bartab.setBackgroundColor(Color.parseColor("#918888"));
             graphcontainer.addView(barChart);
             barChart.animateY(1400, Easing.EaseInOutQuad);
-        }
-
-        else
-        {
+        } else {
             bartab.setBackgroundColor(Color.parseColor("#6E6666"));
             pietab.setBackgroundColor(Color.parseColor("#918888"));
             graphcontainer.addView(pieChart);
@@ -421,25 +416,22 @@ public class Graph extends AppCompatActivity {
 
         Double gt = 0.0;
 
-        for(String k:cat_sums.keySet())
-        {
-            gt+=cat_sums.get(k);
+        for (String k : cat_sums.keySet()) {
+            gt += cat_sums.get(k);
         }
 
 
-        Hashtable<String,Integer> cat_color_table = new Hashtable<>();
+        Hashtable<String, Integer> cat_color_table = new Hashtable<>();
 
         ArrayList<Integer> ncolors = new ArrayList<>();
 
-        String cat_colors=cat_color+"";
+        String cat_colors = cat_color + "";
         cat_colors = cat_colors.trim();
 
 
-        for(String x:cat_colors.split("\n"))
-        {
-            if(x.split(":").length==2)
-            {
-                cat_color_table.put(x.split(":")[0],Integer.parseInt(x.split(":")[1]));
+        for (String x : cat_colors.split("\n")) {
+            if (x.split(":").length == 2) {
+                cat_color_table.put(x.split(":")[0], Integer.parseInt(x.split(":")[1]));
             }
         }
 
@@ -447,9 +439,8 @@ public class Graph extends AppCompatActivity {
         ArrayList<PieEntry> entries = new ArrayList<>();
         ArrayList<String> label_List = new ArrayList<String>();
 
-        for(String category:cat_sums.keySet())
-        {
-            entries.add(new PieEntry((float) (cat_sums.get(category)/gt), category));
+        for (String category : cat_sums.keySet()) {
+            entries.add(new PieEntry((float) (cat_sums.get(category) / gt), category));
             label_List.add(category);
             ncolors.add(cat_color_table.get(category));
         }
@@ -459,9 +450,6 @@ public class Graph extends AppCompatActivity {
 //        entries.add(new PieEntry((float) (cat_sums.get("Flat")/gt), "Flat"));
 //        entries.add(new PieEntry((float) (cat_sums.get("Travel")/gt), "Travel"));
 //        entries.add(new PieEntry((float) (cat_sums.get("Other")/gt), "Other"));
-
-
-
 
 
         PieDataSet dataSet = new PieDataSet(entries, "Expense Category");
@@ -514,7 +502,7 @@ public class Graph extends AppCompatActivity {
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                Toasty.info(Graph.this,label_List.get(Math.round(h.getX()))+" : "+Math.round(e.getY()* finalGt),Toast.LENGTH_LONG,false).show();
+                Toasty.info(Graph.this, label_List.get(Math.round(h.getX())) + " : " + Math.round(e.getY() * finalGt), Toast.LENGTH_LONG, false).show();
             }
 
             @Override
@@ -525,22 +513,18 @@ public class Graph extends AppCompatActivity {
     }
 
 
-    public Hashtable<String, Double> category_sums(List<Expense> expenses)
-    {
-        Hashtable<String, Double> cat_sum= new Hashtable<String, Double>();
+    public Hashtable<String, Double> category_sums(List<Expense> expenses) {
+        Hashtable<String, Double> cat_sum = new Hashtable<String, Double>();
 
         ArrayList<String> nkeys = new ArrayList<String>();
 
 
-        for(Expense exp:expenses)
-        {
-            if(!nkeys.contains(exp.getCategory()))
-            {
+        for (Expense exp : expenses) {
+            if (!nkeys.contains(exp.getCategory())) {
                 nkeys.add(exp.getCategory());
 
             }
         }
-
 
 
 //        cat_sum.put("Food", 0.0);
@@ -549,15 +533,13 @@ public class Graph extends AppCompatActivity {
 //        cat_sum.put("Other", 0.0);
 //        cat_sum.put("Travel", 0.0);
 
-        for (String key:nkeys)
-        {
-            cat_sum.put(key,0.0);
+        for (String key : nkeys) {
+            cat_sum.put(key, 0.0);
         }
 
-        for(Expense exp:expenses)
-        {
-            Double temp = cat_sum.get(exp.getCategory())+ Double.parseDouble(exp.getAmount());
-            cat_sum.replace(exp.getCategory(),temp);
+        for (Expense exp : expenses) {
+            Double temp = cat_sum.get(exp.getCategory()) + Double.parseDouble(exp.getAmount());
+            cat_sum.replace(exp.getCategory(), temp);
         }
 
 
@@ -566,8 +548,7 @@ public class Graph extends AppCompatActivity {
     }
 
 
-    public void go_home(View view)
-    {
+    public void go_home(View view) {
         Intent myIntent = new Intent(Graph.this, MainActivity.class);
         Graph.this.startActivity(myIntent);
     }

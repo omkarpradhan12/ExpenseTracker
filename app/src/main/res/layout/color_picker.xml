@@ -71,27 +71,7 @@
 
             />
 
-<!--        <com.google.android.material.slider.Slider-->
-<!--            android:id="@+id/greenSlider"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:valueFrom="0"-->
-<!--            android:valueTo="255"-->
-<!--            android:thumbColor="@color/green"-->
-<!--            android:trackColorActive="@color/green"-->
-<!--            android:trackColorInactive="@color/gray"-->
-<!--            app:labelText="Green" />-->
 
-<!--        <com.google.android.material.slider.Slider-->
-<!--            android:id="@+id/blueSlider"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:valueFrom="0"-->
-<!--            android:valueTo="255"-->
-<!--            android:thumbColor="@color/blue"-->
-<!--            android:trackColorActive="@color/blue"-->
-<!--            android:trackColorInactive="@color/gray"-->
-<!--            app:labelText="Blue" />-->
 
     </LinearLayout>
 

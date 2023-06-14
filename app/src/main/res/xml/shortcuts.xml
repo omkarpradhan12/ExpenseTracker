@@ -1,0 +1,38 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="new_exp"
+        android:enabled="true"
+        android:icon="@drawable/add"
+        android:shortcutShortLabel="@string/add_exp_short"
+        android:shortcutLongLabel="@string/add_exp_long"
+        android:shortcutDisabledMessage="@string/compose_disabled_message1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.expensetest"
+            android:targetClass="com.example.expensetest.Add_Expense" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+        <capability-binding android:key="actions.intent.CREATE_MESSAGE" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="new_split"
+        android:enabled="true"
+        android:icon="@drawable/file_svg"
+        android:shortcutShortLabel="@string/add_split_short"
+        android:shortcutLongLabel="@string/add_split_long"
+        android:shortcutDisabledMessage="@string/compose_disabled_message1">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.expensetest"
+            android:targetClass="com.example.expensetest.Split_Master" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+        <capability-binding android:key="actions.intent.CREATE_MESSAGE" />
+    </shortcut>
+
+</shortcuts>
