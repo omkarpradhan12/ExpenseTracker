@@ -69,7 +69,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="#464D87"
+                app:boxBackgroundColor="#48507d"
                 app:hintTextColor="@color/white"
                 app:helperTextTextColor="@color/white"
                 android:textColorHint="@color/white"
@@ -97,7 +97,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="#464D87"
+                app:boxBackgroundColor="#48507d"
                 app:hintTextColor="@color/white"
                 app:helperTextTextColor="@color/white"
                 android:textColorHint="@color/white"
@@ -156,7 +156,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:boxBackgroundColor="@color/bg"
+                app:boxBackgroundColor="#48507d"
                 >
 
                 <AutoCompleteTextView

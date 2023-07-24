@@ -2,31 +2,38 @@ package com.example.expensetest;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.provider.Settings;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
 
 public class Add_Expense extends AppCompatActivity {
 
+    private static final int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 5469;
     private String cat_list;
 
     @Override
@@ -61,10 +68,19 @@ public class Add_Expense extends AppCompatActivity {
         act.setAdapter(adapter);
 
 
-        setWindowParams();
+
+        checkPermission();
+
+
 
     }
 
+
+
+    public void cancel(View view)
+    {
+        finishAffinity();
+    }
 
 
     public void add_expense(View view)
@@ -117,30 +133,43 @@ public class Add_Expense extends AppCompatActivity {
                     //Toasty.info(MainActivity.this,cate,Toasty.LENGTH_LONG).show();
                     db.addExpense(new Expense(dt, reas, cate, amt));
                     Toasty.success(getApplicationContext(),"Successfully added",Toasty.LENGTH_LONG).show();
+
+                    Intent intent =new Intent(this, Total_Widget.class);
+                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+                    int[] ids = AppWidgetManager.getInstance(getApplication())
+                            .getAppWidgetIds(new ComponentName(getApplication(),
+                                    Total_Widget.class));
+                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                    sendBroadcast(intent);
+
                     this.finishAffinity();
                 }
             }
 
-    public void cancel(View view)
-    {
-        this.finishAffinity();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE) {
+            if (!Settings.canDrawOverlays(this)) {
+                // You don't have permission
+                checkPermission();
+            } else {
+                // Do as per your logic 
+            }
+
+        }
+
+    }
+    public void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+            }
+        }
     }
 
-    private void setWindowParams()
-    {
-        WindowManager.LayoutParams wlp = getWindow().getAttributes();
-        wlp.height=WRAP_CONTENT;
-        wlp.width=WRAP_CONTENT;
-        wlp.dimAmount = 0;
-
-        wlp.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
-        wlp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
-                | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
-
-
-
-        getWindow().setAttributes(wlp);
-    }
 
 }

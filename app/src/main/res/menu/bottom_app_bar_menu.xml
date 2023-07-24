@@ -40,12 +40,15 @@
                    android:title="Save to CSV 💾"
                    app:showAsAction="never" />
 
+               <item
+                   android:id="@+id/menu_file_analysis"
+                   android:title="Analyse a CSV"
+                   app:showAsAction="never" />
+
+
            </menu>
 
        </item>
-
-
-
 
 
 

@@ -2,6 +2,7 @@ package com.example.expensetest;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -48,6 +49,20 @@ public class expenseDB_Helper extends SQLiteOpenHelper {
         else
             Log.d("Insert : ", "Yah Bro");
         db.close();
+    }
+
+
+    String get_total()
+    {
+        String selectQuery = "SELECT SUM(CAST(Amount as Double))[Amount] FROM Expenses_Table";
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        cursor.moveToFirst();
+        int m = cursor.getInt(0);
+
+        return "Current Total :₹"+m;
+
     }
 
     void editExpense(Expense exp) {

@@ -44,6 +44,7 @@ import java.util.concurrent.Executor;
 import es.dmoral.toasty.Toasty;
 
 
+
 public class Launcher extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_PERMISSION = 786;
@@ -189,6 +190,9 @@ public class Launcher extends AppCompatActivity {
         color_check();
 
     }
+
+
+
 
     @Override
     protected void onResume() {

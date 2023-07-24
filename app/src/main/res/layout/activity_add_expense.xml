@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#363c63"
-
+    android:background="#464d87"
     >
 
     <ScrollView
@@ -28,20 +27,11 @@
                 android:text="Add New Expense"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
-                android:background="@drawable/header_bg"/>
+                android:background="@color/colorAccent"
+                />
 
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Date"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24dp"
-                android:textStyle="bold" />
 
 
             <DatePicker
@@ -50,8 +40,11 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/amount"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="-45dp"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner"
+                android:datePickerMode="calendar"
                 android:theme="@style/MyDatePicker" />
 
 
@@ -154,37 +147,58 @@
                 android:textColorHint="#ffffff"
                 android:textColor="#ffffff"
                 android:hint="Category"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
                 app:boxBackgroundColor="@color/bg"
                 >
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteTextView_ss"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="none"
+                    android:inputType="textAutoComplete"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Expense"
-                android:onClick="add_expense"
-                />
+                android:weightSum="3">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1.25"
+                    android:layout_height="wrap_content"
+                    android:text="Add Expense"
+                    android:onClick="add_expense"
+                    android:backgroundTint="#458946"
+                    android:textColor="#ffffff"
+                    app:cornerRadius="50px"
+                    app:strokeColor="#F8F8F8"
+                    app:strokeWidth="2px"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="0dp"
+                    />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:onClick="cancel"
-                />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1.25"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:onClick="cancel"
+                    android:backgroundTint="#AA3E3E"
+                    android:textColor="#ffffff"
+                    app:cornerRadius="50px"
+                    app:strokeColor="#F8F8F8"
+                    app:strokeWidth="2px"
+                    />
+            </LinearLayout>
+
+
 
 
         </LinearLayout>

@@ -2,6 +2,8 @@ package com.example.expensetest;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -210,6 +212,12 @@ public class MainActivity extends AppCompatActivity {
                             file_picker();
                             return true;
                         }
+
+                        if(item.getItemId() == R.id.menu_file_analysis){
+                            Intent myIntent = new Intent(MainActivity.this, File_Analysis.class);
+                            MainActivity.this.startActivity(myIntent);
+                        }
+
                         if (item.getItemId() == R.id.menu_save_csv) {
                             csv_maker();
                             return true;
@@ -757,6 +765,14 @@ public class MainActivity extends AppCompatActivity {
                                     Double newamt = Double.parseDouble(totalamt.getText().toString().replace("₹ ","")) - Double.parseDouble(exp.getAmount());
                                     totalamt.setText("₹ " + newamt);
                                     Toasty.warning(MainActivity.this, "Removed Record", Toast.LENGTH_SHORT, true).show();
+                                    Intent intent =new Intent(getApplicationContext(), Total_Widget.class);
+                                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+                                    int[] ids = AppWidgetManager.getInstance(getApplication())
+                                            .getAppWidgetIds(new ComponentName(getApplication(),
+                                                    Total_Widget.class));
+                                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                                    sendBroadcast(intent);
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null).show();
@@ -777,6 +793,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        Intent intent =new Intent(getApplicationContext(), Total_Widget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        int[] ids = AppWidgetManager.getInstance(getApplication())
+                .getAppWidgetIds(new ComponentName(getApplication(),
+                        Total_Widget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
 
     }
 
@@ -979,6 +1003,16 @@ public class MainActivity extends AppCompatActivity {
                 ChipGroup cg = findViewById(R.id.filter_chips);
                 cg.clearCheck();
 
+                Intent intent =new Intent(getApplicationContext(), Total_Widget.class);
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+                int[] ids = AppWidgetManager.getInstance(getApplication())
+                        .getAppWidgetIds(new ComponentName(getApplication(),
+                                Total_Widget.class));
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                sendBroadcast(intent);
+
+
                 table_update(getall());
             }
         });
@@ -1059,7 +1093,17 @@ public class MainActivity extends AppCompatActivity {
                     Toasty.error(getBaseContext(), "Something went wrong", Toast.LENGTH_LONG, true).show();
                 } else {
                     //Toasty.info(MainActivity.this,cate,Toasty.LENGTH_LONG).show();
+
                     db.addExpense(new Expense(dt, reas, cate, amt));
+                    Toasty.success(getApplicationContext(),"Successfully added",Toasty.LENGTH_LONG).show();
+                    Intent intent =new Intent(getApplicationContext(), Total_Widget.class);
+                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+                    int[] ids = AppWidgetManager.getInstance(getApplication())
+                            .getAppWidgetIds(new ComponentName(getApplication(),
+                                    Total_Widget.class));
+                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                    sendBroadcast(intent);
                 }
 
                 ChipGroup cg = findViewById(R.id.filter_chips);

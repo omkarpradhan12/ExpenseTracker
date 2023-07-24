@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MyDatePicker" >
+    <style name="MyDatePicker">
         <!-- Text color -->
         <item name="android:textColorPrimary">#D2FFFB</item>
         <!-- Divider color -->
         <item name="colorControlNormal">#5BC7FA</item>
+        <item name="android:textColorPrimaryInverse">#000</item> <!-- header date, month color && calendar text highlight color -->
+        <item name="android:textColorSecondaryInverse">#000</item> <!-- header year color -->
+
     </style>
+
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
@@ -37,8 +41,6 @@
     </style>
 
 
-
-
     <style name="DarkAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@drawable/popup_background</item>
         <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
@@ -55,14 +57,14 @@
 
     <style name="MyAlertDialogBottomBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
         <!-- Customize the properties of the bottom bar style here -->
-        <item name="android:background">#293839</item> <!-- Change the background color -->
+        <item name="android:background">#B0293839</item> <!-- Change the background color -->
         <item name="android:gravity">center</item> <!-- Change the gravity -->
         <!-- Add more customizations as needed -->
     </style>
 
     <style name="DialogTitleStyle" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/dark_text_color_primary</item>
-        <item name="android:background">@color/dark_background_color</item>
+        <item name="android:background">#00000000</item>
     </style>
 
     <style name="DialogAnimation">
@@ -114,19 +116,27 @@
     </style>
 
 
-
-
-
-
     <style name="TextButtoncancel" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">#F38181</item>
         <item name="backgroundTint">#00FFFFFF</item>
     </style>
 
 
-    <style name="MyMaterialCalendar"  parent="Widget.MaterialComponents.MaterialCalendar">
+    <style name="MyMaterialCalendar" parent="Widget.MaterialComponents.MaterialCalendar">
         <item name="rangeFillColor">@color/range_fill</item>
 
     </style>
+
+
+
+
+    <style name="WidgetContainer" parent="AppTheme.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
+        <item name="android:background">#3C484C</item>
+        <item name="appWidgetPadding">10dp</item>
+        <item name="android:textColor">#D5D5D5</item>
+    </style>
+
+
 
 </resources>

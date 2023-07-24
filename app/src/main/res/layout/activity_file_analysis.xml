@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".File_Analysis"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="@drawable/cell"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:clickable="true"
+            android:foreground="@drawable/ripple"
+            android:longClickable="true"
+            android:text="File Analysis"
+            android:textAlignment="center"
+            android:textColor="#F6F6F6"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        >
+
+     <EditText
+         android:layout_width="0px"
+         android:layout_height="wrap_content"
+         android:layout_weight="0.7"
+         android:id="@+id/filename_analysis"
+         />
+
+        <Button
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="Select File"
+            android:onClick="file_analysis_picker"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/Month_Name"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cell"
+                    android:text="Month Name"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24dp" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:id="@+id/grand_total"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/cell"
+                            android:text="Amount Spent"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24dp" />
+                    </TableRow>
+
+                </TableLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/bartab"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#918888"
+                        android:clickable="true"
+                        android:onClick="switcher"
+                        android:drawableRight="@drawable/bar_chart_4_bars_fill0_wght400_grad0_opsz48"
+                        android:text="BarChart"
+                        android:textAlignment="center"
+                        android:textColor="#DCDCDC"
+                        android:textSize="18dp" />
+
+
+
+                    <TextView
+                        android:id="@+id/pietab"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#6E6666"
+                        android:clickable="true"
+                        android:onClick="switcher"
+                        android:text="PieChart"
+                        android:drawableRight="@drawable/pie_chart_fill0_wght400_grad0_opsz48"
+                        android:textAlignment="center"
+                        android:textColor="#DCDCDC"
+                        android:textSize="18dp" />
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/graph_container"
+                    android:background="#586360"
+                    >
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/category_graph"
+                        android:layout_width="fill_parent"
+                        android:layout_height="280dp"
+                        >
+
+                    </com.github.mikephil.charting.charts.BarChart>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart_view"
+                        android:layout_width="fill_parent"
+                        android:layout_height="280dp"
+                        >
+
+                    </com.github.mikephil.charting.charts.PieChart>
+
+
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+
+                        <TextView
+                            android:background="@drawable/cell"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Summary "
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="28dp" />
+
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fillViewport="true"
+                    android:scrollbars="none">
+
+
+                    <TableLayout
+                        android:id="@+id/dynamictable"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:shrinkColumns="*"
+                        android:stretchColumns="*"
+                        >
+
+                    </TableLayout>
+
+                </ScrollView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
