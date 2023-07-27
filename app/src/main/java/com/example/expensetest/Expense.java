@@ -1,6 +1,6 @@
 package com.example.expensetest;
 
-public class Expense {
+public class Expense implements Comparable<Expense>{
 
 
     int expkey;
@@ -66,5 +66,10 @@ public class Expense {
 
     public void setAmount(String amount) {
         Amount = amount;
+    }
+
+    @Override
+    public int compareTo(Expense expense) {
+        return (int) (Double.parseDouble(expense.Amount) - Double.parseDouble(this.Amount) );
     }
 }

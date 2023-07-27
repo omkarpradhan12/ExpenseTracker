@@ -53,6 +53,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:text="Select File"
+            android:textColor="#ffffff"
+            app:cornerRadius="50px"
+            app:strokeColor="#F8F8F8"
+            app:strokeWidth="2px"
+            android:backgroundTint="#0E8287"
             android:onClick="file_analysis_picker"
             />
 
@@ -60,7 +65,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/dashboard_scroll"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,31 +91,45 @@
                     android:textColor="#FFFFFF"
                     android:textSize="24dp" />
 
-                <TableLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cell"
+                    android:text="Top 6 Expenses from the given data"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24dp" />
 
 
-                    <TableRow
+                    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/expensetable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:orientation="vertical"
+                        android:shrinkColumns="*"
+                        android:stretchColumns="*"
                         >
 
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:id="@+id/grand_total"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/cell"
-                            android:text="Amount Spent"
-                            android:textAlignment="center"
-                            android:textColor="#FFFFFF"
-                            android:textSize="24dp" />
-                    </TableRow>
+                    </TableLayout>
 
-                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/grand_total"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cell"
+                    android:text="Amount Spent"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24dp" />
+
+
+
+
+
+
+
 
 
                 <LinearLayout
@@ -208,7 +230,7 @@
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fillViewport="true"
                     android:scrollbars="none">

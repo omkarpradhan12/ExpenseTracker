@@ -2,9 +2,13 @@ package com.example.expensetest;
 
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -12,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +25,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +46,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.io.BufferedReader;
@@ -52,6 +59,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -201,8 +209,12 @@ public class File_Analysis extends AppCompatActivity {
                 Expense expense = new Expense(fileContent.get(i).split(",")[0],fileContent.get(i).split(",")[1],fileContent.get(i).split(",")[2],fileContent.get(i).split(",")[3]);
                 todb.add(expense);
             }
-            //send_to_db(todb);
             setup_graphs(todb);
+
+            Collections.sort(todb);
+
+            table_update(todb.subList(0,6));
+
 
         } else {
             Toasty.error(File_Analysis.this, "Unsupported CSV found", Toast.LENGTH_LONG, true).show();
@@ -211,7 +223,76 @@ public class File_Analysis extends AppCompatActivity {
 
     }
 
+    private TableLayout tableLayout;
+    public void table_update(List<Expense> expenses) {
+
+        Hashtable<String, Integer> cat_color_table = new Hashtable<>();
+
+
+        String cat_colors = cat_color + "";
+        cat_colors = cat_colors.trim();
+
+
+        for (String x : cat_colors.split("\n")) {
+            if (x.split(":").length == 2) {
+                cat_color_table.put(x.split(":")[0], Integer.parseInt(x.split(":")[1]));
+            }
+        }
+
+
+        tableLayout = (TableLayout) findViewById(R.id.expensetable);
+
+        tableLayout.removeAllViews();
+
+        String s = "";
+        expenseDB_Helper db = new expenseDB_Helper(this);
+
+        for (Expense exp : expenses) {
+
+
+
+            View tabrow = LayoutInflater.from(this).inflate(R.layout.table_card, tableLayout, false);
+
+            MaterialCardView mcard = (MaterialCardView) tabrow.findViewById(R.id.tab_card);
+
+            TextView date = (TextView) tabrow.findViewById(R.id.date_card);
+            date.setText(exp.getDate());
+
+            TextView reason = (TextView) tabrow.findViewById(R.id.reason_card);
+            reason.setText(exp.getReason());
+
+            TextView category = (TextView) tabrow.findViewById(R.id.cat_card);
+            category.setText(exp.getCategory());
+
+            TextView amount = (TextView) tabrow.findViewById(R.id.amount_card);
+            amount.setText("₹ " + exp.getAmount());
+
+
+            if (cat_color_table.containsKey(exp.getCategory())) {
+                GradientDrawable shape = new GradientDrawable();
+                shape.setShape(GradientDrawable.RECTANGLE);
+                shape.setStroke(1, Color.parseColor("#ffffff"));
+                shape.setColor(cat_color_table.get(exp.getCategory()));
+
+                tabrow.setBackgroundDrawable(shape);
+            } else {
+                tabrow.setBackgroundColor(Color.parseColor("#788780"));
+            }
+
+
+
+            tableLayout.addView(tabrow);
+
+
+        }
+
+
+    }
+
     public void setup_graphs(List<Expense> fileContent){
+
+        ScrollView dashboard_scroll = (ScrollView) findViewById(R.id.dashboard_scroll);
+        dashboard_scroll.setVisibility(View.VISIBLE);
 
         Hashtable<String, Double> cat_sums = category_sums(fileContent);
         tab_maker(cat_sums);
